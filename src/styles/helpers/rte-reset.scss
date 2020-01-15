@@ -1,0 +1,75 @@
+/*********************************************** rte-reset.scss ********************************************************
+ *                                           Rich Text Editor Reset                                                    *
+ ******************************************************************************************************************** */
+
+/* ---------- Rich Text Editor ---------- */
+.rte {
+  /* Image Height Reset */
+  img {
+    height: auto;
+  }
+
+  /* Fixed Table Layout Reset */
+  table {
+    table-layout: fixed;
+  }
+
+  /* Ordered/Unordered List Margin Reset */
+  ul,
+  ol {
+    margin: 0 0 ($gutter / 2) $gutter;
+  }
+
+  /* Match the Styles from Rich Text Editor Nested Lists */
+  ul {
+    list-style: disc outside;
+
+    ul {
+      list-style: circle outside;
+
+      ul { list-style: square outside; }
+    }
+  }
+}
+
+/* Text Center Alignment Reset */
+.text-center.rte,
+.text-center .rte {
+  ul,
+  ol {
+    margin-left: 0;
+    list-style-position: inside;
+  }
+}
+
+/* Table Scroll Reset */
+.rte-table {
+  max-width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* YouTube/Vimeo Embedded RTE Reset */
+.rte__video-wrapper {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  height: auto;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* This class is wrapped around tables in the RTE to prevent layout breaking with a scrollable parent. */
+.rte__table-wrapper {
+  max-width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}

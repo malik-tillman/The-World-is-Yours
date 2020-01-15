@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/** theme.scss *********************************************************************************************************
+ *                                             Malik Tillman 2020                                                      *
+ ******************************************************************************************************************** */
+
+/***********************************************************************************************************************
+ *                               CSNV - World Is Yours ss20 | Built with Slate                                         *
+ *                 You cannot use native CSS/Sass @imports in this file without a build script                         *
+ *                                                                                                                     *
+ *                                             ORDER MATTERS!!                                                         *
+ ******************************************************************************************************************** */
+
+/* ---------- Tooling ---------- */
+@import url('tools/mixins.scss');
+
+/* ---------- SETTINGS VARIABLES ---------- */
+@import url('settings/variables.scss.liquid');
+
+/* ---------- HELPERS STYLES ---------- */
+@import url('helpers/normalize.scss');
+@import url('helpers/reset.scss');
+@import url('helpers/helper-classes.scss');
+@import url('helpers/links-buttons.scss');
+@import url('helpers/blank-states.scss');
+
+/* ---------- GLOBAL STYLES ---------- */
+@import url('global/layout.scss');
+@import url('global/icons.scss');
+@import url('global/forms.scss');

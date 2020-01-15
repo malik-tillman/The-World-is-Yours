@@ -1,0 +1,51 @@
+<div class="page-width">
+  <div class="section-header text-center">
+    <h1>Account</h1>
+    {{ Log out customer_logout_link }}
+  </div>
+
+  <div class="grid myaccount">
+    <div class="grid__item myaccount__order-history">
+      <h2>Orders</h2>
+        {% if customer.orders.size != 0 %}
+
+          <table class="responsive-table">
+            <thead>
+              <tr>
+                <th scope="col">Order Number</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Payment Status</th>
+                <th scope="col">Fulfillment Status</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+                <tr>
+                  <th data-label="Order Number" scope="row">
+                    <a href="{{ order.customer_url }}" class="btn btn--secondary btn--small" aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">{{ order.name }}</a>
+                  </th>
+                  <td data-label="Order Date">{{ order.created_at | time_tag: format: 'date' }}</td>
+                  <td data-label="Payment Status">{{ order.financial_status_label }}</td>
+                  <td data-label="Fulfillment Status">{{ order.fulfillment_status_label }}</td>
+                  <td data-label="Total">{{ order.total_price | money }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        {% else %}
+
+          <p>You have no orders.</p>
+        {% endif %}
+        
+    </div>
+    <div class="grid__item myaccount__account-details">
+      <h2>Customer Details</h2>
+
+      <div class="myaccount__addresses">{{ customer.default_address | format_address }}</div>
+
+      <p><a href="{{ routes.account_addresses_url }}" class="btn btn--small">View addresses ({{ customer.addresses_count }})</a></p>
+    </div>
+  </div>
+</div>

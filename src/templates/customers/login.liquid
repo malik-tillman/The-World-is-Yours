@@ -1,0 +1,162 @@
+<div class="page-width">
+  <div class="grid">
+
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+      <div class="form-message form-message--success hide" id="ResetSuccess" tabindex="-1">
+        Password reset go!
+      </div>
+
+      <div id="CustomerLoginForm" class="form-vertical login-form">
+
+        <!-- <h1 id="LoginHeading" class="text-center">Log in</h1> -->
+        <div class="register-header">
+          <h1 class="register-header__header">CSNV</h1>
+          <span class="register-header__sub-head">TYPE OR PRINT ALL INFORMATION IN BLACK</span>
+        </div>
+
+        {% form 'customer_login', class: 'register-form', novalidate: 'novalidate' %}
+
+          {%- if form.errors -%}
+            <div class="form-message form-message--error">
+              <h2 class="h3 form-message__title " tabindex="-1" data-form-status>Errors</h2>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="register-form__section">
+          <label for="CustomerEmail"
+              {%- if form.errors contains 'form' -%}
+                class="input--error"
+                aria-invalid="true"
+              {%- endif -%}>Email</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            {%- if form.errors contains 'form' -%}
+              class="input--error"
+              aria-invalid="true"
+            {%- endif -%}
+            >
+          </div>
+
+          {% if form.password_needed %}
+          <div class="register-form__section">
+            <label for="CustomerPassword" 
+              {%- if form.errors contains 'form' -%}
+                class="input--error"
+                aria-invalid="true"
+              {%- endif -%}>Password</label>
+            <input
+              type="password"
+              value=""
+              name="customer[password]"
+              id="CustomerPassword"
+              {%- if form.errors contains 'form' -%}
+                class="input--error"
+                aria-invalid="true"
+              {%- endif -%}
+            >
+          </div>
+          {% endif %}
+
+          <div class="register-form__section">
+            <button type="submit" class="register-form__submit">
+              <span>Log in</span>
+              <img src="{{ 'icon-submit.svg' | asset_url }}" alt="Submit button image">
+            </button>
+          </div>
+
+          <div class="register-form__section">
+            {% if form.password_needed %}
+              <p><a href="#RecoverPasswordForm" id="RecoverPassword">Forgot password?</a></p>
+            {% endif %}
+            <p>
+              {{ 'Do you need to create an account?' | customer_register_link }}
+            </p>
+          </div>
+        {% endform %}
+      </div>
+
+      <div id="RecoverPasswordForm" class="hide password-recover-form">
+
+        <div class="text-center form-vertical">
+          <h2 id="RecoverHeading">Recover Password</h2>
+          <p></p>
+        </div>
+
+        <div class="form-vertical">
+          {% form 'recover_customer_password', class: 'register-form' %}
+
+            {% comment %}
+              Add a hidden span to indicate the form was submitted succesfully.
+            {% endcomment %}
+            {% if form.posted_successfully? %}
+              <span class="hide reset-password-success"></span>
+            {% endif %}
+
+            <div class="register-form__section">
+            <label for="RecoverEmail" 
+              {%- if form.errors contains 'form' -%}
+                class="input--error"
+                aria-invalid="true"
+              {%- endif -%}>Email</label>
+            <input
+              type="email"
+              value=""
+              name="email"
+              id="RecoverEmail"
+              class="input-full{% if form.errors %} input--error{% endif %}"
+              autocorrect="off"
+              autocapitalize="off"
+              {% if form.errors %}
+                aria-invalid="true"
+                aria-describedby="RecoverEmail-email-error"
+              {%- endif -%}
+              >
+            
+
+            {%- if form.errors -%}
+              <span id="RecoverEmail-email-error" class="input-error-message">
+                <span class="visually-hidden">{{ 'general.accessibility.error' }} </span>
+                <span>{{ form.errors.messages['form'] }}</span>
+              </span>
+            {%- endif -%}
+            </div>
+
+            <div class="register-form__section">
+              <button type="submit" class="register-form__submit">
+                <span>Submit here</span>
+                <img src="{{ 'icon-submit.svg' | asset_url }}" alt="Submit button image">
+              </button>
+            </div>
+
+            <div class="register-form__section">
+              <a href="#LoginHeading" id="HideRecoverPasswordLink">Cancel</a>
+            </div>
+          {% endform %}
+        </div>
+
+      </div>
+
+      {% comment %}
+        If accounts are set as optional, the following will be shown as an option
+        during checkout, not on the default /login page.
+      {% endcomment %}
+      {% if shop.checkout.guest_login %}
+        <div class="text-center">
+          <hr class="hr--invisible">
+          <h2>{{ 'customer.login.guest_title' }}</h2>
+
+          {% form 'guest_login' %}
+            <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' }}">
+          {% endform %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>

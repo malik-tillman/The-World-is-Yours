@@ -1,0 +1,27 @@
+<h1>{{ page.title }}</h1>
+<h2>General inquiries</h2>
+<p><a href="mailto:clientservices@csnvstudio.com">clientservices@csnvstudio.com</a></p>
+
+<h2>Send us a message</h2>
+{% form 'contact' %}
+  {% if form.posted_successfully? %} Thank you for your contact {% endif %}
+  {{ form.errors | default_errors }}
+  <label for="contact-form__name">Name</label>
+  <input type="email" id="contact-form__name" name="contact[name]" required>
+
+  <label for="contact-form__reason">Refund or exchange</label>
+  <select type="text" id="contact-form__reason" name="contact[reason]" required> 
+    <option value="General Inquiry">General Inquiry</option>
+    <option value="Order Status">Order Status</option>
+    <option value="My Account">My Account</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <label for="contact-form__email">Email</label>
+  <input type="email" id="contact-form__name" name="contact[email]" required>
+
+  <label for="contact-form__message">Message</label>
+  <textarea rows="10" id="contact-form__message" name="contact[body]" required></textarea>
+  <br>
+  <button class="button--colored" type="submit" >Submit</button>
+{% endform %}

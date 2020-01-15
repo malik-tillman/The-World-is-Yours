@@ -1,0 +1,34 @@
+
+<h1 class="visually-hidden">{{ collection.title }}</h1>
+
+<div class="collection">
+	{% if collection.image %}
+	<div class="collection__header">
+		<img class="collection__header__img" src="{{ collection.image | img_url: '1000x1000' }}" alt="Featured image for {{ collection.title }}">
+	</div>
+	{% endif %}
+
+	{% if collection.description %}
+	<div class="collection__description">
+		{{ collection.description }}
+	</div>
+	{% endif %}
+</div>
+
+<section class="product-grid">
+{% for product in collection.products %}
+	<div class="product-grid__card">
+		<a href="{{ product.url | within: collection }}">
+			<img class="product-grid__image" src="{{ product.featured_image.src | img_url: '1000x1000' }}" alt="{{ product.featured_image.alt | escape }}">
+			<div class="product-grid__details">
+				<h3 class="product-grid__name">{{ product.title }}</h3>
+				<span class="product-grid__price">{{ product.price | money }}</span>
+				{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
+			</div>
+		</a>
+	</div>
+{% else %}
+	<p>no matches</p>
+{% endfor %}
+</section>
+

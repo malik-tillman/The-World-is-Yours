@@ -1,0 +1,14 @@
+{
+  "name": "Dev-master",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@shopify/slate-tools": "0.14.0"
+  },
+  "scripts": {
+    "start-dev": "slate start --env=dev",
+    "watch-dev": "slate watch --env=dev"
+  },
+  "dependencies": {
+    "@shopify/slate": "^0.14.0"
+  }
+}

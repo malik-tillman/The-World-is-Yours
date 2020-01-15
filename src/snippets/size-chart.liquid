@@ -1,0 +1,64 @@
+{% if template contains 'product' %}
+{% assign size_options = 'size' | split: ',' %}
+{% assign has_size = false %}
+{% assign size_index = 0 %}
+{% for option in product.options %}  
+  {% assign downcased_option = option | downcase %}
+  {% if has_size == false and size_options contains downcased_option %}
+    {% assign has_size = true %}
+    {% assign size_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+{% if has_size %}
+<div class="product-info__size-chart-button">
+<button class="product-info__size-chart-trigger">Size chart</button>
+</div>
+<div id="size-chart" class="rte product-info__size-chart">
+  <button class="size-chart__close" aria-labeled="Close size cart"><img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the size cart" aria-hidden="true"><span class="visually-hidden">Close</span></button>
+
+  {% if product.type == 'T-Shirt' %}
+    <a href="{{ 'size-chart_tshirt.jpg' | asset_url }}" target="_blank">
+      <img src="{{ 'size-chart_tshirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+    </a>
+  {% endif %}
+
+  {% if product.type == 'Shirt' %}
+  <a href="{{ 'size-chart_shirt.jpg' | asset_url }}" target="_blank">
+    <img src="{{ 'size-chart_shirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+  </a>
+  {% endif %}
+
+  {% if product.type == 'Jacket' %}
+  <a href="{{ 'size-chart_jacket.jpg' | asset_url }}" target="_blank">
+    <img src="{{ 'size-chart_jacket.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+  </a>
+  {% endif %}
+
+  {% if product.type == 'Shorts' %}
+  <a href="{{ 'size-chart_shorts.jpg' | asset_url }}" target="_blank">
+    <img src="{{ 'size-chart_shorts.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+  </a>
+  {% endif %}
+
+  {% if product.type == 'Track Pants' %}
+  <a href="{{ 'size-chart_track-pants.jpg' | asset_url }}" target="_blank">
+    <img src="{{ 'size-chart_track-pants.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+  </a>
+  {% endif %}
+
+  {% if product.type == 'Jeans' %}
+  <a href="{{ 'size-chart_jeans.jpg' | asset_url }}" target="_blank">
+    <img src="{{ 'size-chart_jeans.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+  </a>
+  {% endif %}
+
+</div>
+<script type="text/javascript">
+  $('.product-info__size-chart-trigger, .size-chart__close').on('click', e => {
+    let size_chart = document.querySelector('#size-chart');
+
+    size_chart.classList[!size_chart.classList.contains('is-visible') ? 'add' : 'remove']('is-visible');
+  });
+</script>
+{% endif %}
+{% endif %}

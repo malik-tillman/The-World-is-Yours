@@ -1,0 +1,119 @@
+<div class="page-width">
+  <div class="register-header">
+          <h1 class="register-header__header">CSNV</h1>
+          <span class="register-header__sub-head">TYPE OR PRINT ALL INFORMATION IN BLACK</span>
+        </div>
+
+  <div class="grid">
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+
+      <div class="form-vertical">
+
+        <div>
+          {%- assign formId = 'RegisterForm' -%}
+        {% form 'create_customer', id: formId, class: 'register-form'  %}
+          {% include 'form-status', form: form, form_id: formId %}
+
+
+          <div class="register-form__section">
+            <label for="{{ formId }}-FirstName">First name</label>
+            <input type="text" required name="customer[first_name]" id="{{ formId }}-FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+          </div>
+
+          <div class="register-form__section">
+            <label for="{{ formId }}-LastName">Last name</label>
+            <input type="text" required name="customer[last_name]" id="{{ formId }}-LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+          </div>
+
+          <div class="register-form__section">
+            <label for="{{ formId }}-email" {%- if form.errors contains 'email' -%}class="input--error"{% endif %}>Email</label>
+            <input
+              type="email"
+              name="customer[email]"
+              id="{{ formId }}-email"
+              class="{% if form.errors contains 'email' %} input--error{% endif %}"
+              {% if form.email %} value="{{ form.email }}"{% endif %}
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              aria-required="true"
+              required
+              {%- if form.errors contains 'email' -%}
+                class="input--error"
+                aria-invalid="true"
+                aria-describedby="{{ formId }}-email-error"
+              {%- endif -%}
+            >
+            {%- if form.errors contains 'email' -%}
+              <span id="{{ formId }}-email-error" class="input-error-message">
+                <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+              </span>
+            {%- endif -%}
+          </div>
+
+          <div class="register-form__section">
+            <label for="{{ formId }}-password"
+              {%- if form.errors contains 'password' -%}
+                class="input--error"
+              {% endif %}>Password</label>
+            <input
+              type="password"
+              name="customer[password]"
+              id="{{ formId }}-password"
+              class="{% if form.errors contains 'password' %} input--error{% endif %}"
+              aria-required="true"
+              required
+              {%- if form.errors contains 'password' -%}
+                class="input--error"
+                aria-invalid="true"
+                aria-describedby="{{ formId }}-password-error"
+              {%- endif -%}
+            >
+            {%- if form.errors contains 'password' -%}
+              <span id="{{ formId}}-password-error" class="input-error-message">
+                <span>{{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.</span>
+              </span>
+            {%- endif -%}
+          </div>
+
+          <div class="register-form__section">
+            <label for="{{ formId }}-DOB">DOB</label>
+            <input type="date" required name="customer[note][DOB]" id="{{ formId }}-DOB" {% if form.note %}value="{{ form.note }}"{% endif %} autocomplete="bday">
+          </div>
+        </div>
+        
+        
+
+        
+
+          <div>
+            <div class="register-form__section">
+            <div class="register-form__prints">
+                <img class="register-form__img register-form__img--right-thumb" src="{{ 'icon-thumb_omega.svg' | asset_url }}" alt="" role="presentation">
+              <span>R. Thumb</span>
+            </div>
+            
+            <div class="register-form__prints">
+                <img class="register-form__img register-form__img--right-middle" src="{{ 'icon-thumb_alpha.svg' | asset_url }}" alt="" role="presentation">
+            <span>R. Middle</span>
+              </div>
+
+                    <div class="register-form__section">
+            <button type="submit" class="register-form__submit">
+              <span>Submit here</span>
+              <img src="{{ 'icon-submit.svg' | asset_url }}" alt="Submit button image">
+            </button>
+          </div>
+
+          </div>
+          </div>
+          
+
+
+
+        {% endform %}
+      </div>
+
+
+      

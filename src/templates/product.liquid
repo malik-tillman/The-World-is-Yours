@@ -1,0 +1,94 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+<section class="product">
+  <div class="product__images">
+
+    {% for image in product.images %}
+    <img class="product__image" src="{{ image.src | img_url: '1000x1000' }}" alt="{{ image.alt | escape }}">
+    {% endfor %}
+
+  </div>
+
+<div class="product__info">
+<h1>{{ product.title }}</h1>
+<span class="product__info__price">{{ current_variant.price | money }}</span>
+
+{% include 'size-chart' %}
+
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product__cart-form">
+
+  {% if product.available %}
+  {% if product.has_only_default_variant %}
+  <input name="id" value="{{ product.variants[0].id }}" type="hidden">
+  {% else %}
+  <select name="id" id="productSelect">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option value="{{ variant.id }}">
+          {{ variant.title }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - sold out
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+{% endif %}
+  
+{% endif %}
+  
+  {% if product.available %}
+  <div class="visually-hidden">
+    <label for="Quantity">Quantity</label>
+    <input type="number" id="Quantity" name="quantity" value="1" min="1">
+  </div>
+  <button type="submit" name="add" id="AddToCart" class="button--colored" data-product-id="{{ product.variants[0].id }}">Add to cart</button>
+  {% else %}
+  <span class="product__sold-out">Sold Out</span>
+  {% endif %}
+</form>
+
+  <div class="product-info__klarna">Pay in installments with <strong><a href="https://www.klarna.com/" target="_blank">Klarna</a></strong></div>
+  <div class="product-info__description">
+    <h3>Description and Details</h3>
+    {{ product.description }}
+  </div>
+</div>
+</section>
+
+{% section 'product-recommendations' %}
+
+<script type="text/javascript">
+  let add_to_cart = $('#AddToCart');
+
+ // console.log(Shopify-Icons.getCart())
+
+  add_to_cart.on('click', e => {
+    e.preventDefault();
+
+    let header_cart_text = $('.header-cart__count__text');
+    let shopping_cart__empty_text = $('.shopping-cart__empty-text');
+    let shopping_cart_text = $('.shopping-cart__content');
+
+    Shopify.addItemFromForm('AddToCartForm');
+
+    // $.ajax({
+    //   type: 'GET',
+    //   url: '/cart.js',
+    //   dataType: 'json',
+    //   success: function(data){
+    //       console.log(data);
+
+    //       shopping_cart__empty_text.remove();
+
+    //       header_cart_text.html( `[${data.item_count}]`);
+
+    //       data.items.forEach( item => {
+    //         console.log(item)
+    //       })
+    //   },
+    //   error: function(){}
+    // });
+  })
+</script>
