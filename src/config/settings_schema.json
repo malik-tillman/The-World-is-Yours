@@ -1,1 +1,78 @@
-[{"name":"theme_info","theme_name":"CSNV Studio Theme","theme_version":"1.0.0","theme_author":"Some Dev","theme_documentation_url":"https:\/\/github.com\/Shopify\/","theme_support_url":"https:\/\/github.com\/Shopify\/themekit\/"},{"name":"Marquee","settings":[{"type":"header","content":"Marquee"},{"type":"text","id":"marquee_text","label":"Marquee Text","default":"CSNV"}]},{"name":"Homepage Video","settings":[{"type":"header","content":"Homepage Video"},{"type":"url","id":"home_video_url_webm","label":"Video WebM URL"},{"type":"url","id":"home_video_url_mp4","label":"Video MP4 URL"},{"type":"image_picker","id":"home_video_thumbnail","label":"Video Thumbnail"}]},{"name":"Social","settings":[{"type":"header","content":"Social Links"},{"type":"url","id":"facebook_link","label":"Facebook Link"},{"type":"url","id":"instagram_link","label":"Instagram Link"},{"type":"url","id":"twitter_link","label":"Twitter Link"},{"type":"url","id":"tiktok_link","label":"Tik Tok Link"}]}]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "CSNV Studio Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Some Dev",
+    "theme_documentation_url": "https:\/\/github.com\/Shopify\/",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/themekit\/"
+  },
+  {
+    "name": "Marquee",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Marquee"
+      },
+      {
+        "type": "text",
+        "id": "marquee_text",
+        "label": "Marquee Text",
+        "default": "CSNV"
+      }
+    ]
+  },
+  {
+    "name": "Homepage Video",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Homepage Video"
+      },
+      {
+        "type": "url",
+        "id": "home_video_url_webm",
+        "label": "Video WebM URL"
+      },
+      {
+        "type": "url",
+        "id": "home_video_url_mp4",
+        "label": "Video MP4 URL"
+      },
+      {
+        "type": "image_picker",
+        "id": "home_video_thumbnail",
+        "label": "Video Thumbnail"
+      }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social Links"
+      },
+      {
+        "type": "url",
+        "id": "facebook_link",
+        "label": "Facebook Link"
+      },
+      {
+        "type": "url",
+        "id": "instagram_link",
+        "label": "Instagram Link"
+      },
+      {
+        "type": "url",
+        "id": "twitter_link",
+        "label": "Twitter Link"
+      },
+      {
+        "type": "url",
+        "id": "tiktok_link",
+        "label": "Tik Tok Link"
+      }
+    ]
+  }
+]
