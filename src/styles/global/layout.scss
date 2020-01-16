@@ -1,9 +1,29 @@
 /************************************************* layout.scss *********************************************************
  *                                                Layout Styles                                                        *
  ******************************************************************************************************************** */
-body,
-html {
+
+body, html {
   background-color: $color-body;
+
+  width: 100%;
+  min-height: 100%;
+
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: .05em;
+  color: #111;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.shopping-cart--is-open {
+  overflow: hidden;
 }
 
 .page-width {

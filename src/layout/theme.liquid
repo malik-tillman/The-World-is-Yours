@@ -62,6 +62,7 @@
 	<title>{{ seo_title | strip }}</title>
 
 	{% comment %} Preloaded Stylesheets and Scripts {% endcomment %}
+	{{ 'theme.scss.liquid' | asset_url | stylesheet_tag }}
 	{{ 'csnv.css' | asset_url | stylesheet_tag }}
 	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }} {% comment %} todo: delete {% endcomment %}
 	{{ 'api.jquery.js' | shopify_asset_url | script_tag }} {% comment %} todo: delete {% endcomment %}

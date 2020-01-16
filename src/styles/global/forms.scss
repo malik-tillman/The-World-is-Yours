@@ -2,15 +2,24 @@
  *                                       Form Styles | Scaffolding by Slate                                            *
  ******************************************************************************************************************** */
 
-input,
-textarea,
-select {
+/* Reset Input Appearance */
+body input:focus,
+body input:active {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  outline: none;
+  border: thin solid #111;
+}
+
+input, textarea, select {
   border: 1px solid $color-border;
   border-radius: 0;
   max-width: 100%;
 
   &:focus {
-    // You should add some focus styles
+    // todo: add some focus styles
   }
 
   &[disabled] {
@@ -51,8 +60,7 @@ select::-ms-expand {
 }
 
 /*================ Error styles ================*/
-input,
-select,
+input, select,
 textarea {
   &.input-error {
     border-color: $color-error;
