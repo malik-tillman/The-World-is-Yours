@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
 
+.icon {
+	width: 15px;
+}
+
+.icon-instagram {
+	width: 20px;
+}
+
+.icon-bag {
+	width: 35px;
+}
+
+.icon-search {
+	width: 15px;
+}
+
 * {
 	margin: 0;
 	padding: 0;
