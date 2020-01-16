@@ -82,7 +82,7 @@
 	{% comment %} ------ Background Video on Index ------ {% endcomment %}
 	{% if template == 'index' %}
 		{% comment %} todo: {% endcomment %}
-		{%- if settings.home_video_url_webm && settings.home_video_mp4 -%}
+		{%- if settings.home_video_url_webm and settings.home_video_url_mp4 -%}
 			<div class="video-container">
 				<video autoplay muted loop playsinline preload poster="
 						{%- if settings.home_video_thumbnail -%}
@@ -176,7 +176,7 @@
 
 					{% comment %} Regular Link on Blank Link List {% endcomment %}
 					{% else %}
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %} {# todo: Localize #} {% endcomment %}
 						<li><a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a></li>
 
 					{% endif %}
