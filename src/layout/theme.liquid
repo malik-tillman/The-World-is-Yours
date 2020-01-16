@@ -18,7 +18,7 @@
 	{% comment %} Set Metadata: Canonical url | see: https://support.google.com/webmasters/answer/139066?hl=en {% endcomment %}
 	<link rel="canonical" href="{{ canonical_url }}">
 
-	{% include 'social-meta-tags' %}
+	{% render 'social-meta-tags' %}
 
 	{% comment %} Set Metadata: Page description | see: https://moz.com/learn/seo/meta-description {% endcomment %}
 	{% if page_description %}
@@ -120,7 +120,7 @@
 		{% comment %} todo: Change button to link {% endcomment %}
 		<button class="header-cart__button" type="button">
 			<span class="visually-hidden">Shopping Cart</span>
-			{% include 'CSNV-Icons/icon-bag' %}
+            {% render 'icon-bag' %}
 		</button>
 	</div>
 
@@ -217,7 +217,8 @@
 
 					{% comment %} Search Button {% endcomment %}
 					<button class="side-bar__search-button">
-						{% include "CSNV-Icons/icon-search" %}
+						{% render "icon-search" %}
+
 						<span class="visually-hidden">Search</span>
 					</button>
 				</form>
@@ -232,7 +233,7 @@
 					{% if settings.facebook_link %}
 					<li>
 						<a href="{{ settings.facebook_link }}" class="side-bar__social__link side-bar__social--facebook" target="_blank">
-							{% include "CSNV-Icons/icon-facebook" %}
+							{% render "icon-facebook" %}
 							<span class="visually-hidden">Facebook</span>
 						</a>
 					</li>
@@ -242,7 +243,7 @@
 					{% if settings.instagram_link %}
 					<li>
 						<a href="{{ settings.instagram_link }}" class="side-bar__social__link side-bar__social--instagram" target="_blank">
-							{% include "CSNV-Icons/icon-instagram" %}
+							{% render "icon-instagram" %}
 							<span class="visually-hidden">Instagram</span>
 						</a>
 					</li>
@@ -252,7 +253,7 @@
 					{% if settings.twitter_link %}
 					<li>
 						<a href="{{ settings.twitter_link }}" class="side-bar__social__link side-bar__social--twitter" target="_blank">
-							{% include "CSNV-Icons/icon-twitter" %}
+							{% render "icon-twitter" %}
 							<span class="visually-hidden">Twitter</span>
 						</a></li>
 					{% endif %}
@@ -261,7 +262,7 @@
 					{% if settings.tiktok_link %}
 					<li>
 						<a href="{{ settings.tiktok_link }}" class="side-bar__social__link side-bar__social--tiktok" target="_blank">
-							{% include "CSNV-Icons/icon-twitter" %}
+							{% render "icon-twitter" %}
 							<span class="visually-hidden">Tik Tok</span>
 						</a>
 					</li>
@@ -294,7 +295,7 @@
 		<div class="shopping-cart__content">
 			{% comment %} Close Button {% endcomment %}
 			<button class="shopping-cart__close" aria-labeled="Close shopping cart">
-				{% include "CSNV-Icons/icon-close" %}
+				{% render "icon-close" %}
 
 				{% comment %} todo: localize {% endcomment %}
 				<span class="visually-hidden">Close</span>

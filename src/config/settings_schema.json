@@ -8,6 +8,34 @@
     "theme_support_url": "https:\/\/github.com\/Shopify\/themekit\/"
   },
   {
+    "name": "Icons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Search Icon"
+      },
+      {
+        "type": "select",
+        "id": "search-icon-size",
+        "label": "Search Icon Size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Marquee",
     "settings": [
       {
@@ -47,7 +75,7 @@
     ]
   },
   {
-    "name": "Social",
+    "name": "Social Media",
     "settings": [
       {
         "type": "header",

@@ -70,6 +70,8 @@
     "content_for_index": []
   },
   "presets": {
-    "Default": {}
+    "Default": {
+      "search-icon-size": "normal"
+    }
   }
 }
