@@ -92,7 +92,7 @@
 		{% comment %}{# todo: #}{% endcomment %}
 		{%- if settings.home_video_url_webm and settings.home_video_url_mp4 -%}
 			<div class="video-container">
-				<video autoplay muted loop playsinline preload poster="
+				<video autoplay muted loop playsinline preload disablePictureInPicture poster="
 						{%- if settings.home_video_thumbnail -%}
 							{{ settings.home_video_thumbnail | img_url: 'large' }}
 						{%- endif -%}">
@@ -441,7 +441,7 @@
 			setTimeout(function () {
 				loader.style.opacity = "0";
 			}, 1000);
-		} )
+		} );
 	</script>
 </body>
 </html>

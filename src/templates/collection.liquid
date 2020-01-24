@@ -1,33 +1,110 @@
-<h1 class="visually-hidden">{{ collection.title }}</h1>
+<div class="collection_container">
+	<div class="collection">
+		{% if settings.collection_heading_video_fallback %}
+			<div class="collection_video_container">
+				<video class="collection_video" autoplay muted loop playsinline preload disablePictureInPicture
+					   poster="{%- if settings.home_video_thumbnail -%}
+							{{ settings.home_video_thumbnail | img_url: 'large' }}
+						   {%- endif -%}">
+					<source src="{{ settings.home_video_url_webm }}" type="video/webm">
+					<source src="{{ settings.home_video_url_mp4 }}" type="video/mp4">
+				</video>
+			</div>
+		{% endif %}
 
-<div class="collection">
-	{% if collection.image %}
-	<div class="collection__header">
-		<img class="collection__header__img" src="{{ collection.image | img_url: 'master' }}" alt="Featured image for {{ collection.title }}">
+		{% if collection.description %}
+			<div class="collection__description">
+				{{ collection.description }}
+			</div>
+		{% endif %}
 	</div>
-	{% endif %}
 
-	{% if collection.description %}
-	<div class="collection__description">
-		{{ collection.description }}
-	</div>
-	{% endif %}
+	<h1 class="collection_title">{{ collection.title }}</h1>
+
+	<section class="product-grid">
+		{% for product in collection.products %}
+
+			{% assign glitched_image = "none" %}
+			{% for tag in product.tags %}
+				{% if tag contains 'glitched_bottom' %}
+					{% assign glitched_image = "glitched_bottom" %}
+					{% elsif tag contains 'glitched_top' %}
+					{% assign glitched_image = "glitched_top" %}
+				{% endif %}
+			{% endfor %}
+
+
+			<div class="product-grid__card">
+				<a href="{{ product.url | within: collection }}">
+					{% assign image = product.featured_image %}
+					{% case glitched_image %}
+						{% when 'glitched_top' %}
+							{% if image.alt contains 'glitched' %}
+								<div class="glitch_container">
+									<img class="product-grid__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
+									<img class="glitch_image_top glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
+								</div>
+							{% else %}
+								<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+							{% endif %}
+
+						{% when 'glitched_bottom' %}
+							{% if image.alt contains 'glitched' %}
+								<div class="glitch_container">
+									<img class="product-grid__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
+									<img class="glitch_image_bottom glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
+								</div>
+							{% else %}
+								<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+							{% endif %}
+
+							{% else %}
+							<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+						{% endcase %}
+					<div class="product-grid__details">
+						<h3 class="product-grid__name">{{ product.title }}</h3>
+						<span class="product-grid__price">{{ product.price | money }}</span>
+						{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
+					</div>
+				</a>
+			</div>
+		{% else %}
+			<p>no matches</p>
+		{% endfor %}
+	</section>
 </div>
 
-<section class="product-grid">
-{% for product in collection.products %}
-	<div class="product-grid__card">
-		<a href="{{ product.url | within: collection }}">
-			<img class="product-grid__image" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{ product.featured_image.alt | escape }}">
-			<div class="product-grid__details">
-				<h3 class="product-grid__name">{{ product.title }}</h3>
-				<span class="product-grid__price">{{ product.price | money }}</span>
-				{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
-			</div>
-		</a>
-	</div>
-{% else %}
-	<p>no matches</p>
-{% endfor %}
-</section>
+<script>
+	/* Glitch */
+	const stopIt = false;
+	$( function() {
+		$( ".glitch_image" ).mgGlitch({
+			destroy : stopIt, // set 'true' to stop the plugin
+			glitch: true, // set 'false' to stop glitching
+			scale: true, // set 'false' to stop scaling
+			blend : true, // set 'false' to stop glitch blending
+			blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
+			glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
+			glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
+			glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
+			glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
+			zIndexStart : 8, // because of absolute position, set z-index base value
+		});
+	});
+
+	/* Resize  */
+	let glitchImages = document.getElementsByClassName("glitch_image");
+	let glitchImageContainers = document.getElementsByClassName("glitch_container");
+
+	resizeGlitchContainer();
+
+	window.addEventListener('resize', resizeGlitchContainer);
+
+	function resizeGlitchContainer() {
+		for(let i = 0; i < glitchImageContainers.length; i++) {
+			glitchImageContainers[i].style.height = (glitchImages[i].offsetHeight) + "px";
+		}
+	};
+</script>
+
 

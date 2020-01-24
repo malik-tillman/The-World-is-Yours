@@ -7,9 +7,7 @@
 * Plugin URI: http://hmongouachon.com
 * Version: 1.0.0
 */
-
-
-;( function( $, window, document, undefined ) {
+( function( $, window, document, undefined ) {
 
     "use strict";
 
@@ -131,10 +129,11 @@
                 var randomTime = getRandomInt(glitch1TimeMin, glitch1TimeMax);
 
                 // select front-1 selector : random clip, right and left values
+                //'left' : leftValue
+                //'right' : rightValue,
                 $(el).css({
                     'clip' : 'rect('+clipPos1+'px, '+clipPos2+'px, '+clipPos3+'px,' + clipPos4 +'px)' ,
-                    'right' : rightValue,
-                    'left' : leftValue
+                    'transform': 'translate(' + leftValue + 'px, ' + rightValue + 'px)'
                 });
 
                 // set loop with random time
@@ -163,13 +162,13 @@
                 };
 
                 // select front-2 selector : random clip, right, left and scale values
+                //'left' : leftValue,
+                //'right' : rightValue,
                 $(el).next().css({
                     'clip' : 'rect('+clipPos1+'px, '+clipPos2+'px, '+clipPos3+'px,' + clipPos4 +'px)',
-                    'left' : leftValue,
-                    'right' : rightValue,
                     '-webkit-transform' : 'scale(' + scaleValue + ')',
                     '-ms-transform' : 'scale(' + scaleValue + ')',
-                    'transform' : 'scale(' + scaleValue + ')'
+                    'transform' : 'scale(' + scaleValue + ') translate(' + leftValue + 'px, ' + rightValue + 'px)'
                 });
 
                 // set loop with random time
@@ -198,13 +197,13 @@
                 };
 
                 // select front-3 selector : random clip, right, left and scale values
+                //'left' : leftValue,
+                //'right' : rightValue,
                 $(el).next().next().css({
                     'clip' : 'rect('+clipPos1+'px, '+clipPos2+'px, '+clipPos3+'px,' + clipPos4 +'px)',
-                    'left' : leftValue,
-                    'right' : rightValue,
                     '-webkit-transform' : 'scale(' + scaleValue + ')',
                     '-ms-transform' : 'scale(' + scaleValue + ')',
-                    'transform' : 'scale(' + scaleValue + ')'
+                    'transform' : 'scale(' + scaleValue + ') translate(' + leftValue + 'px, ' + rightValue + 'px)'
                 });
 
                 // set loop with random time

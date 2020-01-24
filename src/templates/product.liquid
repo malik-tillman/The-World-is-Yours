@@ -158,13 +158,7 @@
       });
   });
 
-  $(".glitch_image").mgGlitch({
-     destroy: true
-  });
-
   let index = 0;
-
-  resizeGlitchContainer();
 
 
   let checkForGlitch = false;
@@ -206,7 +200,9 @@
   //
   //
   // }, 1000);
+
   window.addEventListener('resize', resizeGlitchContainer);
+  window.addEventListener('load', resizeGlitchContainer);
 
   function resizeGlitchContainer() {
       for(let i = 0; i < glitchImageContainers.length; i++) {

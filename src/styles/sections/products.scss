@@ -3,7 +3,7 @@
 }
 
 
-body:not(.template--product) main  {
+body:not(.template--product, .template--collection) main  {
   max-width: unset;
   margin-top: 0;
   margin-left: 186px;
@@ -18,6 +18,7 @@ body.template--product main  {
 
 .product-info__description {
   padding: 1em 0 1.5em;
+  text-align: center;
 }
 
 .product-info__description h3 {
@@ -153,7 +154,33 @@ body.template--product main  {
   display: block;
 }
 
+/* ---------- Collections ---------- */
+.collection_container {
+  @include flexbox();
+  @include flex-direction(column);
+}
 
+.collection_video_container {
+  position: relative;
+  width: 100vw;
+  height: 15vh;
+  object-fit: cover;
+  overflow: hidden;
+
+}
+
+.collection_video {
+  position: absolute;
+  width: 100vw;
+}
+
+.collection_title {
+  font-size: 2em;
+  margin-top: 1em;
+  text-align: center;
+}
+
+/* ---------- Products Grid ---------- */
 .product-grid {
   @include flexbox();
   @include justify-content(flex-start);
@@ -162,7 +189,7 @@ body.template--product main  {
 
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
 }
@@ -170,10 +197,11 @@ body.template--product main  {
 $card-width: 25%;
 .product-grid__card {
   display: inline-block;
-  padding: 1em;
+  padding: 2em;
   flex: 1 $card-width;
   width: $card-width;
   max-width: $card-width;
+
 }
 
 .product-grid__card a {
@@ -182,10 +210,13 @@ $card-width: 25%;
 
 .product-grid__image {
   width: 100%;
+
+  background-color: $color-product-background;
 }
 
 .product-grid__details {
   text-align: center;
+  padding-top: 1em;
 }
 
 .product {
@@ -213,6 +244,7 @@ $card-width: 25%;
 
 .glitch_container {
   position: relative;
+  margin: 2em 0;
 }
 
 .glitch_image_main, .glitch_image_top, .glitch_image_bottom {
