@@ -2,21 +2,33 @@
  *                                       Form Styles | Scaffolding by Slate                                            *
  ******************************************************************************************************************** */
 
-/* Reset Input Appearance */
-body input:focus,
-body input:active {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  outline: none;
-  border: thin solid #111;
+/* ---------- Input and Text Area Appearance ---------- */
+body {
+  input:focus, input:active {
+    @include prefix(appearance, none, webkit moz spec);
+
+    border-radius: 0;
+    outline: none;
+    border: thin solid #111;
+  }
 }
 
 input, textarea, select {
-  border: 1px solid $color-border;
+  @include prefix(appearance, none, webkit moz spec);
+
+  display: block;
+  width: 100%;
+  max-width: 416px;
+  padding: .5em 1.25em;
+  margin: .75em 0;
+
+  background-color: transparent;
+  border: thin solid $color-border;
   border-radius: 0;
-  max-width: 100%;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 0.7rem;
 
   &:focus {
     // todo: add some focus styles
@@ -27,31 +39,50 @@ input, textarea, select {
     background-color: $color-disabled;
     border-color: $color-disabled-border;
   }
+
+  /* Error styles */
+  &.input-error {
+    border-color: $color-error;
+    background-color: $color-error-bg;
+    color: $color-error;
+  }
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  display: inline-block;
+  margin-right: .5rem;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #111;
+  box-shadow: 2px 2px 0 inset white, -2px -2px 0 inset white;
+}
+
+input[type="checkbox"] + label {
+  margin: .75em 0;
 }
 
 textarea {
   min-height: 100px;
 }
 
-/*================ Custom select style ================*/
+/* ---------- Custom select style ---------- */
 select {
   @include prefix(appearance, none, webkit moz spec);
-  background-position: right center;
-  background: {
-    image: url($svg-select-icon);
-    repeat: no-repeat;
-    position: right 10px center;
-    color: transparent;
-  }
-  padding-right: 28px;
+
+  padding-right: 10px;
   text-indent: 0.01px;
   text-overflow: '';
   cursor: pointer;
 
-  /*================ Hide the svg arrow in IE9 ================*/
-  .ie9 & {
-    padding-right: 10px;
-    background-image: none;
+  background: {
+    image: none;
+    repeat: no-repeat;
+    position: right 10px center;
+    color: transparent;
   }
 }
 
@@ -59,12 +90,141 @@ select::-ms-expand {
   display: none;
 }
 
-/*================ Error styles ================*/
-input, select,
-textarea {
-  &.input-error {
-    border-color: $color-error;
-    background-color: $color-error-bg;
-    color: $color-error;
-  }
+
+/* CSNV */
+.form-group {
+  @include flexbox();
+}
+
+.form-group__set {
+  width: calc(50% - 2rem)
+}
+
+.form-group__set:first-child {
+  padding-right: 2rem;
+}
+
+.form-group--full-width {
+  display: block;
+  padding-right: 4rem;
+}
+
+.form-group--full-width * {
+  max-width: unset;
+}
+
+.form-group--inline {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.form-group.form-group--inline  input[type="checkbox"] {
+  flex: 0 0 1rem;
+}
+
+select {
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 4"><path d="M4 3.76L.21 1.05.79.24 4 2.53 7.21.24l.58.81z"/></svg>');
+  background-position:center right 16px;
+  background-size:8px 4px;
+  background-repeat:no-repeat;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+label {
+  font-weight: 700;
+  margin: 1.75em 0 .75em;
+  display: block;
+}
+
+label[for^='address_'] {
+  display: inline-block;
+}
+
+input::placeholder {
+  font-size: inherit;
+  color: inherit;
+}
+
+button,
+input[type="submit"],
+input[type="button"]{
+  font-family: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25em 0;
+  letter-spacing: .2em;
+  width: auto;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .7rem;
+}
+
+main button,
+main input[type="submit"],
+main input[type="button"] {
+  margin: .75em 0;
+}
+
+.button--colored,
+button.button--colored,
+input[type="submit"].button--colored,
+input[type="button"].button--colored,
+.shopify-challenge__button[type="submit"] {
+  color:  #fff;
+  font-weight: 700;
+  background-color: #000;
+  padding: 0.5rem 1rem;
+}
+
+.shopify-challenge__button[type="submit"] {
+  max-width: unset;
+  width: auto;
+}
+
+.myaccount__account-details,
+.myaccount__addresses {
+  margin: 1.75em 0;
+}
+
+.btn--narrow {
+  max-width: 30px;
+}
+
+.form-vertical {
+  margin: 0 auto;
+  max-width: 440px;
+  width: 100%;
+}
+
+.template--customers-login .form-vertical,
+.template--customers-register .form-vertical {
+  margin: 0 auto;
+  max-width: unset;
+  width: 100%;
+  font-size: 0.6rem;
+}
+
+#RecoverPasswordForm {
+  display: none;
+}
+
+#RecoverPasswordForm:target {
+  display: block;
+}
+
+
+
+.password-recover-form {
+  margin-top: 5em;
+}
+
+.input--error, .input-error-message, .form-message--error {
+  color: #ad0404;
+  border-color: #ad0404;
 }

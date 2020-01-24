@@ -1,6 +1,6 @@
 const init = () => {
-    'use strict'
-    
+	'use strict';
+
     let mobile_menu_button = select('.side-bar__menu-button');
     let sidebar_mask = select('.side-bar__mask');
 
@@ -131,3 +131,5 @@ const toggle_dropdown = e => {
 }
 
 document.addEventListener('DOMContentLoaded', init)
+
+

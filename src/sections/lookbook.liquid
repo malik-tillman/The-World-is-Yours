@@ -14,7 +14,12 @@
 </div>
 
 <div class="lookbook-viewer">
-  <button class="lookbook-viewer__close" aria-labeled="Close viewer"><img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the look book viewer" aria-hidden="true"><span class="visually-hidden">Close</span></button>
+  <button class="lookbook-viewer__close" aria-labeled="Close viewer">
+    {% comment %}{# <img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the look book viewer" aria-hidden="true"> #}{% endcomment %}
+    {% assign alt = 'Close the look book viewer' %}
+    {% render "icon-close", alt: alt %}
+    <span class="visually-hidden">Close</span>
+  </button>
 
   <div class="lookbook-viewer_image">
     <img src="">

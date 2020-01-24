@@ -1,56 +1,56 @@
 <!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
 <head>
-	{% comment %} Set Metadata {% endcomment %}
+	{% comment %}{# Set Metadata #}{% endcomment %}
 
-	{% comment %} Set Metadata: Character set {% endcomment %}
+	{% comment %}{# Set Metadata: Character set #}{% endcomment %}
 	<meta charset="utf-8">
 
-	{% comment %} Set Metadata: Browser stuff | see: https://stackoverflow.com/questions/6771258/what-does-meta-http-equiv-x-ua-compatible-content-ie-edge-do {% endcomment %}
+	{% comment %}{# Set Metadata: Browser stuff | see: https://stackoverflow.com/questions/6771258/what-does-meta-http-equiv-x-ua-compatible-content-ie-edge-do #}{% endcomment %}
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	{% comment %} Set Metadata: Viewport control | see: https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag {% endcomment %}
+	{% comment %}{# Set Metadata: Viewport control | see: https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag #}{% endcomment %}
 	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-	{% comment %} Set Metadata: Browser theme color | see: https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android {% endcomment %}
+	{% comment %}{# Set Metadata: Browser theme color | see: https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android #}{% endcomment %}
 	<meta name="theme-color" content="{{ settings.color_button }}">
 
-	{% comment %} Set Metadata: Canonical url | see: https://support.google.com/webmasters/answer/139066?hl=en {% endcomment %}
+	{% comment %}{# Set Metadata: Canonical url | see: https://support.google.com/webmasters/answer/139066?hl=en #}{% endcomment %}
 	<link rel="canonical" href="{{ canonical_url }}">
 
 	{% render 'social-meta-tags' %}
 
-	{% comment %} Set Metadata: Page description | see: https://moz.com/learn/seo/meta-description {% endcomment %}
+	{% comment %}{# Set Metadata: Page description | see: https://moz.com/learn/seo/meta-description #}{% endcomment %}
 	{% if page_description %}
 		<meta name="description" content="{{ page_description | escape }}">
 	{% endif %}
 
-	{% comment %} Set Favicon {% endcomment %}
+	{% comment %}{# Set Favicon #}{% endcomment %}
 	{%- if settings.favicon -%}
 		<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
 	{%- endif -%}
 
-	{% comment %} Generate Title {% endcomment %}
+	{% comment %}{# Generate Title #}{% endcomment %}
 	{%- capture seo_title -%}
 
-		{% comment %} Add search heading and results {% endcomment %}
+		{% comment %}{# Add search heading and results #}{% endcomment %}
 		{%- if request.page_type == 'search' and search.performed == true -%}
 			{{ 'general.search.heading' | t: count: search.results_count }}: {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
 		{%- else -%}
 			{{ page_title }}
 		{%- endif -%}
 
-		{% comment %} Add tags to title {% endcomment %}
+		{% comment %}{# Add tags to title #}{% endcomment %}
 		{%- if current_tags -%}
 			{%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
 		{%- endif -%}
 
-		{% comment %} Add page to title unless on the first page {% endcomment %}
+		{% comment %}{# Add page to title unless on the first page #}{% endcomment %}
 		{%- if current_page != 1 -%}
 			&ndash; {{ 'general.meta.page' | t: page: current_page }}
 		{%- endif -%}
 
-		{% comment %} Add shop name if page title in settings doesn't have it todo:evaluate {% endcomment %}
+		{% comment %}{# Add shop name if page title in settings doesn't have it todo:evaluate #}{% endcomment %}
 		{%- assign escaped_page_title = page_title | escape -%}
 		{%- unless escaped_page_title contains shop.name -%}
 			&ndash; {{ shop.name }}
@@ -58,31 +58,38 @@
 
 	{%- endcapture -%}
 
-	{% comment %} Remove whitespace from start and end of concatnated title {% endcomment %}
+	{% comment %}{# Remove whitespace from start and end of concatnated title #}{% endcomment %}
 	<title>{{ seo_title | strip }}</title>
 
-	{% comment %} Preloaded Stylesheets and Scripts {% endcomment %}
-	{{ 'theme.scss.liquid' | asset_url | stylesheet_tag }}
-	{{ 'csnv.css' | asset_url | stylesheet_tag }}
-	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }} {% comment %} todo: delete {% endcomment %}
-	{{ 'api.jquery.js' | shopify_asset_url | script_tag }} {% comment %} todo: delete {% endcomment %}
+	{% comment %}{# Preloaded Stylesheets and Scripts #}{% endcomment %}
+	{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+	{% comment %}{# {# {{ 'csnv.css' | asset_url | stylesheet_tag }} #} #}{% endcomment %}
+	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }} {% comment %}{# todo: delete #}{% endcomment %}
+	{{ 'api.jquery.js' | shopify_asset_url | script_tag }} {% comment %}{# todo: delete #}{% endcomment %}
 
-	{% comment %} Deferred Scripts {% endcomment %}
+	{% comment %}{# Deferred Scripts #}{% endcomment %}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" defer></script>
 	<script src="{{ 'global.js' | asset_url }}" defer></script>
+	<script src="{{ 'glitch.js' | asset_url }}"></script>
 
-	{% comment %} Blahh {% endcomment %}
+
+	{% comment %}{# Blahh #}{% endcomment %}
 	{{ content_for_header }}
 </head>
 
-{% comment %} todo: Change body page class selector {% endcomment %}
-{% comment %} todo: optimize classes {% endcomment %}
-{% comment %} class="template-{{ request.page_type | handle }}" {% endcomment %}
-<body class="template--{{ template | split: '/' | join : '-' | split: '.' | join: '-'}}">
+{% comment %}{#  todo: Change body page class selector  #}{% endcomment %}
+{% comment %}{# todo: optimize classes #}{% endcomment %}
+{% comment %}{# class="template-{{ request.page_type | handle }}" #}{% endcomment %}
+<body class="template--{{ template | split: '/' | join : '-' | split: '.' | join: '-'}} loading">
 
-	{% comment %} ------ Background Video on Index ------ {% endcomment %}
+	{% comment %}{# ------ Page Loader ------ #}{% endcomment %}
+	<div id="loader">
+	<img id="loader-image" src="{{ 'loading-logo.gif' | asset_url }}" alt="Loading..."/>
+</div>
+
+	{% comment %}{# ------ Background Video on Index ------ #}{% endcomment %}
 	{% if template == 'index' %}
-		{% comment %} todo: {% endcomment %}
+		{% comment %}{# todo: #}{% endcomment %}
 		{%- if settings.home_video_url_webm and settings.home_video_url_mp4 -%}
 			<div class="video-container">
 				<video autoplay muted loop playsinline preload poster="
@@ -96,8 +103,8 @@
 		{%- endif -%}
 	{% endif %}
 
-    {% comment %} ------ Marquee Text ------ {% endcomment %}
-    {% comment %} todo: Change classes to `marquee-[level-name]` {% endcomment %}
+    {% comment %}{# ------ Marquee Text ------ #}{% endcomment %}
+    {% comment %}{# todo: Change classes to `marquee-[level-name]` #}{% endcomment %}
 	{%- if settings.marquee_text -%}
 		<div class="alert-banner">
 			<div class="alert-banner__marquee">
@@ -108,65 +115,65 @@
 		</div>
 	{%- endif -%}
 
-	{% comment %} ------ Cart ------ {% endcomment %}
+	{% comment %}{# ------ Cart ------ #}{% endcomment %}
 	<div class="header-cart">
-		{% comment %} Show Count {% endcomment %}
+		{% comment %}{# Show Count #}{% endcomment %}
 		{% if cart.item_count > 0 %}
 			<div class="header-cart__count">
 				<span class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
 			</div>
 		{% endif %}
 
-		{% comment %} Cart Icon {% endcomment %}
-		{% comment %} todo: Change button to link {% endcomment %}
+		{% comment %}{# Cart Icon #}{% endcomment %}
+		{% comment %}{# todo: Change button to link #}{% endcomment %}
 		<button class="header-cart__button" type="button">
 			<span class="visually-hidden">Shopping Cart</span>
             {% render 'icon-bag' %}
 		</button>
 	</div>
 
-	{% comment %} ------ Side Nav ------ {% endcomment %}
+	{% comment %}{# ------ Side Nav ------ #}{% endcomment %}
 	<aside class="side-bar">
-		{% comment %} Logo and Rights {% endcomment %}
+		{% comment %}{# Logo and Rights #}{% endcomment %}
 		<div class="side-bar__header-logo">
-			{% comment %} Logo Link {% endcomment %}
-			{% comment %} todo: Localize title {% endcomment %}
+			{% comment %}{# Logo Link #}{% endcomment %}
+			{% comment %}{# todo: Localize title #}{% endcomment %}
 			<a href="/" title="CSNV Home">
 				<img src="{{ 'logo.gif' | asset_url }}" alt="CSNV Logo"/>
 			</a>
 
-			{% comment %} All Rights Reserved {% endcomment %}
-			{% comment %} todo: Localize {% endcomment %}
+			{% comment %}{# All Rights Reserved #}{% endcomment %}
+			{% comment %}{# todo: Localize #}{% endcomment %}
 			<small class="side-bar__header-logo__reg">All Rights Reserved <br>
 			&copy; 2019 CSNV studio</small>
 		</div>
 
-		{% comment %} Nav {% endcomment %}
+		{% comment %}{# Nav #}{% endcomment %}
 		<nav class="side-bar__nav">
-			{% comment %} Mobile Menu Button {% endcomment %}
+			{% comment %}{# Mobile Menu Button #}{% endcomment %}
 			<button class="side-bar__menu-button"><span>Menu</span></button>
 
-			{% comment %} Nav Link List {% endcomment %}
+			{% comment %}{# Nav Link List #}{% endcomment %}
 			<ul>
 				{% for link in linklists.main-menu.links %}
-					{% comment %} Retrieve Index Link Handle {% endcomment %}
+					{% comment %}{# Retrieve Index Link Handle #}{% endcomment %}
 					{% assign child_list_handle = link.title | handleize %}
 
-					{% comment %} Dropdown Link on Non-blank Link List {% endcomment %}
+					{% comment %}{# Dropdown Link on Non-blank Link List #}{% endcomment %}
 					{% if linklists[child_list_handle].links != blank %}
 						<li class="side-bar__nav__dropdown">
 
-							{% comment %} Link {% endcomment %}
-							{% comment %} todo: Localize {% endcomment %}
+							{% comment %}{# Link #}{% endcomment %}
+							{% comment %}{# todo: Localize #}{% endcomment %}
 							<button class="side-bar__nav__dropdown-trigger" type="button">
 								{{ link.title }}
 							</button>
 
-							{% comment %} Dropdown Menu for Link {% endcomment %}
+							{% comment %}{# Dropdown Menu for Link #}{% endcomment %}
 							<ul class="side-bar__nav__dropdown-container" aria-expanded="false">
 								{% for childLink in linklists[child_list_handle].links %}
 									<li>
-										{% comment %} todo: Localize {% endcomment %}
+										{% comment %}{# todo: Localize #}{% endcomment %}
 										<a href="{{ childLink.url }}" title="{{ childLink.title | escape }}">
 											{{ childLink.title | escape}}
 										</a>
@@ -175,27 +182,27 @@
 							</ul>
 						</li>
 
-					{% comment %} Regular Link on Blank Link List {% endcomment %}
+					{% comment %}{# Regular Link on Blank Link List #}{% endcomment %}
 					{% else %}
-						{% comment %} {# todo: Localize #} {% endcomment %}
+						{% comment %}{# {# todo: Localize #} #}{% endcomment %}
 						<li><a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a></li>
 
 					{% endif %}
 				{% endfor %}
 
-				{% comment %} Customer Account {% endcomment %}
+				{% comment %}{# Customer Account #}{% endcomment %}
 				{% if shop.customer_accounts_enabled %}
 
-					{% comment %} Add Account and Log Out Link {% endcomment %}
+					{% comment %}{# Add Account and Log Out Link #}{% endcomment %}
 					{% if customer %}
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %}{# todo: Localize #}{% endcomment %}
 						<li><a href="/account" title="Go to your account">
 							Account <br /><span class="account-name">({{ customer.email }})</span></a></li>
 						<li><a href="/account/logout" title="Log out">Log out</a></li>
 
-					{% comment %} Add Login and Register Link {% endcomment %}
+					{% comment %}{# Add Login and Register Link #}{% endcomment %}
 					{% else %}
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %}{# todo: Localize #}{% endcomment %}
 						<li><a href="/account/login" title="Log in to your account">Log in</a></li>
 						<li><a href="/account/register" title="Register for an accountt">Register</a></li>
 
@@ -203,20 +210,20 @@
 				{% endif %}
 			</ul>
 
-			{% comment %} Search Icon and Bar {% endcomment %}
+			{% comment %}{# Search Icon and Bar #}{% endcomment %}
 			<div class="side-bar__search" tabindex="0">
 				<form class="side-bar__search-form" action="{{ routes.search_url }}">
-					{% comment %} Label {% endcomment %}
-					{% comment %} todo: Localize {% endcomment %}
+					{% comment %}{# Label #}{% endcomment %}
+					{% comment %}{# todo: Localize #}{% endcomment %}
 					<label for="q" class="visually-hidden">Search</label>
 
-					{% comment %} Input {% endcomment %}
-					{% comment %} todo: optimize ID and Name {% endcomment %}
+					{% comment %}{# Input #}{% endcomment %}
+					{% comment %}{# todo: optimize ID and Name #}{% endcomment %}
 					<div class="side-bar__search-mask">
 						<input type="text" placeholder="Search..." id="q" name="q">
 					</div>
 
-					{% comment %} Search Button {% endcomment %}
+					{% comment %}{# Search Button #}{% endcomment %}
 					<button class="side-bar__search-button">
 						{% render "icon-search" %}
 
@@ -226,11 +233,11 @@
 			</div>
 		</nav>
 
-		{% comment %} Footer {% endcomment %}
+		{% comment %}{# Footer #}{% endcomment %}
 		<footer class="side-bar__footer">
 			<div class="side-bar__social">
-				<ul> {% comment %} todo: Localize {% endcomment %}
-					{% comment %} Facebook Link {% endcomment %}
+				<ul> {% comment %}{# todo: Localize #}{% endcomment %}
+					{% comment %}{# Facebook Link #}{% endcomment %}
 					{% if settings.facebook_link %}
 					<li>
 						<a href="{{ settings.facebook_link }}" class="side-bar__social__link side-bar__social--facebook" target="_blank">
@@ -240,7 +247,7 @@
 					</li>
 					{% endif %}
 
-					{% comment %} Instagram Link {% endcomment %}
+					{% comment %}{# Instagram Link #}{% endcomment %}
 					{% if settings.instagram_link %}
 					<li>
 						<a href="{{ settings.instagram_link }}" class="side-bar__social__link side-bar__social--instagram" target="_blank">
@@ -250,7 +257,7 @@
 					</li>
 					{% endif %}
 
-					{% comment %} Twitter Link {% endcomment %}
+					{% comment %}{# Twitter Link #}{% endcomment %}
 					{% if settings.twitter_link %}
 					<li>
 						<a href="{{ settings.twitter_link }}" class="side-bar__social__link side-bar__social--twitter" target="_blank">
@@ -259,7 +266,7 @@
 						</a></li>
 					{% endif %}
 
-					{% comment %} TikTok Link {% endcomment %}
+					{% comment %}{# TikTok Link #}{% endcomment %}
 					{% if settings.tiktok_link %}
 					<li>
 						<a href="{{ settings.tiktok_link }}" class="side-bar__social__link side-bar__social--tiktok" target="_blank">
@@ -272,105 +279,105 @@
 			</div>
 		</footer>
 
-		{% comment %} todo: evaluate | delete {% endcomment %}
+		{% comment %}{# todo: evaluate | delete #}{% endcomment %}
 		<div class="side-bar__mask"></div>
 	</aside>
 
-	{% comment %} ------ Main Content Container ------ {% endcomment %}
+	{% comment %}{# ------ Main Content Container ------ #}{% endcomment %}
 	<div class="container">
 		<main>
-			{% comment %} Ignores Content for Index {% endcomment %}
-			{% comment %} todo: evaluate {% endcomment %}
+			{% comment %}{# Ignores Content for Index #}{% endcomment %}
+			{% comment %}{# todo: evaluate #}{% endcomment %}
 			{% if template != 'index' %}
 				{{ content_for_layout }}
 			{% endif %}
 		</main>
 	</div>
 
-	{% comment %} ------ Shopping Cart Menu ------ {% endcomment %}
+	{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
 	<div class="shopping-cart">
-		{% comment %} todo: evaluate | delete {% endcomment %}
+		{% comment %}{# todo: evaluate | delete #}{% endcomment %}
 		<div class="shopping-cart__mask"></div>
 
-		{% comment %} Cart {% endcomment %}
+		{% comment %}{# Cart #}{% endcomment %}
 		<div class="shopping-cart__content">
-			{% comment %} Close Button {% endcomment %}
+			{% comment %}{# Close Button #}{% endcomment %}
 			<button class="shopping-cart__close" aria-labeled="Close shopping cart">
 				{% render "icon-close" %}
 
-				{% comment %} todo: localize {% endcomment %}
+				{% comment %}{# todo: localize #}{% endcomment %}
 				<span class="visually-hidden">Close</span>
 			</button>
 
-			{% comment %} todo: localize {% endcomment %}
+			{% comment %}{# todo: localize #}{% endcomment %}
 			<span class="visually-hidden">Close</span>
 
-			{% comment %} No Items in Cart {% endcomment %}
+			{% comment %}{# No Items in Cart #}{% endcomment %}
 			{% if cart.item_count == 0 %}
 				<div class="shopping-cart__empty-text">The shopping cart is empty</div>
 
-			{% comment %} Items are in Cart {% endcomment %}
+			{% comment %}{# Items are in Cart #}{% endcomment %}
 			{% else %}
 				<form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
 
-					{% comment %} Items in Cart {% endcomment %}
+					{% comment %}{# Items in Cart #}{% endcomment %}
 					<div class="shopping-cart__items">
 
-						{% comment %} Cart Title {% endcomment %}
-						{% comment %} todo: localize {% endcomment %}
+						{% comment %}{# Cart Title #}{% endcomment %}
+						{% comment %}{# todo: localize #}{% endcomment %}
 						<h1 id="cart-title" >Your cart</h1>
 
-						{% comment %} Loop Through Cart Items {% endcomment %}
+						{% comment %}{# Loop Through Cart Items #}{% endcomment %}
 						{%- for item in cart.items -%}
 
-							{% comment %} Display Each Item's Information {% endcomment %}
+							{% comment %}{# Display Each Item's Information #}{% endcomment %}
 							<div class="shopping-cart__item">
 
-								{% comment %} Item Image {% endcomment %}
+								{% comment %}{# Item Image #}{% endcomment %}
 								<img class="shopping-cart__image" src="{{ item.image | img_url: '400x400' }}" alt="{{ item.product.title }}">
 
-								{% comment %} Item Details {% endcomment %}
+								{% comment %}{# Item Details #}{% endcomment %}
 								<div class="shopping-cart__details">
 
-									{% comment %} Item Title {% endcomment %}
+									{% comment %}{# Item Title #}{% endcomment %}
 									<span class="shopping-cart__title">
-										{% comment %} Link to Item {% endcomment %}
+										{% comment %}{# Link to Item #}{% endcomment %}
 										<a href="{{ item.url }}" title="{{ item.product.title }}">
 											{{ item.product.title }}
 										</a>
 									</span>
 
-									{% comment %} Item Price {% endcomment %}
+									{% comment %}{# Item Price #}{% endcomment %}
 									<span class="shopping-cart__price">{{ item.product.price | money}}</span>
 
-									{% comment %} Quantity Selection {% endcomment %}
+									{% comment %}{# Quantity Selection #}{% endcomment %}
 									<span class="shopping-cart__quantity">
 
-										{% comment %} Item Input Label {% endcomment %}
+										{% comment %}{# Item Input Label #}{% endcomment %}
 										<label for="updates_{{ item.key }}" class="visually-hidden">
 											Quantity:
 										</label>
 
-										{% comment %} Minus Item Input {% endcomment %}
+										{% comment %}{# Minus Item Input #}{% endcomment %}
 										<button type="button" class="shopping-cart__quantity-button shopping-cart__quantity-button--minus" data-quantity-input="{{ item.key }}">
 											<span>−</span>
 										</button>
 
-										{% comment %} Input Number Amount {% endcomment %}
+										{% comment %}{# Input Number Amount #}{% endcomment %}
 										<input id="updates_{{ item.key }}_cart" class="shopping-cart__quantity-input"
 											   name="updates[]" type="text" value="{{ item.quantity }}"
 											   data-min="0" data-max="{{ item.quantity }}" pattern="[0-9]*"
 											   data-quantity-input="{{ item.key }}"
 											   data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
 
-										{% comment %} Add Item Input {% endcomment %}
+										{% comment %}{# Add Item Input #}{% endcomment %}
 										<button type="button" class="shopping-cart__quantity-button shopping-cart__quantity-button--plus" data-quantity-input="{{ item.key }}">
 											<span>+</span>
 										</button>
 
 									</span>
 
-									{% comment %} Remove Product {% endcomment %}
+									{% comment %}{# Remove Product #}{% endcomment %}
 									<p class="shopping-cart__cart-remove">
 										<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
 										   class="text-link text-link--accent" aria-label="Remove">
@@ -386,28 +393,28 @@
 
 					</div>
 
-					{% comment %} Cart Subtotal {% endcomment %}
+					{% comment %}{# Cart Subtotal #}{% endcomment %}
 					<div class="shopping-cart__subtotal">
 						<span class="shopping-cart__subtotal-text">
-							{% comment %} todo: Localize {% endcomment %}
+							{% comment %}{# todo: Localize #}{% endcomment %}
 							<span>Subtotal</span>{{ cart.total_price | money }}
 						</span>
 					</div>
 
-					{% comment %} Cart Footer {% endcomment %}
+					{% comment %}{# Cart Footer #}{% endcomment %}
 					<div class="shopping-cart__footer">
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %}{# todo: Localize #}{% endcomment %}
 						<p>Shipping & taxes calculated at checkout</p>
 
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %}{# todo: Localize #}{% endcomment %}
 						<p><strong>INTERNATIONAL ORDERS MAY BE SUBJECT TO CUSTOMS DUTIES OR IMPORT TAXES</strong></p>
 					</div>
 
-					{% comment %} Submit Button {% endcomment %}
+					{% comment %}{# Submit Button #}{% endcomment %}
 					<div class="shopping-cart__button-containers">
 						<!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
 
-						{% comment %} todo: Localize {% endcomment %}
+						{% comment %}{# todo: Localize #}{% endcomment %}
 						<button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
 							Checkout
 						</button>
@@ -421,5 +428,20 @@
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" ></script>
 	<script src="{{ 'global.js' | asset_url }}" ></script>
+
+	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
+	<script>
+		window.addEventListener("load", function () {
+			let loader = document.getElementById("loader");
+
+			setTimeout(function () {
+				document.body.style.overflowY = "scroll";
+			}, 500);
+
+			setTimeout(function () {
+				loader.style.opacity = "0";
+			}, 1000);
+		} )
+	</script>
 </body>
 </html>

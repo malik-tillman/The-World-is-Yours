@@ -71,7 +71,6 @@
   },
   "presets": {
     "Default": {
-      "search-icon-size": "normal"
     }
   }
 }

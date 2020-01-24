@@ -10,23 +10,35 @@
  *                                             ORDER MATTERS!!                                                         *
  ******************************************************************************************************************** */
 
-/* ---------- Tooling ---------- */
-@import url('tools/mixins.scss');
-
 /* ---------- SETTINGS VARIABLES ---------- */
 @import url('settings/variables.scss.liquid');
+
+/* ---------- Fonts ---------- */
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
+/* ---------- Tooling ---------- */
+@import url('helpers/mixins.scss');
+@import url('helpers/helper-classes.scss');
 
 /* ---------- HELPERS STYLES ---------- */
 @import url('helpers/normalize.scss');
 @import url('helpers/reset.scss');
-@import url('helpers/helper-classes.scss');
-@import url('helpers/links-buttons.scss');
-@import url('helpers/blank-states.scss');
+@import url('helpers/rte-reset.scss');
+
 
 /* ---------- GLOBAL STYLES ---------- */
 @import url('global/layout.scss');
 @import url('global/icons.scss');
 @import url('global/forms.scss');
+@import url('global/text.scss');
+@import url('global/misc.scss');
+@import url('global/loader.scss');
+
+/* ---------- SECTION STYLES ---------- */
+@import url('sections/alert-banner.scss');
+@import url('sections/cart.scss');
+@import url('sections/header.scss');
+@import url('sections/products.scss');
 
 /* ---------- PAGE STYLES ---------- */
 @import url('pages/customer.scss');

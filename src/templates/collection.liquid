@@ -1,10 +1,9 @@
-
 <h1 class="visually-hidden">{{ collection.title }}</h1>
 
 <div class="collection">
 	{% if collection.image %}
 	<div class="collection__header">
-		<img class="collection__header__img" src="{{ collection.image | img_url: '1000x1000' }}" alt="Featured image for {{ collection.title }}">
+		<img class="collection__header__img" src="{{ collection.image | img_url: 'master' }}" alt="Featured image for {{ collection.title }}">
 	</div>
 	{% endif %}
 
@@ -19,7 +18,7 @@
 {% for product in collection.products %}
 	<div class="product-grid__card">
 		<a href="{{ product.url | within: collection }}">
-			<img class="product-grid__image" src="{{ product.featured_image.src | img_url: '1000x1000' }}" alt="{{ product.featured_image.alt | escape }}">
+			<img class="product-grid__image" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{ product.featured_image.alt | escape }}">
 			<div class="product-grid__details">
 				<h3 class="product-grid__name">{{ product.title }}</h3>
 				<span class="product-grid__price">{{ product.price | money }}</span>

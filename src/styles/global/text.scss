@@ -1,0 +1,48 @@
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+main h1 {
+  font-size: .7rem;
+  margin-bottom: 1em;
+}
+
+main h2 {
+  font-size: .7rem;
+}
+
+main h3 {
+  font-size: .6rem;
+}
+
+main h4 {
+  font-size: .6rem;
+  text-transform: uppercase;
+}
+
+main h5 {
+  font-size: .6rem;
+  text-transform: uppercase;
+}
+
+main h6 {
+  font-size: .5rem;
+}
+
+a {
+  color: inherit;
+}
+
+main p {
+  margin: 1rem 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+strong {
+  font-weight: 700;
+}

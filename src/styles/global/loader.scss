@@ -1,0 +1,24 @@
+#loader {
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
+
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+
+  background-color: white;
+
+  opacity: 1;
+  transition: opacity 1500ms ease-out;
+
+  pointer-events: none;
+
+  z-index: $z-index-skip-to-content;
+}
+
+#loader-image {
+  height: 54px;
+  pointer-events: none;
+}

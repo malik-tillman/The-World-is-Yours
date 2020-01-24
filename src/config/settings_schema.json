@@ -8,30 +8,322 @@
     "theme_support_url": "https:\/\/github.com\/Shopify\/themekit\/"
   },
   {
-    "name": "Icons",
+    "name": "Colors",
     "settings": [
       {
+        "content": "Main Colors",
         "type": "header",
-        "content": "Search Icon"
+        "info": "Colors for layouts, backgrounds, and other main elements"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background Color",
+        "default": "#ffffff",
+        "info": "Color for page's background."
+      },
+      {
+        "type": "color",
+        "id": "color_primary_font",
+        "label": "Primary Color",
+        "default": "#000000",
+        "info": "Primary text color."
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border Color",
+        "default": "#111111",
+        "info": "Default color for borders."
+      },
+      {
+        "type": "color",
+        "id": "color_products_background",
+        "label": "Products Background Color",
+        "default": "#F3EEF2",
+        "info": "Color for product image backgrounds."
+      },
+      {
+        "content": "Text Colors",
+        "type": "header",
+        "info": "Colors for text properties."
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Body Text",
+        "default": "#111111",
+        "info": "Color for body text."
+      },
+      {
+        "content": "Form Colors",
+        "type": "header",
+        "info": "Colors for forms."
+      },
+      {
+        "type": "color",
+        "id": "color_form_disabled",
+        "label": "Disabled",
+        "default": "#000000",
+        "info": "Color for disabled form state."
+      },
+      {
+        "type": "color",
+        "id": "color_form_disabled_border",
+        "label": "Disabled Border",
+        "default": "#000000",
+        "info": "Color for border of disabled form state."
+      },
+      {
+        "type": "color",
+        "id": "color_form_error",
+        "label": "Error",
+        "default": "#000000",
+        "info": "Color for form error state."
+      },
+      {
+        "type": "color",
+        "id": "color_form_error_background",
+        "label": "Error Background",
+        "default": "#000000",
+        "info": "Color for form error state's background."
+      },
+      {
+        "type": "color",
+        "id": "color_form_success",
+        "label": "Success",
+        "default": "#000000",
+        "info": "Color for form success state."
+      },
+      {
+        "type": "color",
+        "id": "color_form_success_background",
+        "label": "Success Background",
+        "default": "#000000",
+        "info": "Color for form success state's background."
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "content": "Primary (Defaults)",
+        "type": "header",
+        "info": "Default typography settings."
+      },
+      {
+        "type": "range",
+        "id": "typo_primary_font_size",
+        "min": 8,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Font Size",
+        "default": 16
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_primary_font",
+        "label": "Primary Font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_primary_font_fallback",
+        "label": "Primary Font Fallback",
+        "default": "helvetica_n4",
+        "info": "This is the fallback font for primary fonts. If the primary font selected above is not available on the client system, we will attempt to use this font. (note: by default this will fallback to the primary font, so if primary font is not availible this will not either. Change it to a new font to have safer web fonts.)"
       },
       {
         "type": "select",
-        "id": "search-icon-size",
-        "label": "Search Icon Size",
+        "id": "typo_primary_font_generic",
+        "label": "Primary Generic Font",
+        "options": [
+          { "value": "Serif", "label": "Serif" },
+          { "value": "Sans-serif", "label": "Sans-serif" },
+          { "value": "Monospace", "label": "Monospace" }
+        ],
+        "default": "Sans-serif",
+        "info": "A generic web font is a font that will be used in the extreme case that the two above selected fonts are not available on the client machine."
+      },
+      {
+        "type": "select",
+        "id": "typo_primary_weight",
+        "label": "Font Weight",
         "options": [
           {
-            "value": "small",
-            "label": "Small"
+            "value": "lighter",
+            "label": "Lighter"
           },
           {
             "value": "normal",
             "label": "Normal"
           },
           {
-            "value": "large",
-            "label": "Large"
+            "value": "bold",
+            "label": "Bold"
+          },
+          {
+            "value": "bolder",
+            "label": "Bolder"
           }
-        ]
+        ],
+        "info": "The thinness or thickness of a font."
+      },
+      {
+        "type": "range",
+        "id": "typo_primary_line_height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Line Height",
+        "default": 1.4
+      },
+      {
+        "type": "select",
+        "id": "typo_primary_letter_spacing",
+        "options": [
+          { "value": "0.00", "label":  "None"},
+          { "value": "0.01", "label":  "Very Small (.01)"},
+          { "value": "0.03", "label":  "Small (.03)"},
+          { "value": "0.05", "label":  "Normal (.05)"},
+          { "value": "0.07", "label":  "Large (.07)"},
+          { "value": "0.10", "label":  "Very Large (.1)"}
+        ],
+        "label": "Letter Spacing",
+        "default": "0.05"
+      },
+      {
+        "content": "Products Page",
+        "type": "header"
+      },
+      {
+        "type": "range",
+        "id": "typo_product_title_size",
+        "min": 0.1,
+        "max": 5,
+        "step": 0.1,
+        "unit": "em",
+        "label": "Font Size",
+        "default": 2
+      }
+    ]
+  },
+  {
+    "name": "Icons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Default Icon"
+      },
+      {
+        "type": "range",
+        "id": "primary_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Primary Icon Size",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Cart Icon"
+      },
+      {
+        "type": "range",
+        "id": "cart_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Cart Icon Size",
+        "default": 32
+      },
+      {
+        "type": "header",
+        "content": "Search Icon"
+      },
+      {
+        "type": "range",
+        "id": "search_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Search Icon Size",
+        "default": 15
+      },
+      {
+        "type": "header",
+        "content": "Instagram Icon"
+      },
+      {
+        "type": "range",
+        "id": "instagram_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Instagram Icon Size",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Facebook Icon"
+      },
+      {
+        "type": "range",
+        "id": "facebook_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Facebook Icon Size",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Twitter Icon"
+      },
+      {
+        "type": "range",
+        "id": "twitter_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Twitter Icon Size",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Tik Tok Icon"
+      },
+      {
+        "type": "range",
+        "id": "tik_tok_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Tik Tok Icon Size",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Payment Option Icon"
+      },
+      {
+        "type": "range",
+        "id": "payment_icon_size",
+        "min": 10,
+        "max": 35,
+        "step": 1,
+        "unit": "px",
+        "label": "Payment Option Icon Size",
+        "default": 16
       }
     ]
   },
@@ -100,6 +392,75 @@
         "type": "url",
         "id": "tiktok_link",
         "label": "Tik Tok Link"
+      }
+    ]
+  },
+  {
+    "name": "Products Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Glitch"
+      },
+      {
+        "type": "select",
+        "id": "products_glitch_blend",
+        "options": [
+          { "value":  "color", "label": "Color" },
+          { "value":  "color-burn", "label": "Color Burn" },
+          { "value":  "color-dodge", "label": "Color Dodge" },
+          { "value":  "darken", "label": "Darken" },
+          { "value":  "difference", "label": "Difference" },
+          { "value":  "exclusion", "label": "Exclusion" },
+          { "value":  "hard-light", "label": "Hard Light" },
+          { "value":  "hue", "label": "Hue" },
+          { "value":  "lighten", "label": "Lighten" },
+          { "value":  "luminosity", "label": "Luminosity" },
+          { "value":  "multiply", "label": "Multiply" },
+          { "value":  "normal", "label": "Normal" },
+          { "value":  "overlay", "label": "Overlay" },
+          { "value":  "saturation", "label": "Saturation" },
+          { "value":  "screen", "label": "Screen" },
+          { "value":  "soft-light", "label": "Soft Light" }
+        ],
+        "label": "Blend Mode",
+        "info": "Blend mode for product page glitch effect."
+      },
+      {
+        "type": "range",
+        "id": "products_glitch_alpha_min",
+        "min": 0,
+        "max": 500,
+        "step": 10,
+        "label": "Alpha Glitch Minimum",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "products_glitch_alpha_max",
+        "min": 0,
+        "max": 500,
+        "step": 10,
+        "label": "Alpha Glitch Maximum",
+        "default": 250
+      },
+      {
+        "type": "range",
+        "id": "products_glitch_omega_min",
+        "min": 0,
+        "max": 500,
+        "step": 10,
+        "label": "Omega Glitch Minimum",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "products_glitch_omega_max",
+        "min": 0,
+        "max": 500,
+        "step": 10,
+        "label": "Omega Glitch Maximum",
+        "default": 150
       }
     ]
   }

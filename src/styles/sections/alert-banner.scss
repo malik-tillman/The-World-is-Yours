@@ -1,0 +1,47 @@
+.alert-banner {
+  width: 100%;
+  height: 28px;
+  overflow: hidden;
+  position: fixed;
+  z-index: 5;
+}
+
+.alert-banner__marquee {
+  width: 100%;
+  font-family: 'VT323', monospace;
+  font-size: 1.75rem;
+  line-height: 1;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.alert-banner__marquee span {
+  text-align: center;
+  width: 30%;
+  display: block;
+  position: absolute;
+  right: -30%;
+  will-change: transform;
+  animation: marquee 9s linear infinite;
+}
+
+.alert-banner__marquee span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.alert-banner__marquee span:nth-child(2) {
+  animation-delay: 3s;
+}
+
+.alert-banner__marquee span:nth-child(3) {
+  animation-delay: 6s;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-450%);
+  }
+}

@@ -25,6 +25,7 @@
   }
 }
 
+/* Main Mobile Breakpoint */
 @media screen and (max-width: 736px) {
   body, html {
     width: 100vw;
@@ -61,8 +62,8 @@
   }
 
   .alert-banner__marquee span {
-    width: 100%;
-    right: -100%;
+    width: 100vw;
+    right: -100vw;
   }
 
   .alert-banner__marquee span {
@@ -90,7 +91,7 @@
 
   .side-bar__header-logo {
     top: 2.5em;
-    width: 100%;
+    width: 100vw;
     left: 0;
     right: 0;
     position: fixed;
@@ -236,6 +237,7 @@
   }
 
   .product-grid__card {
+    flex: 1 50%;
     width: 50%;
     max-width: 50%;
     padding-left: 0;
@@ -256,25 +258,41 @@
     text-transform: uppercase;
     display: inline-block;
   }
+
   .product {
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    overflow-x: hidden;
   }
 
   .product__images {
-    width: 100%;
-    min-width: unset;
-    display: block;
-    overflow-x: scroll;
+    width: 100vw;
+    max-width: 80vw;
+    min-width: 75vw;
+    justify-content: center;
     white-space: nowrap;
+    order: 0;
+  }
+
+  .product_title_container {
+    order: 1;
+  }
+
+  #product_title {
+    transform: rotate(0deg);
+    position: relative;
+
+    padding: 0;
+    margin: 0;
   }
 
   .product__info {
     max-width: unset;
     width: 100%;
     padding: 1em 0;
+    order: 2;
+
+    position: relative;
   }
 
   .product__cart-form input,
@@ -400,3 +418,4 @@
     font-size: .9rem;
   }
 }
+
