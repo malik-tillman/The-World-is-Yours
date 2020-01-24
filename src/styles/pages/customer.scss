@@ -1,0 +1,146 @@
+.template--customers-addresses  form .grid {
+  display: flex;
+}
+
+.template--customers-addresses  form .grid__item {
+  width: 100%;
+  max-width: 403px;
+}
+
+.template--customers-addresses  form .grid__item:first-child {
+  margin-right: 1rem;
+}
+
+.register-header {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-header > *{
+  width: 50%;
+  padding: 1em;
+}
+
+.register-header__header {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.register-header__sub-head {
+  text-align: center;
+}
+
+.register-form {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-content: space-around;
+  flex-wrap: wrap;
+}
+
+.register-form .form-message{
+  width: 100%;
+  padding: 0 1em;
+}
+
+.register-form__section {
+  width: 100%;
+  padding: 1em;
+}
+
+.template--customers-register .form-vertical {
+  display: flex;
+}
+
+.template--customers-register .form-vertical > div {
+  width: 100%;
+}
+
+.form-vertical h2 {
+  padding: 0 0.7em;
+}
+
+.register-form__section p {
+  margin-bottom: 1em;
+}
+
+.register-form__section p:last-child {
+  margin-bottom: 0;
+}
+
+.register-form__section label,
+.register-form__label{
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  width: 70px;
+}
+
+.register-form__label--grey {
+  color: #333;
+  font-weight: 400;
+}
+
+.register-form__img {
+  width: 100%;
+  max-height: 96px;
+}
+
+.register-form__section input {
+  border: thin solid transparent;
+  border-bottom: thin solid #111;
+  display: inline-block;
+  max-width: unset;
+  width: calc(100% - 80px);
+}
+
+.register-form__section input.input--error {
+  border-bottom: 1px solid #ad0404;
+}
+
+.register-form__submit {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+}
+
+.register-form__submit img {
+  max-width: 260px;
+  width: 100%;
+}
+
+.register-form__submit span {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  display: block;
+}
+
+.register-form__prints {
+  padding: 1.3em 0;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+
+.register-form__prints img {
+  max-height: 70px;
+}
+
+.register-form__img--right-thumb,
+.register-form__img--right-middle {
+  width: 130px;
+}
+
+.register-form__prints span {
+  display: block;
+  text-transform: uppercase;
+}

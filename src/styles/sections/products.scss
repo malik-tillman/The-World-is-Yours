@@ -1,0 +1,280 @@
+.product-price__sold-out {
+  display: block;
+}
+
+
+body:not(.template--product) main  {
+  max-width: unset;
+  margin-top: 0;
+  margin-left: 186px;
+  padding: 8em 2.5em 5em;
+}
+
+body.template--product main  {
+  width: 100%;
+  max-width: unset;
+  padding-top: 0;
+}
+
+.product-info__description {
+  padding: 1em 0 1.5em;
+}
+
+.product-info__description h3 {
+  margin: 1rem 0;
+}
+
+.product-info__description p {
+  margin: 0 0 1em;
+}
+
+.productinfo__sold-out {
+  display: block;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-top: 2em;
+}
+
+.product__info .size-chart__close {
+  width: 1rem;
+  height: 1rem;
+}
+
+.product__info .size-chart__close img {
+  width: 100%;
+}
+
+.product-info__size-chart-button {
+  text-align: right;
+}
+
+.product-info__size-chart-trigger {
+  font-size: 0.6em;
+}
+
+.product__info .product-info__size-chart-trigger {
+  width: unset;
+  padding: 0;
+}
+
+.product-info__size-chart-button {
+  text-align: right;
+}
+
+.product__info .product-info__size-chart-trigger {
+  width: unset;
+  padding: 0;
+}
+
+
+#size-chart {
+  display: none;
+  max-width: 412px;
+  width: 100%;
+  font-size: 1em;
+}
+
+#size-chart.is-visible {
+  display: block;
+}
+
+#size-chart img {
+  width: 100%;
+}
+
+.product__info, #product_title {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 33%;
+}
+
+#product_title {
+  transform: rotate(90deg);
+  font-size: $product-font-size;
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.product_title_container {
+  order: 2;
+
+  width: 5vw;
+}
+
+.product__info {
+  order: 1;
+}
+
+
+
+
+#shopify-section-product-recommendations,
+.related-products {
+  margin: 2em 0 4em;
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.related-products * {
+  font-size: 0.7rem;
+  width: 100%;
+}
+
+.related-products__container {
+  list-style: none;
+  display: flex;
+  display: -webkit-flex;
+}
+
+.related-product {
+  width: 25%;
+  padding: 0 .5em;
+}
+
+.related-product a {
+  text-decoration: none;
+}
+
+
+.button--disabled {
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0;
+  margin-top: 1.4em;
+}
+
+.prodct__cart-form {
+  margin: 1em 0 1.5em;
+}
+
+.prodct__cart-form > label {
+  display: block;
+}
+
+
+.product-grid {
+  @include flexbox();
+  @include justify-content(flex-start);
+  @include flex-flow(wrap);
+  @include align-items(center);
+
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+$card-width: 25%;
+.product-grid__card {
+  display: inline-block;
+  padding: 1em;
+  flex: 1 $card-width;
+  width: $card-width;
+  max-width: $card-width;
+}
+
+.product-grid__card a {
+  text-decoration: none;
+}
+
+.product-grid__image {
+  width: 100%;
+}
+
+.product-grid__details {
+  text-align: center;
+}
+
+.product {
+  @include flexbox();
+  @include flex-direction(row);
+  @include flex-wrap(nowrap);
+  @include justify-content(space-between);
+}
+
+.product__images {
+  width: 75vh;
+  flex: 0 0 calc(75% - 296px);
+  max-width: 50vw;
+  min-width: 25vw;
+  background-color: $color-product-background;
+
+  order: 0;
+}
+
+.product__image {
+  width: 100%;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+}
+
+.glitch_container {
+  position: relative;
+}
+
+.glitch_image_main, .glitch_image_top, .glitch_image_bottom {
+  position: absolute;
+}
+
+.glitch_image {
+  position: absolute;
+  background-color: transparent !important;
+  filter: grayscale(50%);
+}
+
+.glitch_image_top {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+
+.glitch_image_bottom {
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
+}
+
+
+
+.product__info {
+  padding: 1em;
+  align-self: flex-start;
+  width: 35vw;
+}
+
+.product__info > * {
+  font-size: 1rem;
+  margin: 0.25em 0 .5em;
+}
+
+.product__info > h1 {
+  font-size: 2rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.product__info__price {
+  font-weight: 400;
+  color: #414141;
+  margin-bottom: 1.75em;
+}
+
+.product__info .single-option-selector {
+  width: 100% !important;;
+}
+
+.product__info input,
+.product__info button,
+.product__info select{
+  width: 100%;
+  max-width: unset;
+}
+
+.product__sold-out {
+  margin: 1rem 0;
+  display: block;
+}
+
+.product-info__klarna {
+  text-transform: uppercase;
+  line-height: 2;
+}

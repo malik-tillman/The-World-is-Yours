@@ -1,46 +1,31 @@
 /************************************************** icons.scss *********************************************************
- *                                                Icon Styles Todo: Delete                                             *
+ *                                                  Icon Styles                                                        *
  ******************************************************************************************************************** */
-
+/*
+* Default Icon Styles
+*/
 .icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: $primary-icon-size;
+  height: $primary-icon-size;
   vertical-align: middle;
-  fill: currentColor;
 
   .no-svg & {
     display: none;
   }
 }
 
+/*
+* Larger Icons
+*/
 .icon--wide {
-  width: 40px;
+  width: $primary-icon-size * 2;
 }
 
-svg,
-symbol {
-  &.icon:not(.icon--full-color) {
-    circle,
-    ellipse,
-    g,
-    line,
-    path,
-    polygon,
-    polyline,
-    rect {
-      fill: inherit;
-      stroke: inherit;
-    }
-  }
-
-}
-
-/*============================================================================
-  A generic way to visually hide content while
-  remaining accessible to screen readers (h5bp.com)
-==============================================================================*/
-.icon-fallback-text {
+/*
+* SEO Friendly Hidden Fallback Text
+*/
+.icon-fallback-text, .icon__fallback-text {
   @include visually-hidden();
 
   .no-svg & {
@@ -48,14 +33,64 @@ symbol {
   }
 }
 
-/*================ Payment Icons ================*/
-.payment-icons {
-  @include prefix('user-select', 'none', moz ms webkit spec);
-  cursor: default;
+
+/***********************************************************************************************************************
+ *                                                       Social Icons                                                  *
+ ******************************************************************************************************************** */
+/*
+* Cart Icons
+*/
+.icon-bag {
+  width: $cart-icon-size;
+  height: $cart-icon-size;
 }
 
-/*================ Shopify-Icons icon on password page ================*/
-.icon-shopify-logo {
-  width: 1.5 * $font-size-base * 120 / 35;
-  height: 1.5 * $font-size-base;
+/*
+* Search Icons
+*/
+.icon-search {
+  width: $search-icon-size;
+  height: $search-icon-size;
+}
+
+/*
+* Instagram Icons
+*/
+.icon-instagram {
+  width: $instagram-icon-size;
+  height: $instagram-icon-size;
+}
+
+/*
+* Facebook Icons
+*/
+.icon-facebook {
+  width: $facebook-icon-size;
+  height: $facebook-icon-size;
+}
+
+/*
+* Twitter Icons
+*/
+.icon-twitter {
+  width: $twitter-icon-size;
+  height: $twitter-icon-size;
+}
+
+/*
+* Tik Tok Icons
+*/
+.icon-tik-tok {
+  width: $tik-tok-icon-size;
+  height: $tik-tok-icon-size;
+}
+
+/*
+* Payment Option Icons
+*/
+.payment-icons {
+  @include prefix('user-select', 'none', moz ms webkit spec);
+  width: $payment-icon-size;
+  height: $payment-icon-size;
+  cursor: default;
 }

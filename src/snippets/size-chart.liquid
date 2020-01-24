@@ -14,7 +14,13 @@
 <button class="product-info__size-chart-trigger">Size chart</button>
 </div>
 <div id="size-chart" class="rte product-info__size-chart">
-  <button class="size-chart__close" aria-labeled="Close size cart"><img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the size cart" aria-hidden="true"><span class="visually-hidden">Close</span></button>
+  <button class="size-chart__close" aria-labeled="Close size cart">
+    {% render 'icon-close' %}
+    {% comment %}{% raw %}
+    <img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the size cart" aria-hidden="true">
+    {% endraw %}{% endcomment %}
+    <span class="visually-hidden">Close</span>
+  </button>
 
   {% if product.type == 'T-Shirt' %}
     <a href="{{ 'size-chart_tshirt.jpg' | asset_url }}" target="_blank">

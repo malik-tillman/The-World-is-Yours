@@ -1,33 +1,54 @@
-/********************************************* helper-classes.scss *****************************************************
+/***************************************** helper-classes.scss.liquid **************************************************
  *                                               Helper Classes                                                        *
  ******************************************************************************************************************** */
 
+/***********************************************************************************************************************
+ *                                              Easy Add Classes                                                       *
+ ******************************************************************************************************************** */
+/* ---------- Clearfix ---------- */
 .clearfix {
   @include clearfix();
 }
 
+/* ---------- Hide same as `.visually-hidden` ---------- */
+.hide {
+  @include visually-hidden();
+}
+
+// todo: Pick one
+
+/* ---------- Visually Hide same as `.hide` ---------- */
 .visually-hidden {
   @include visually-hidden();
 }
 
-.js-focus-hidden:focus {
-  outline: none;
+/* ---------- Visually Show ---------- */
+.visually-shown {
+  @include visually-shown();
 }
 
+/* ---------- Hide Labels Unless No Placeholders ---------- */
 .label-hidden {
   @include visually-hidden();
 
-  // No placeholders, so force show labels
   .no-placeholder & {
     @include visually-shown();
   }
 }
 
-.visually-shown {
-  @include visually-shown();
+
+/***********************************************************************************************************************
+ *                                          Support Easy Add Classes                                                   *
+ ******************************************************************************************************************** */
+/* -- JS */
+/* ---------- Show When JS is Supported ---------- */
+.js {
+  .no-js & {
+    display: none;
+  }
 }
 
-// Only show when JS is not supported
+/* ---------- Show When JS is NOT Supported ---------- */
 .no-js:not(html) {
   display: none;
 
@@ -36,14 +57,20 @@
   }
 }
 
-// Only show when JS is supported
-.js {
-  .no-js & {
+/* ---------- Focus Hidden ---------- */
+.js-focus-hidden:focus {
+  outline: none;
+}
+
+/* -- Cookies */
+/* ---------- Show When Browser Cookies are Supported ---------- */
+.supports-cookies {
+  html.supports-no-cookies & {
     display: none;
   }
 }
 
-// Only show when browser cookies are not supported
+/* ---------- Show When Browser Cookies are NOT Supported ---------- */
 .supports-no-cookies:not(html) {
   display: none;
 
@@ -52,22 +79,23 @@
   }
 }
 
-// Only show when browser cookies are supported
-.supports-cookies {
-  html.supports-no-cookies & {
-    display: none;
-  }
-}
 
-/*============================================================================
-  Skip to content button
-    - Overrides .visually-hidden when focused
-==============================================================================*/
+/***********************************************************************************************************************
+ *                                           Skip to Content Button                                                    *
+ *                                 Overrides .visually-hidden when focused                                             *
+ ******************************************************************************************************************** */
 .skip-link:focus {
   @include visually-shown(absolute);
-  color: $color-body-text;
-  background-color: $color-body;
-  padding: $gutter / 2;
+  color: $color-primary-font;
+  background-color: $color-background;
   z-index: $z-index-skip-to-content;
   transition: none;
+}
+
+
+.full-width {
+  @include clearfix();
+  max-width: 100%;
+  padding: 0;
+  margin: 0 auto;
 }

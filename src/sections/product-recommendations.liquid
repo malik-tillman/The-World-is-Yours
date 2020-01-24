@@ -5,7 +5,7 @@
         <ul class="related-products__container"> 
             {%- for product in recommendations.products -%}
             <li class="related-product">
-                <img class="related-product__image" src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.featured_image.alt }}">
+                <img class="related-product__image" src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.featured_image.alt }}">
                 <a href="{{ product.url }}" title="View {{ product.title }}">
                     <h3 class="related-product__name">{{ product.title }}</h3>
                     <span class="related-product__price">{{ product.price | money}}</span>

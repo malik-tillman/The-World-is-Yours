@@ -1,45 +1,72 @@
 /*********************************************** variables.scss ********************************************************
  *                                     Variables and Styles from Settings                                              *
+ *                  - To add a variable, make sure you first update `settings_schema.json`. -                          *
  ******************************************************************************************************************** */
-
 
 /***********************************************************************************************************************
  *                                               Color Variables                                                       *
  ******************************************************************************************************************** */
-/* ---------- Primary ---------- */
-$color-primary: {{ settings.color_primary }};
+/* ---------- Main Colors ---------- */
+$color-background: {{ settings.color_background }};
+$color-primary-font: {{ settings.color_primary_font }};
+$color-border: {{ settings.color_border }};
+$color-product-background: {{ settings.color_products_background }};
 
-/* ---------- Text ---------- */
+/* ---------- Text Colors ---------- */
 $color-body-text: {{ settings.color_body_text }};
 
-/* ---------- Background ---------- */
-$color-body: #fff;
-
-/* ---------- Border ---------- */
-$color-border: #f6f6f6;
-
-/* ---------- Form States ---------- */
-$color-disabled: #000;
-$color-disabled-border: #000;
-$color-error: #000;
-$color-error-bg: #000;
-$color-success: #000;
-$color-success-bg: #000;
+/* ---------- Form Colors ---------- */
+$color-disabled: {{ settings.color_form_disabled }};
+$color-disabled-border: {{ settings.color_form_disabled_border }};
+$color-error: {{ settings.color_form_error }};
+$color-error-bg: {{ settings.color_form_error_background }};
+$color-success: {{ settings.color_form_success }};
+$color-success-bg: {{ settings.color_form_success_background }};
 
 
 /***********************************************************************************************************************
  *                                               Typography Variables                                                  *
  ******************************************************************************************************************** */
+/* ---------- Primary (default) Font Family Safe from Settings ---------- */
+$primary-font-main: {{ settings.typo_primary_font }};
+$primary-font-fallback: {{ settings.typo_primary_font_fallback }};
+$primary-font-generic: {{ settings.typo_primary_font_generic }};
+$primary-font: $primary-font-main, $primary-font-fallback, $primary-font-generic;
+
+/* ---------- Primary (default) Font Attributes ---------- */
+$primary-font-size: {{ settings.typo_primary_font_size }}px;
+$primary-line-height: {{ settings.typo_primary_line_height }};
+$primary-font-weight: {{ settings.typo_primary_weight }};
+$primary-letter-spacing: {{ settings.typo_primary_letter_spacing }}em;
+
+/* ---------- Misc ---------- */
 $font-weight-normal: 400;
 $font-weight-bold: 700;
-
 $font-stack-header: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-weight-header: $font-weight-bold;
-
 $font-stack-body: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-size-base: {{ settings.type_base_size }};
+$font-size-base: 16px;
+
+/* ---------- Products Page ---------- */
+$product-font-size: {{ settings.typo_product_title_size }}em;
 
 
+/***********************************************************************************************************************
+ *                                                      Icons                                                          *
+ ******************************************************************************************************************** */
+$primary-icon-size: {{ settings.primary_icon_size }}px;
+$search-icon-size: {{ settings.search_icon_size }}px;
+$cart-icon-size: {{ settings.cart_icon_size }}px;
+$instagram-icon-size: {{ settings.instagram_icon_size }}px;
+$facebook-icon-size: {{ settings.facebook_icon_size }}px;
+$twitter-icon-size: {{ settings.twitter_icon_size }}px;
+$tik-tok-icon-size: {{ settings.tik_tok_icon_size }}px;
+$payment-icon-size: {{ settings.payment_icon_size }}px;
+
+
+/***********************************************************************************************************************
+ *                    XXXXXXXXXXXXXXXXXXXXXXXXXXXX      DELETE      XXXXXXXXXXXXXXXXXXXXXXXXXXXX                       *
+ ******************************************************************************************************************** */
 /***********************************************************************************************************************
  *                                                 Grid Breakpoints                                                    *
  ******************************************************************************************************************** */
@@ -81,20 +108,15 @@ $breakpoints: (
 
 
 /***********************************************************************************************************************
- *                                                   Sizing Variables                                                  *
- ******************************************************************************************************************** */
-$width-site: 1180px;
-$gutter: 30px;
-
-
-/***********************************************************************************************************************
  *                                                    Z-Index                                                          *
  ******************************************************************************************************************** */
 $z-index-dropdown: 2;
 $z-index-skip-to-content: 10000; // really high to be safe of app markup
+$z-index-bottom-of-stack: -999;
 
 
 /***********************************************************************************************************************
  *                                                       SVG                                                           *
  ******************************************************************************************************************** */
-$svg-select-icon: #{'{{ "ico-select.svg" | asset_url }}'};
+/* todo: delete */
+$svg-select-icon: inhirit;
