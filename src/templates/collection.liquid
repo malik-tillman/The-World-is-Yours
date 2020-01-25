@@ -92,6 +92,33 @@
 		});
 	});
 
+	let checkForGlitch = false;
+	setInterval(function () {
+		if(window.innerWidth < 736)
+			checkForGlitch = true;
+
+		if(checkForGlitch){
+			if(window.innerWidth < 736){
+				$( function() {
+					$( ".glitch_image" ).mgGlitch({
+						destroy : true, // set 'true' to stop the plugin
+					});
+				});
+
+				checkForGlitch = true;
+			}
+			else {
+				$( function() {
+					$( ".glitch_image" ).mgGlitch({
+						destroy : false, // set 'true' to stop the plugin
+					});
+				});
+
+				checkForGlitch = false;
+			}
+		}
+	}, 1000);
+
 	/* Resize  */
 	let glitchImages = document.getElementsByClassName("glitch_image");
 	let glitchImageContainers = document.getElementsByClassName("glitch_container");
