@@ -162,44 +162,46 @@
 
 
   let checkForGlitch = false;
+  let doFunction = false;
 
-  // setInterval(function () {
-  //   for(let container in glitchImageContainers){
-  //       switch (container.offsetHeight) {
-  //           case undefined:
-  //           case "0":
-  //           case "0px":
-  //       }
-  //   }
-  //     console.log(window.innerWidth);
-  //
-  //   if(window.innerWidth < 736){
-  //       checkForGlitch = true;
-  //   }
-  //
-  //   if(checkForGlitch){
-  //       if(window.innerWidth < 736){
-  //           $( function() {
-  //               $( ".glitch_image" ).mgGlitch({
-  //                   destroy : true, // set 'true' to stop the plugin
-  //               });
-  //           });
-  //
-  //           checkForGlitch = true;
-  //       }
-  //       else {
-  //           $( function() {
-  //               $( ".glitch_image" ).mgGlitch({
-  //                   destroy : false, // set 'true' to stop the plugin
-  //               });
-  //           });
-  //
-  //           checkForGlitch = false;
-  //       }
-  //   }
-  //
-  //
-  // }, 1000);
+  if(doFunction)
+    setInterval(function () {
+    for(let container in glitchImageContainers){
+        switch (container.offsetHeight) {
+            case undefined:
+            case "0":
+            case "0px":
+        }
+    }
+      console.log(window.innerWidth);
+
+    if(window.innerWidth < 736){
+        checkForGlitch = true;
+    }
+
+    if(checkForGlitch){
+        if(window.innerWidth < 736){
+            $( function() {
+                $( ".glitch_image" ).mgGlitch({
+                    destroy : true, // set 'true' to stop the plugin
+                });
+            });
+
+            checkForGlitch = true;
+        }
+        else {
+            $( function() {
+                $( ".glitch_image" ).mgGlitch({
+                    destroy : false, // set 'true' to stop the plugin
+                });
+            });
+
+            checkForGlitch = false;
+        }
+    }
+
+
+  }, 1000);
 
   window.addEventListener('resize', resizeGlitchContainer);
   window.addEventListener('load', resizeGlitchContainer);
