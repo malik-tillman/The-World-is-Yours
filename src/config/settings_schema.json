@@ -399,8 +399,43 @@
     "name": "Products Page",
     "settings": [
       {
-        "type": "header",
-        "content": "Glitch"
+        "content": "Collection Heading",
+        "type": "header"
+      },
+      {
+        "type": "select",
+        "id": "products_heading_media_type",
+        "options": [
+          { "value":  "image", "label": "Image Heading" },
+          { "value":  "video", "label": "Video Heading" }
+        ],
+        "label": "Heading Media Type",
+        "info": "The media type for the products page heading."
+      },
+      {
+        "type": "image_picker",
+        "id": "collection_heading_image",
+        "label": "Image for Collection Heading"
+      },
+      {
+        "type": "text",
+        "id": "collection_heading_image_fallback",
+        "label": "Fallback Image URL for Collection Heading"
+      },
+      {
+        "type": "video_url",
+        "id": "collection_heading_video",
+        "label": "Video for Collection Heading",
+        "accept": ["youtube", "vimeo"]
+      },
+      {
+        "type": "text",
+        "id": "collection_heading_video_fallback",
+        "label": "Fallback Video URL for Collection Heading"
+      },
+      {
+        "content": "Glitch",
+        "type": "header"
       },
       {
         "type": "select",

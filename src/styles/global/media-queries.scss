@@ -214,13 +214,7 @@
   body:not(.template--collection) main,
   body:not(.template--product) main {
     margin-left: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
     padding-top: 10em;
-  }
-
-  body.template--collection main {
-    top: 10rem;
   }
 
   .collection {
@@ -266,30 +260,35 @@
   }
 
   .product__images {
+    @include align-self(center);
+
     width: 100vw;
     max-width: 80vw;
     min-width: 75vw;
-    justify-content: center;
     white-space: nowrap;
     order: 0;
   }
 
   .product_title_container {
     order: 1;
+    width: 100%;
   }
 
   #product_title {
+    text-align: center;
+
     transform: rotate(0deg);
     position: relative;
 
-    padding: 0;
+    padding: 1em;
     margin: 0;
   }
 
   .product__info {
+    @include align-self(center);
     max-width: unset;
-    width: 100%;
-    padding: 1em 0;
+    width: 80%;
+    padding: 1em;
     order: 2;
 
     position: relative;
