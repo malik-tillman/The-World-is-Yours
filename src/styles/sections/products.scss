@@ -177,21 +177,27 @@ body.template--product main  {
 }
 
 .collection_video_container {
+  display: block;
+
   box-shadow: 0px 5px 25px 9px rgba(0,0,0,0.2),
   0px -5px 25px 9px rgba(255,255,255,0.2);
 
 
-
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 15vh;
   object-fit: cover;
   overflow: hidden;
+
+  margin: 0;
+  padding: 0;
 }
 
 .collection_video {
-  position: absolute;
   width: 100vw;
+
+  margin: 0;
+  padding: 0;
 }
 
 .collection_title {
@@ -443,13 +449,21 @@ $card-width: 25%;
 
 .campaign_collection_video {
   width: 20vw;
-  margin: 3em 1em;
+  height: 15vw;
+
+  transform: scale(1);
+
+  transition: transform 1s ease;
+}
+
+.campaign_collection_video:hover {
+  transform: scale(0.9);
 }
 
 .lookbook__image, .campaign_collection_video  {
-  box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.5),
-  -15px -15px 52px -6px rgba(255,255,255,1);
+  box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.2),
+  -15px -15px 52px -6px rgba(255,255,255,.7);
 
-  -webkit-box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.5),
-  -15px -15px 52px -6px rgba(255,255,255,1);
+  -webkit-box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.2),
+  -15px -15px 52px -6px rgba(255,255,255,.7);
 }

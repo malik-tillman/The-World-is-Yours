@@ -92,10 +92,8 @@
 		{% comment %}{# todo: #}{% endcomment %}
 		{%- if settings.home_video_url_webm and settings.home_video_url_mp4 -%}
 			<div class="video-container">
-				<video autoplay muted loop playsinline preload disablePictureInPicture poster="
-						{%- if settings.home_video_thumbnail -%}
-							{{ settings.home_video_thumbnail | img_url: 'large' }}
-						{%- endif -%}">
+				<video autoplay muted loop playsinline preload disablePictureInPicture
+					   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/csnv_background_video__thumbnail_ad54107d-174e-49c2-8ce6-8c3197ff618c.jpg?v=1575484209">
 					<source src="{{ settings.home_video_url_webm }}" type="video/webm">
 					<source src="{{ settings.home_video_url_mp4 }}" type="video/mp4">
 				</video>
@@ -280,9 +278,12 @@
 				<div class="shopping-cart__empty-text">The shopping bag is empty, try refreshing the page.</div>
 
 				<div class="empty__bag_video_container">
-					<video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
-						<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
-					</video>
+					<a href="/cart">
+						<video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture
+							   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster.PNG?v=1580061262">
+							<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+						</video>
+					</a>
 				</div>
 
 			{% comment %}{# Items are in Cart #}{% endcomment %}
@@ -454,10 +455,6 @@
 				loader.style.opacity = "0";
 			}, 1000);
 		} );
-
-		document.addEventListener('touchmove', function (event) {
-			if (event.scale !== 1) { event.preventDefault(); }
-		}, false);
 	</script>
 </body>
 </html>
