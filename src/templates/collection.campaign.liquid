@@ -1,3 +1,13 @@
+{% if settings.collection_heading_video_fallback %}
+    <div class="collection_video_container">
+        <video class="collection_video" autoplay muted loop playsinline preload disablePictureInPicture
+               poster="{%- if settings.home_video_thumbnail -%}
+							{{ settings.home_video_thumbnail | img_url: 'large' }}
+						   {%- endif -%}">
+            <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+        </video>
+    </div>
+{% endif %}
 
 <h1 class="visually-hidden">{{ collection.title }}</h1>
 
@@ -9,6 +19,17 @@
 
 {% section 'lookbook' %}
 
-<section class="product-grid">
-</section>
+<div class="campaign_video_container">
+    <video class="campaign_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
+        <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+    </video>
+
+    <video class="campaign_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
+        <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+    </video>
+
+    <video class="campaign_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
+        <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+    </video>
+</div>
 

@@ -11,20 +11,16 @@
 }
 
 
-
-
-
 .side-bar {
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 100vh;
-  padding: .5em 1em;
-  width: 186px;
+  padding: 1em 1em;
+  width: auto;
   position: fixed;
-  z-index: 10;
-  left: 1.5em;
+  z-index: 25;
+  margin-left: 1.15em;
 }
 
 /*@supports (position: sticky) {
@@ -35,8 +31,9 @@
 	}
 }*/
 
+/* todo: Add settings */
 .side-bar a, .side-bar button {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   text-align: left;
   letter-spacing: 0.075em;
@@ -153,9 +150,6 @@
   max-height: unset;
 }
 
-.side-bar__footer {
-  margin-bottom: 2.2em;
-}
 
 .side-bar__search {
   margin-bottom: 2.2em;
@@ -197,21 +191,35 @@
   width: 1rem;
 }
 
-.side-bar__social ul{
+.footer {
+  position: fixed;
+  bottom: 0;
+  margin-left: 1.15em;
+  margin-bottom: 1.15em;
+
+  z-index: 25;
+}
+
+.social__footer ul{
   display: flex;
   display: -webkit-flex;
   flex-direction: row;
 }
 
-.side-bar__social ul li {
-  padding: 0 .5em;
+.social__footer ul li {
+  padding:  1em;
+  margin-left: 1.15em;
 }
 
-.side-bar__social ul li:first-child {
+.social__footer ul li:first-child {
   padding-left: 0;
 }
 
-.side-bar__social__link img{
+.social__footer img{
   height: 1rem;
   width: 1rem;
+}
+
+.side-bar__link-item {
+  cursor: pointer;
 }

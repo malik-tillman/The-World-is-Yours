@@ -13,12 +13,16 @@ const init = () => {
 
     if (mobile_menu_button) mobile_menu_button.addEventListener('click', toggle_menu);
     if (sidebar_mask) sidebar_mask.addEventListener('click', toggle_menu);
-    
-    if (cart_triggers && Array.isArray(cart_triggers)) cart_triggers.forEach( element => element.addEventListener('click', toggle_shoppingcart));
+
+    /* Add Click Event Listeners to Cart Triggers */
+    if (cart_triggers && Array.isArray(cart_triggers))
+    	cart_triggers.forEach(element => element.addEventListener('click', toggle_shoppingcart));
 
     if (nav_dropdown && Array.isArray(nav_dropdown)) {
         nav_dropdown.forEach( element => element.addEventListener('click', toggle_dropdown));
-    } if (nav_dropdown && !Array.isArray(nav_dropdown)) {
+    }
+
+    if (nav_dropdown && !Array.isArray(nav_dropdown)) {
         nav_dropdown.addEventListener('click', toggle_dropdown);
     }
 
@@ -62,7 +66,7 @@ const init = () => {
 const select = (selector, parent = document) => {
     let found_el = [...parent.querySelectorAll(selector)];
     return (found_el.length === 1) ? found_el[0] : found_el;
-}
+};
 
 const getSiblings = elem => {
 	let siblings = [];
@@ -98,7 +102,7 @@ const toggle_shoppingcart = e => {
 	content.classList[!content.classList.contains('shopping-cart--is-open') ? 'add' : 'remove']('shopping-cart--is-open');
 
 	off_screen_cart.classList[!off_screen_cart.classList.contains('is-open') ? 'add' : 'remove']('is-open');
-}
+};
 
 const toggle_dropdown = e => {
 	let clicked_element = e.target;

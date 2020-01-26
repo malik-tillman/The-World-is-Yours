@@ -1,19 +1,37 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 <section class="product">
-    <div class="product__images">
+    <div id="clickRegions">
+        <div id="leftRegion"></div>
 
+        <div id="rightRegion"></div>
+    </div>
+
+    <div class="product__images">
+        <div id="product__container">
+            {% for image in product.images %}
+                <div class="product__images__container imageTrigger">
+                    <img onmouseenter="toggleGlitch(self)" class="product__image glitch_image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt }}">
+                </div>
+            {% endfor %}
+        </div>
+
+        <div id="mobile_swipe_region">
+            <div class="indicators">
+                <p id="pauseGlitch">Hold & Drag Up or Down</p>
+                <p id="swipeLeftRight">Swipe Left & Right</p>
+            </div>
+        </div>
+
+        {% comment %}{% raw %}
     {% assign glitched_image = "none" %}
     {% for tag in product.tags %}
-      {% if tag contains 'glitched_bottom' %}
-        {% assign glitched_image = "glitched_bottom" %}
-      {% elsif tag contains 'glitched_top' %}
-        {% assign glitched_image = "glitched_top" %}
-      {% endif %}
+    {% if tag contains 'glitched_bottom' %}
+    {% assign glitched_image = "glitched_bottom" %}
+    {% elsif tag contains 'glitched_top' %}
+    {% assign glitched_image = "glitched_top" %}
+    {% endif %}
     {% endfor %}
-
-
-
     {% for image in product.images %}
       {% case glitched_image %}
         {% when 'glitched_top' %}
@@ -41,10 +59,10 @@
       {% endcase %}
 
     {% endfor %}
+    {% endraw %}{% endcomment %}
+    </div>
 
-  </div>
-
-    <div class="product__info">
+    <div id="product__info" class="product__info">
         <span class="product__info__price">{{ current_variant.price | money }}</span>
 
         {% include 'size-chart' %}
@@ -90,16 +108,15 @@
             </a></strong>
         </div>
         <div class="product-info__description">
-    <h3>Description and Details</h3>
-    {{ product.description }}
-  </div>
+            <h3 class="product-info__description__title">Description and Details</h3>
+            {{ product.description }}
+        </div>
     </div>
 
     <div class="product_title_container">
-        <div class="product_title_height_container">
-
+        <div class="intrinsic__title_container">
+            <h1 id="product_title">{{ product.title }}</h1>
         </div>
-        <h1 id="product_title">{{ product.title }}</h1>
     </div>
 </section>
 
@@ -107,8 +124,6 @@
 
 <script type="text/javascript">
   let add_to_cart = $('#AddToCart');
-
- // console.log(Shopify-Icons.getCart())
 
   add_to_cart.on('click', e => {
     e.preventDefault();
@@ -119,29 +134,48 @@
 
     Shopify.addItemFromForm('AddToCartForm');
 
-    // $.ajax({
-    //   type: 'GET',
-    //   url: '/cart.js',
-    //   dataType: 'json',
-    //   success: function(data){
-    //       console.log(data);
+    $.ajax({
+      type: 'GET',
+      url: '/cart.js',
+      dataType: 'json',
+      success: function(data){
+          console.log(data);
 
-    //       shopping_cart__empty_text.remove();
+          shopping_cart__empty_text.remove();
 
-    //       header_cart_text.html( `[${data.item_count}]`);
+          header_cart_text.html( `[${data.item_count}]`);
 
-    //       data.items.forEach( item => {
-    //         console.log(item)
-    //       })
-    //   },
-    //   error: function(){}
-    // });
+          data.items.forEach( item => {
+            console.log(item)
+          })
+      },
+      error: function(){}
+    });
   });
 
   var imagePath = '{{ image.src | img_url: 'master' }}';
 
-  let glitchImages = document.getElementsByClassName("glitch_image");
-  let glitchImageContainers = document.getElementsByClassName("glitch_container");
+  let imageContainer = document.getElementById("product__container");
+  let outerImageContainers = [...document.querySelectorAll(".product__images__container")];
+  let glitchImages = [...document.querySelectorAll(".glitch_image")];
+  let mobileSwipeRegion = document.getElementById("mobile_swipe_region");
+  let pauseGlitchTrigger = document.getElementById("pauseGlitch");
+  let swipeLeftRightTrigger = document.getElementById("swipeLeftRight");
+
+  let leftTrigger = document.getElementById("leftRegion");
+  let rightTrigger = document.getElementById("rightRegion");
+  let containerTransform;
+  let imageContainerWidth;
+  let glitchToggle;
+  let glitchRunning;
+  let clientX;
+  let deltaX;
+  let noMouseEvents = false;
+
+  let mobileIndex = 0;
+
+  /* Initial Reset */
+  focusReset();
 
   $( function() {
       $( ".glitch_image" ).mgGlitch({
@@ -154,62 +188,276 @@
           glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
           glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
           glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
-          zIndexStart : 8, // because of absolute position, set z-index base value
+          zIndexStart : 1, // because of absolute position, set z-index base value
       });
   });
 
-  let index = 0;
+  leftTrigger.addEventListener('click', focusLastImage);
+  rightTrigger.addEventListener('click', focusNextImage);
 
+  document.addEventListener('mousemove', function (event) {
+      glitchToggle = event.clientX <= (document.documentElement.clientWidth / 2);
+  });
 
-  let checkForGlitch = false;
-  let doFunction = false;
-
-  if(doFunction)
-    setInterval(function () {
-    for(let container in glitchImageContainers){
-        switch (container.offsetHeight) {
-            case undefined:
-            case "0":
-            case "0px":
-        }
-    }
-      console.log(window.innerWidth);
-
-    if(window.innerWidth < 736){
-        checkForGlitch = true;
-    }
-
-    if(checkForGlitch){
-        if(window.innerWidth < 736){
-            $( function() {
-                $( ".glitch_image" ).mgGlitch({
-                    destroy : true, // set 'true' to stop the plugin
-                });
-            });
-
-            checkForGlitch = true;
-        }
-        else {
-            $( function() {
-                $( ".glitch_image" ).mgGlitch({
-                    destroy : false, // set 'true' to stop the plugin
-                });
-            });
-
-            checkForGlitch = false;
-        }
-    }
-
-
+  setInterval(function () {
+      if (glitchToggle && !glitchRunning) {
+          pauseGlitchTrigger.style.display = "none";
+          $( function() {
+              $( ".glitch_image" ).mgGlitch({
+                  destroy : true, // set 'true' to stop the plugin
+              });
+          });
+          glitchRunning = true;
+      }
+      else if (!glitchToggle && glitchRunning) {
+          $( function() {
+              $( ".glitch_image" ).mgGlitch({
+                  destroy : false, // set 'true' to stop the plugin
+                  glitch: true, // set 'false' to stop glitching
+                  scale: true, // set 'false' to stop scaling
+                  blend : true, // set 'false' to stop glitch blending
+                  blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
+                  glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
+                  glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
+                  glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
+                  glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
+                  zIndexStart : 1, // because of absolute position, set z-index base value
+              });
+          });
+          glitchRunning = false;
+      }
   }, 1000);
 
-  window.addEventListener('resize', resizeGlitchContainer);
-  window.addEventListener('load', resizeGlitchContainer);
 
-  function resizeGlitchContainer() {
-      for(let i = 0; i < glitchImageContainers.length; i++) {
-          glitchImageContainers[i].style.height = (glitchImages[i].offsetHeight) + "px";
+  window.addEventListener('resize', focusReset);
+
+  mobileSwipeRegion.addEventListener('touchstart', function (event) {
+      clientX = event.touches[0].clientX;
+      noMouseEvents = true;
+      glitchToggle = true;
+  }, false);
+
+  mobileSwipeRegion.addEventListener('touchmove', function (event) {
+      deltaX = event.changedTouches[0].clientX - clientX;
+  });
+
+  mobileSwipeRegion.addEventListener('touchend', function (event) {
+      if(Math.abs(deltaX) > 75) {
+          if(deltaX<0)
+              focusNextImage();
+          else
+              focusLastImage();
+      }
+
+      glitchToggle = false;
+  });
+
+  function focusNextImage() {
+      if(window.innerWidth < 736) {
+          swipeLeftRightTrigger.style.display = "none";
+          if(mobileIndex>=outerImageContainers.length-1) {
+              $(outerImageContainers[mobileIndex]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(-100vw)'
+              });
+
+              $(outerImageContainers[0]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(100vw)'
+              });
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'display': 'none'
+                  });
+
+                  mobileIndex = 0;
+
+                  $(outerImageContainers[mobileIndex]).css({
+                      'display': 'flex'
+                  });
+              }, 500);
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'opacity': '1',
+                      'transform': 'translateX(0vw)'
+                  });
+              }, 600);
+          }
+          else if(mobileIndex>=0) {
+              $(outerImageContainers[mobileIndex]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(-100vw)'
+              });
+
+              $(outerImageContainers[(mobileIndex+1)]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(100vw)',
+                  'display': 'flex'
+              });
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'opacity': '0',
+                      'transform': 'translateX(-100vw)',
+                      'display': 'none'
+                  });
+
+                  mobileIndex++;
+
+                  $(outerImageContainers[mobileIndex]).css({
+                      'opacity': '1',
+                      'transform': 'translateX(0vw)'
+                  });
+              }, 500);
+          }
+      }
+      else {
+          containerTransform -= 75;
+          let transitionSpeed = 700;
+
+          imageContainer.style.transform = "translateX(" + containerTransform + "vw)";
+
+          if(containerTransform<=-imageContainerWidth){
+              setTimeout(function () {
+                  focusLastImage();
+              }, transitionSpeed);
+          }
       }
   }
 
+  function focusLastImage() {
+      let transitionSpeed = 2000;
+
+      if(window.innerWidth < 736) {
+          swipeLeftRightTrigger.style.display = "none";
+          if(mobileIndex<=0) {
+              $(outerImageContainers[mobileIndex]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(100vw)'
+              });
+
+              $(outerImageContainers[(outerImageContainers.length-1)]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(-100vw)'
+              });
+
+              setTimeout(function () {
+                  for(let containers = 0; containers <= outerImageContainers.length; containers++) {
+                      $(outerImageContainers[containers]).css({
+                          'display': 'none'
+                      });
+                  }
+
+                  mobileIndex = outerImageContainers.length-1;
+
+                  $(outerImageContainers[mobileIndex]).css({
+                      'display': 'flex'
+                  });
+              }, 500);
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'opacity': '1',
+                      'transform': 'translateX(0vw)'
+                  });
+              }, 600);
+          }
+          else if(mobileIndex<=outerImageContainers.length) {
+              $(outerImageContainers[mobileIndex]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(100vw)'
+              });
+
+              $(outerImageContainers[(mobileIndex-1)]).css({
+                  'opacity': '0',
+                  'transform': 'translateX(-100vw)'
+              });
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'display': 'none'
+                  });
+
+                  mobileIndex--;
+
+                  $(outerImageContainers[mobileIndex]).css({
+                      'display': "flex"
+                  });
+              }, 500);
+
+              setTimeout(function () {
+                  $(outerImageContainers[mobileIndex]).css({
+                      'opacity': '1',
+                      'transform': 'translateX(0)'
+                  });
+              }, 600);
+          }
+      }
+      else {
+          containerTransform += 75;
+          transitionSpeed = 2000;
+
+          imageContainer.style.transform = "translateX(" + containerTransform + "vw)";
+
+          if(containerTransform>0){
+              setTimeout(function () {
+                  focusNextImage();
+              }, transitionSpeed);
+          }
+      }
+  }
+
+  function focusReset() {
+      if(window.innerWidth < 736)
+          imageContainerWidth = outerImageContainers.length*125;
+      else
+          imageContainerWidth = outerImageContainers.length*75;
+
+      imageContainer.style.width = imageContainerWidth;
+      imageContainer.style.transform = "translateX(0vw)";
+      containerTransform = 0;
+      let deltaX = 0;
+  }
 </script>
+
+<style>
+    .glitch_image {
+        {% case product.type %}
+            {% when 'T-Shirt' %}
+            padding-top: 2em;
+            {% when 'Shirt' %}
+            padding-top: 2em;
+            {% when 'Jacket' %}
+            padding-top: 2em;
+
+            {% when 'Shorts' %}
+            padding-bottom: 2em;
+            {% when 'Track Pants' %}
+            padding-bottom: 2em;
+            {% when 'Jeans' %}
+            padding-bottom: 2em;
+        {% endcase %}
+    }
+
+    .product__images__container {
+        {% case product.type %}
+            {% when 'T-Shirt' %}
+                align-items: flex-end;
+            {% when 'Shirt' %}
+                align-items: flex-end;
+            {% when 'Jacket' %}
+                align-items: flex-end;
+
+            {% when 'Shorts' %}
+                align-items: flex-start;
+            {% when 'Track Pants' %}
+                align-items: flex-start;
+            {% when 'Jeans' %}
+                align-items: flex-start;
+        {% endcase %}
+    }
+
+</style>
+

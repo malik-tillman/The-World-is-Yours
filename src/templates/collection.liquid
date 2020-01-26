@@ -6,8 +6,7 @@
 					   poster="{%- if settings.home_video_thumbnail -%}
 							{{ settings.home_video_thumbnail | img_url: 'large' }}
 						   {%- endif -%}">
-					<source src="{{ settings.home_video_url_webm }}" type="video/webm">
-					<source src="{{ settings.home_video_url_mp4 }}" type="video/mp4">
+					<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
 				</video>
 			</div>
 		{% endif %}
@@ -19,7 +18,7 @@
 		{% endif %}
 	</div>
 
-	<h1 class="collection_title">{{ collection.title }}</h1>
+	<h1 class="collection_title visually-hidden">{{ collection.title }}</h1>
 
 	<section class="product-grid">
 		{% for product in collection.products %}

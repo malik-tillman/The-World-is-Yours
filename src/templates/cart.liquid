@@ -1,32 +1,68 @@
-{% if cart.item_count > 0 %}
-  <h1>cart</h1>
-  <form action="/cart" method="post" novalidate>
-    {% for item in cart.items %}
-      <div class="shopping-cart__item">
-          <img class="shopping-cart__image" src="{{ item.image | img_url: '800x800' }}" alt="{{ item.product.title }}">
-          <div class="shopping-cart__details">
-            <span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
-            <span class="shopping-cart__price">{{ item.product.price | money}}</span>
-          <span class="shopping-cart__quantity">
-            <label for="updates_{{ item.key }}">Quantity:</label>
-            <input id="updates_{{ item.key }}" class="cart__qty-input" name="updates[]" type="text"
-                value="{{ item.quantity }}" min="0" pattern="[0-9]*"
-                data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile></span>
-          <p class="cart__remove">
-                      <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-link text-link--accent" aria-label="Remove">Remove</a>
-                    </p>
+<div class="cart__page__container">
+    {% if settings.collection_heading_video_fallback %}
+        <div class="collection_video_container">
+            <video class="collection_video" autoplay muted loop playsinline preload disablePictureInPicture
+                   poster="{%- if settings.home_video_thumbnail -%}
+							{{ settings.home_video_thumbnail | img_url: 'large' }}
+						   {%- endif -%}">
+                <source src="{{ settings.home_video_url_webm }}" type="video/webm">
+                <source src="{{ settings.home_video_url_mp4 }}" type="video/mp4">
+            </video>
         </div>
-          </div>
-    {% endfor %}
-    <div class="shopping-cart__subtotal">
-        <span class="shopping-cart__subtotal-text"><strong>Subtotal:</strong> {{ cart.total_price | money }}</span>
-      </div>
-    <div class="shopping-cart__button-containers">
-      <button type="submit" name="update">Update</button>
-      <button class="button--colored" type="submit" name="checkout">Checkout</button>
-    </div>
-  </form>
-{% else %}
-  <h2>cart</h2>
-  Cart is empty
-{% endif %}
+    {% endif %}
+
+    {% if cart.item_count > 0 %}
+        <h1 class="cart_page__title">Checkout Bag</h1>
+        <form class="cart__item_container" action="/cart" method="post" novalidate>
+            {% for item in cart.items %}
+                <div class="shopping-cart__divider"></div>
+
+                <div class="shopping-cart__item">
+                    <div class="shopping-cart__image_container">
+                        <img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
+                    </div>
+
+                    <div class="shopping-cart__details">
+                        <div class="shopping-cart__details_container">
+                            <span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
+                            <span class="shopping-cart__price">{{ item.product.price | money}}</span>
+                            <span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+                        </div>
+
+                        <div class="shopping-cart__inputs_container">
+                            <span class="shopping-cart__quantity">
+                                <label for="updates_{{ item.key }}">Quantity:</label>
+                                <input id="updates_{{ item.key }}" class="cart__qty-input" name="updates[]" type="text"
+                                       value="{{ item.quantity }}" min="0" pattern="[0-9]*"
+                                       data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
+                            </span>
+                            <p class="cart__remove">
+                                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-link text-link--accent" aria-label="Remove">Remove</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="shopping-cart__checkout_container">
+                <div class="shopping-cart__subtotal">
+                    <span class="shopping-cart__subtotal-text"><strong>Subtotal:</strong> {{ cart.total_price | money }}</span>
+                </div>
+                <div class="shopping-cart__button-containers">
+                    <button type="submit" name="update">Update</button>
+                    <button class="button--colored" type="submit" name="checkout">Checkout</button>
+                </div>
+            </div>
+        </form>
+
+    {% else %}
+        <h2 class="cart_page__title">Bag is empty, try refreshing to update it.</h2>
+
+        <div class="empty__bag_video_container">
+            <video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
+                <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+            </video>
+        </div>
+    {% endif %}
+</div>
+

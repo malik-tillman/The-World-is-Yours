@@ -21,6 +21,9 @@ body, html {
 body {
   position: relative;
   overflow: hidden;
+
+  width: 100vw;
+  height: 100vh;
 }
 
 
@@ -55,8 +58,9 @@ tr:nth-child(even) {
   @include flexbox();
 
   margin: 0 auto;
-  position: relative;
+  position: absolute;
   min-height: 100vh;
+  width: 100vw;
 }
 
 .video-container {
@@ -88,7 +92,7 @@ tr:nth-child(even) {
 */
 .lookbook-grid {
   width: 100%;
-  margin: 0 auto;
+  margin: 2.5em auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -104,6 +108,41 @@ tr:nth-child(even) {
 }
 
 #shopify-section-lookbook {
-  max-width: 1920px;
+  padding: 0 2em;
   width: 100%;
 }
+
+.page__container, .page__container_general {
+  padding-left: 20em;
+  padding-right: 15em;
+  padding-top: 10em;
+
+  width: 100vw;
+}
+
+.search_container {
+  @include flexbox();
+  @include flex-direction(column);
+  @include align-items(center);
+}
+
+.page__body {
+  text-align: justify;
+}
+
+.search__submit_container {
+  @include flexbox();
+  @include flex-direction(column);
+  @include align-items(center);
+}
+
+.search__submit {
+  color: white;
+  background-color: rgba(17, 17, 17, 1);
+  padding: .5em;
+  border-radius: 2px;
+}
+
+
+
+

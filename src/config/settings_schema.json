@@ -313,6 +313,20 @@
       },
       {
         "type": "header",
+        "content": "Tik Tok Icon"
+      },
+      {
+        "type": "range",
+        "id": "submit_icon_size",
+        "min": 150,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Select Icon Size",
+        "default": 200
+      },
+      {
+        "type": "header",
         "content": "Payment Option Icon"
       },
       {

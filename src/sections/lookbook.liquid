@@ -5,7 +5,7 @@
             {% for block in section.blocks %}
             <div class="lookbook-grid__image">
               <a href="{{ block.settings.lookbook-image | img_url: 'original' }}" target="_blank" data-viewer-image="{{ block.settings.lookbook-image | img_url: '1000x1000' }}">
-                <img src="{{ block.settings.lookbook-image | img_url: '1000x1000' }}">
+                <img class="lookbook__image" src="{{ block.settings.lookbook-image | img_url: '1000x1000' }}">
               </a>
             </div>
             {% endfor %}
@@ -22,7 +22,7 @@
   </button>
 
   <div class="lookbook-viewer_image">
-    <img src="">
+    <img class="lookbook__image" src="">
   </div>
 </div>
 

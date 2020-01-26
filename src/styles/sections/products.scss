@@ -18,11 +18,11 @@ body.template--product main  {
 
 .product-info__description {
   padding: 1em 0 1.5em;
-  text-align: center;
+  text-align: left;
 }
 
 .product-info__description h3 {
-  margin: 1rem 0;
+  margin: .5rem 0;
 }
 
 .product-info__description p {
@@ -68,44 +68,58 @@ body.template--product main  {
   padding: 0;
 }
 
+#size-chart-container {
+  width: auto;
+  height: 0;
+
+  overflow: hidden;
+  transition: height 1s ease;
+}
+
+#size-chart-intrinsic {
+  @include flexbox();
+  @include flex-direction(coulmn);
+  @include justify-content(center);
+  @include prefix(user-select, none, webkit moz ms o spec);
+  -webkit-touch-callout: none;
+}
 
 #size-chart {
-  display: none;
-  max-width: 412px;
+  width: 35vh;
+}
+
+.product__info {
+  position: absolute;
+  margin-left: 55vw;
+  margin-top: 30vh;
+  transition: margin-top 1s ease;
+  width: 100;
+  order: 1;
+}
+
+.product__info.chart-visible {
+  margin-top: 10vh;
+}
+
+.intrinsic__title_container {
+  overflow: visible;
   width: 100%;
-  font-size: 1em;
-}
-
-#size-chart.is-visible {
-  display: block;
-}
-
-#size-chart img {
-  width: 100%;
-}
-
-.product__info, #product_title {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 33%;
 }
 
 #product_title {
+  @include prefix(user-select, none, webkit moz o spec);
   transform: rotate(90deg);
   font-size: $product-font-size;
-  text-align: left;
+  text-align: center;
 
   white-space: nowrap;
 }
 
 .product_title_container {
+  position: relative;
   order: 2;
-
-  width: 5vw;
-}
-
-.product__info {
-  order: 1;
+  overflow: visible;
+  right: -13em;
 }
 
 
@@ -130,8 +144,10 @@ body.template--product main  {
 }
 
 .related-product {
-  width: 25%;
-  padding: 0 .5em;
+  @include prefix(user-select, none, webkit moz o spec);
+
+  width: 20%;
+  margin: 0 2em;
 }
 
 .related-product a {
@@ -161,12 +177,16 @@ body.template--product main  {
 }
 
 .collection_video_container {
+  box-shadow: 0px 5px 25px 9px rgba(0,0,0,0.2),
+  0px -5px 25px 9px rgba(255,255,255,0.2);
+
+
+
   position: relative;
   width: 100vw;
   height: 15vh;
   object-fit: cover;
   overflow: hidden;
-
 }
 
 .collection_video {
@@ -209,6 +229,8 @@ $card-width: 25%;
 }
 
 .product-grid__image {
+  padding: 0 1.5em;
+
   width: 100%;
 
   background-color: $color-product-background;
@@ -219,62 +241,161 @@ $card-width: 25%;
   padding-top: 1em;
 }
 
+.product-grid__price {
+  font-size: 0.75em;
+}
+
 .product {
   @include flexbox();
   @include flex-direction(row);
   @include flex-wrap(nowrap);
   @include justify-content(space-between);
+  @include align-items(center);
+  width: 100vw;
 }
 
 .product__images {
-  width: 75vh;
-  flex: 0 0 calc(75% - 296px);
-  max-width: 50vw;
-  min-width: 25vw;
-  background-color: $color-product-background;
+  @include flexbox();
+  @include flex-direction(row);
+
+  overflow: visible;
+  width: 50vw;
+  height: 100vh;
 
   order: 0;
+  background-color: $color-product-background;
+}
+
+#clickRegions {
+  @include flexbox();
+  @include flex-direction(row);
+  @include flex-wrap(nowrap);
+
+  animation: 3s ease 0s 1 fadeout;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+}
+
+#mobile_swipe_region {
+  display: none;
+}
+
+#leftRegion {
+  width: 25vw;
+  height: 100vh;
+}
+
+#rightRegion {
+  width: 75vw;
+  height: 100vh;
+}
+
+.indicators {
+  display: none;
+}
+
+#pauseGlitch  {
+  @include prefix(user-select, none, webkit moz ms o spec);
+  margin-top: 1em;
+  width: 100%;
+  text-align: center;
+
+  opacity: 0;
+  transition: opacity 1s;
+
+  animation-name: pulse;
+  animation-duration: 3000ms;
+  animation-iteration-count: 5;
+}
+
+#swipeLeftRight {
+  @include prefix(user-select, none, webkit moz ms o spec);
+  position: absolute;
+  top: 0;
+  margin-top: 1em;
+  width: 100%;
+  text-align: center;
+
+  opacity: 0;
+  transition: opacity 1s;
+
+  animation-name: pulse;
+  animation-delay: 20000ms;
+  animation-duration: 3000ms;
+  animation-iteration-count: 5;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: .7;
+  }
+ 100% {
+   opacity: 0;
+ }
+}
+
+
+#product__container {
+  @include flexbox();
+  @include flex-direction(row);
+  @include justify-content(space-between);
+
+  transition: transform 2s ease;
+}
+
+.product__images__container {
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(flex-end);
+  position: relative;
+  width: 50vw;
+  margin-right: 25vw;
 }
 
 .product__image {
-  width: 100%;
-  margin-bottom: 25px;
-  padding-bottom: 20px;
+  max-height: 100%;
 }
 
-.glitch_container {
-  position: relative;
-  margin: 2em 0;
-}
-
-.glitch_image_main, .glitch_image_top, .glitch_image_bottom {
-  position: absolute;
+.product__image__intrinsic {
+  opacity: .5;
+  background-color: rgba(173, 4, 4, 0.27);
 }
 
 .glitch_image {
+  @include prefix(user-select, none, webkit moz o spec);
   position: absolute;
+  max-width: 50vw;
   background-color: transparent !important;
-  filter: grayscale(50%);
+  //padding-top: 2em;
 }
 
+/* OLD */
 .glitch_image_top {
   clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 }
-
 .glitch_image_bottom {
   clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
 }
-
-
+/* OLD */
 
 .product__info {
+  @include prefix(user-select, none, webkit moz o spec);
   padding: 1em;
   align-self: flex-start;
   width: 35vw;
+  z-index: 15;
 }
 
 .product__info > * {
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin: 0.25em 0 .5em;
 }
 
@@ -309,4 +430,26 @@ $card-width: 25%;
 .product-info__klarna {
   text-transform: uppercase;
   line-height: 2;
+}
+
+.related-product__image {
+  background-color: $color-product-background;
+}
+
+.campaign_video_container {
+  @include flexbox();
+  @include justify-content(space-around);
+}
+
+.campaign_collection_video {
+  width: 20vw;
+  margin: 3em 1em;
+}
+
+.lookbook__image, .campaign_collection_video  {
+  box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.5),
+  -15px -15px 52px -6px rgba(255,255,255,1);
+
+  -webkit-box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.5),
+  -15px -15px 52px -6px rgba(255,255,255,1);
 }

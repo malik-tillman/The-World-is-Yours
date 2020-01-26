@@ -9,61 +9,66 @@
     {% assign size_index = forloop.index0 %}
   {% endif %}
 {% endfor %}
+
 {% if has_size %}
-<div class="product-info__size-chart-button">
-<button class="product-info__size-chart-trigger">Size chart</button>
+  <div class="product-info__size-chart-button">
+    <button class="product-info__size-chart-trigger">Size chart</button>
+  </div>
+<div id="size-chart-container" class="rte product-info__size-chart">
+  <div id="size-chart-intrinsic">
+    <button class="size-chart__close" aria-labeled="Close size cart">
+      {% render 'icon-close' %}
+      {% comment %}{% raw %}
+        <img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the size cart" aria-hidden="true">
+      {% endraw %}{% endcomment %}
+      <span class="visually-hidden">Close</span>
+    </button>
+
+    {% if product.type == 'T-Shirt' %}
+      <a  href="{{ 'size-chart_tshirt.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_tshirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+      {% elsif product.type == 'Shirt' %}
+      <a  href="{{ 'size-chart_shirt.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_shirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+      {% elsif product.type == 'Jacket' %}
+      <a  href="{{ 'size-chart_jacket.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_jacket.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+      {% elsif product.type == 'Shorts' %}
+      <a  href="{{ 'size-chart_shorts.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_shorts.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+      {% elsif product.type == 'Track Pants' %}
+      <a  href="{{ 'size-chart_track-pants.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_track-pants.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+      {% elsif product.type == 'Jeans' %}
+      <a  href="{{ 'size-chart_jeans.jpg' | asset_url }}" target="_blank">
+        <img id="size-chart" src="{{ 'size-chart_jeans.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
+      </a>
+
+    {% endif %}
+  </div>
 </div>
-<div id="size-chart" class="rte product-info__size-chart">
-  <button class="size-chart__close" aria-labeled="Close size cart">
-    {% render 'icon-close' %}
-    {% comment %}{% raw %}
-    <img src="{{ 'icon-close.svg' | asset_url }}" alt="Close the size cart" aria-hidden="true">
-    {% endraw %}{% endcomment %}
-    <span class="visually-hidden">Close</span>
-  </button>
 
-  {% if product.type == 'T-Shirt' %}
-    <a href="{{ 'size-chart_tshirt.jpg' | asset_url }}" target="_blank">
-      <img src="{{ 'size-chart_tshirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-    </a>
-  {% endif %}
-
-  {% if product.type == 'Shirt' %}
-  <a href="{{ 'size-chart_shirt.jpg' | asset_url }}" target="_blank">
-    <img src="{{ 'size-chart_shirt.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-  </a>
-  {% endif %}
-
-  {% if product.type == 'Jacket' %}
-  <a href="{{ 'size-chart_jacket.jpg' | asset_url }}" target="_blank">
-    <img src="{{ 'size-chart_jacket.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-  </a>
-  {% endif %}
-
-  {% if product.type == 'Shorts' %}
-  <a href="{{ 'size-chart_shorts.jpg' | asset_url }}" target="_blank">
-    <img src="{{ 'size-chart_shorts.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-  </a>
-  {% endif %}
-
-  {% if product.type == 'Track Pants' %}
-  <a href="{{ 'size-chart_track-pants.jpg' | asset_url }}" target="_blank">
-    <img src="{{ 'size-chart_track-pants.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-  </a>
-  {% endif %}
-
-  {% if product.type == 'Jeans' %}
-  <a href="{{ 'size-chart_jeans.jpg' | asset_url }}" target="_blank">
-    <img src="{{ 'size-chart_jeans.jpg' | asset_url }}" alt="Size chart for {{ product.type }}" />
-  </a>
-  {% endif %}
-
-</div>
 <script type="text/javascript">
+  let toggle = false;
   $('.product-info__size-chart-trigger, .size-chart__close').on('click', e => {
-    let size_chart = document.querySelector('#size-chart');
+    toggle = !toggle;
 
-    size_chart.classList[!size_chart.classList.contains('is-visible') ? 'add' : 'remove']('is-visible');
+    let size_chart_container = document.querySelector('#size-chart-container'),
+        size_chart_intrinsic = document.querySelector('#size-chart-intrinsic'),
+        product_info = document.querySelector('#product__info');
+
+    size_chart_container.style.height = toggle ? size_chart_intrinsic.offsetHeight + "px" : 0;
+    product_info.classList[!product_info.classList.contains('chart-visible') ? 'add' : 'remove']('chart-visible');
   });
 </script>
 {% endif %}

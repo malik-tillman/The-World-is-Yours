@@ -1,3 +1,8 @@
+#CustomerLoginForm {
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
 .template--customers-addresses  form .grid {
   display: flex;
 }
@@ -12,20 +17,22 @@
 }
 
 .register-header {
-  display: flex;
+  @include flexbox();
+  @include justify-content(center);
+  @include flex-direction(column);
+  @include align-items(center);
+
   padding: 1em;
-  align-items: center;
-  justify-content: center;
 }
 
 .register-header > *{
   width: 50%;
-  padding: 1em;
 }
 
 .register-header__header {
   font-size: 2.5rem;
   text-align: center;
+  margin-bottom: 0;
 }
 
 .register-header__sub-head {
@@ -93,7 +100,7 @@
   border-bottom: thin solid #111;
   display: inline-block;
   max-width: unset;
-  width: calc(100% - 80px);
+  width: 40vw;
 }
 
 .register-form__section input.input--error {

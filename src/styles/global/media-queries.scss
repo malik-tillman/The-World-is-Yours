@@ -1,11 +1,12 @@
-@media screen and (min-width: 737px) {
-  #size-chart.is-visible {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
+@media screen and (max-width: 1200px) {
+  .product-grid__image {
+    padding: 0 1em;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .product-grid__image {
+    padding: 0;
   }
 }
 
@@ -228,6 +229,7 @@
 
   .product-grid {
     flex-direction: row;
+    margin-top: 1.5em;
   }
 
   .product-grid__card {
@@ -259,12 +261,42 @@
     flex-direction: column;
   }
 
+  #product__container {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .product__images__container {
+    min-width: 100vw;
+
+    opacity: 1;
+
+    transition: opacity 500ms, transform 1500ms ease;
+  }
+
+  #clickRegions {
+    display: none;
+  }
+
+  #mobile_swipe_region {
+    display: block;
+    position: absolute;
+    width: 100vw;
+    height: 60vh;
+
+    z-index: 5;
+  }
+
+  .glitch_image {
+    max-width: 100vw;
+  }
+
   .product__images {
     @include align-self(center);
 
     width: 100vw;
-    max-width: 80vw;
-    min-width: 75vw;
+
+    height: 60vh;
     white-space: nowrap;
     order: 0;
   }
@@ -272,6 +304,7 @@
   .product_title_container {
     order: 1;
     width: 100%;
+    right: 0;
   }
 
   #product_title {
@@ -279,6 +312,9 @@
 
     transform: rotate(0deg);
     position: relative;
+
+    font-size: 1.7em;
+    white-space: normal;
 
     padding: 1em;
     margin: 0;
@@ -290,8 +326,13 @@
     width: 80%;
     padding: 1em;
     order: 2;
+    margin: 0;
 
     position: relative;
+  }
+
+  .product__info.chart-visible {
+    margin-top: 0;
   }
 
   .product__cart-form input,
@@ -404,6 +445,42 @@
   .register-form__submit span {
     font-size: 1rem;
   }
+
+  .page__container {
+    padding: 0;
+  }
+
+  .page__container_general {
+    padding: 5em;
+  }
+
+  #CustomerLoginForm {
+    margin: 0;
+  }
+
+  .shopping-cart__divider {
+    width: 50vw;
+  }
+
+  .cart__page__container {
+    padding-top: 1em;
+  }
+
+  .shopping-cart__item {
+    padding: 0 2em;
+  }
+
+  .empty__bag_collection_video {
+    width: 50vw;
+  }
+
+  .product-grid__image {
+    padding: 0 2em;
+  }
+
+  .indicators {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -419,3 +496,6 @@
 }
 
 
+body.template--cart.shopping-cart--is-open {
+  overflow-y: hidden !important;
+}

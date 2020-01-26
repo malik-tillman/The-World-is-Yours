@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 	{% comment %}{# Set Metadata: Viewport control | see: https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag #}{% endcomment %}
-	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, user-scalable=no"/>
 
 	{% comment %}{# Set Metadata: Browser theme color | see: https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android #}{% endcomment %}
 	<meta name="theme-color" content="{{ settings.color_button }}">
@@ -172,7 +172,7 @@
 							{% comment %}{# Dropdown Menu for Link #}{% endcomment %}
 							<ul class="side-bar__nav__dropdown-container" aria-expanded="false">
 								{% for childLink in linklists[child_list_handle].links %}
-									<li>
+									<li class="side-bar__link-item" onclick="window.location.href = '{{ childLink.url }}'">
 										{% comment %}{# todo: Localize #}{% endcomment %}
 										<a href="{{ childLink.url }}" title="{{ childLink.title | escape }}">
 											{{ childLink.title | escape}}
@@ -185,7 +185,9 @@
 					{% comment %}{# Regular Link on Blank Link List #}{% endcomment %}
 					{% else %}
 						{% comment %}{# {# todo: Localize #} #}{% endcomment %}
-						<li><a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a></li>
+						<li class="side-bar__link-item" onclick="window.location.href = '{{ link.url }}'">
+							<a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a>
+						</li>
 
 					{% endif %}
 				{% endfor %}
@@ -196,15 +198,25 @@
 					{% comment %}{# Add Account and Log Out Link #}{% endcomment %}
 					{% if customer %}
 						{% comment %}{# todo: Localize #}{% endcomment %}
-						<li><a href="/account" title="Go to your account">
-							Account <br /><span class="account-name">({{ customer.email }})</span></a></li>
-						<li><a href="/account/logout" title="Log out">Log out</a></li>
+						<li class="side-bar__link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="/account" title="Go to your account">
+							Account <br /><span class="account-name">({{ customer.email }})</span></a>
+						</li>
+
+						<li class="side-bar__link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="/account/logout" title="Log out">Log out</a>
+						</li>
 
 					{% comment %}{# Add Login and Register Link #}{% endcomment %}
 					{% else %}
 						{% comment %}{# todo: Localize #}{% endcomment %}
-						<li><a href="/account/login" title="Log in to your account">Log in</a></li>
-						<li><a href="/account/register" title="Register for an accountt">Register</a></li>
+						<li class="side-bar__link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="/account/login" title="Log in to your account">Log in</a>
+						</li>
+
+						<li class="side-bar__link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="/account/register" title="Register for an accountt">Register</a>
+						</li>
 
 					{% endif %}
 				{% endif %}
@@ -232,52 +244,6 @@
 				</form>
 			</div>
 		</nav>
-
-		{% comment %}{# Footer #}{% endcomment %}
-		<footer class="side-bar__footer">
-			<div class="side-bar__social">
-				<ul> {% comment %}{# todo: Localize #}{% endcomment %}
-					{% comment %}{# Facebook Link #}{% endcomment %}
-					{% if settings.facebook_link %}
-					<li>
-						<a href="{{ settings.facebook_link }}" class="side-bar__social__link side-bar__social--facebook" target="_blank">
-							{% render "icon-facebook" %}
-							<span class="visually-hidden">Facebook</span>
-						</a>
-					</li>
-					{% endif %}
-
-					{% comment %}{# Instagram Link #}{% endcomment %}
-					{% if settings.instagram_link %}
-					<li>
-						<a href="{{ settings.instagram_link }}" class="side-bar__social__link side-bar__social--instagram" target="_blank">
-							{% render "icon-instagram" %}
-							<span class="visually-hidden">Instagram</span>
-						</a>
-					</li>
-					{% endif %}
-
-					{% comment %}{# Twitter Link #}{% endcomment %}
-					{% if settings.twitter_link %}
-					<li>
-						<a href="{{ settings.twitter_link }}" class="side-bar__social__link side-bar__social--twitter" target="_blank">
-							{% render "icon-twitter" %}
-							<span class="visually-hidden">Twitter</span>
-						</a></li>
-					{% endif %}
-
-					{% comment %}{# TikTok Link #}{% endcomment %}
-					{% if settings.tiktok_link %}
-					<li>
-						<a href="{{ settings.tiktok_link }}" class="side-bar__social__link side-bar__social--tiktok" target="_blank">
-							{% render "icon-twitter" %}
-							<span class="visually-hidden">Tik Tok</span>
-						</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</footer>
 
 		{% comment %}{# todo: evaluate | delete #}{% endcomment %}
 		<div class="side-bar__mask"></div>
@@ -309,12 +275,15 @@
 				<span class="visually-hidden">Close</span>
 			</button>
 
-			{% comment %}{# todo: localize #}{% endcomment %}
-			<span class="visually-hidden">Close</span>
-
 			{% comment %}{# No Items in Cart #}{% endcomment %}
 			{% if cart.item_count == 0 %}
-				<div class="shopping-cart__empty-text">The shopping cart is empty</div>
+				<div class="shopping-cart__empty-text">The shopping bag is empty, try refreshing the page.</div>
+
+				<div class="empty__bag_video_container">
+					<video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture>
+						<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
+					</video>
+				</div>
 
 			{% comment %}{# Items are in Cart #}{% endcomment %}
 			{% else %}
@@ -325,33 +294,30 @@
 
 						{% comment %}{# Cart Title #}{% endcomment %}
 						{% comment %}{# todo: localize #}{% endcomment %}
-						<h1 id="cart-title" >Your cart</h1>
+						<a href="/cart">
+							<h1 id="cart-title">Your Bag</h1>
+						</a>
 
 						{% comment %}{# Loop Through Cart Items #}{% endcomment %}
 						{%- for item in cart.items -%}
-
 							{% comment %}{# Display Each Item's Information #}{% endcomment %}
 							<div class="shopping-cart__item">
 
 								{% comment %}{# Item Image #}{% endcomment %}
-								<img class="shopping-cart__image" src="{{ item.image | img_url: '400x400' }}" alt="{{ item.product.title }}">
+								<img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
 
 								{% comment %}{# Item Details #}{% endcomment %}
 								<div class="shopping-cart__details">
 
-									{% comment %}{# Item Title #}{% endcomment %}
-									<span class="shopping-cart__title">
-										{% comment %}{# Link to Item #}{% endcomment %}
-										<a href="{{ item.url }}" title="{{ item.product.title }}">
-											{{ item.product.title }}
-										</a>
-									</span>
+									<div class="shopping-cart__details_container">
+										<span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
+										<span class="shopping-cart__price">{{ item.product.price | money}}</span>
+										<span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+									</div>
 
-									{% comment %}{# Item Price #}{% endcomment %}
-									<span class="shopping-cart__price">{{ item.product.price | money}}</span>
-
-									{% comment %}{# Quantity Selection #}{% endcomment %}
-									<span class="shopping-cart__quantity">
+									<div class="shopping-cart__inputs_container">
+										{% comment %}{# Quantity Selection #}{% endcomment %}
+										<span class="shopping-cart__quantity">
 
 										{% comment %}{# Item Input Label #}{% endcomment %}
 										<label for="updates_{{ item.key }}" class="visually-hidden">
@@ -377,14 +343,14 @@
 
 									</span>
 
-									{% comment %}{# Remove Product #}{% endcomment %}
-									<p class="shopping-cart__cart-remove">
-										<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
-										   class="text-link text-link--accent" aria-label="Remove">
-											Remove
-										</a>
-									</p>
-
+										{% comment %}{# Remove Product #}{% endcomment %}
+										<p class="shopping-cart__cart-remove">
+											<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
+											   class="text-link text-link--accent" aria-label="Remove">
+												Remove
+											</a>
+										</p>
+									</div>
 								</div>
 
 							</div>
@@ -426,6 +392,52 @@
 		</div>
 	</div>
 
+	{% comment %}{# Footer #}{% endcomment %}
+	<footer class="footer">
+		<div class="social__footer">
+			<ul> {% comment %}{# todo: Localize #}{% endcomment %}
+				{% comment %}{# Facebook Link #}{% endcomment %}
+				{% if settings.facebook_link %}
+					<li>
+						<a href="{{ settings.facebook_link }}" class="side-bar__social__link side-bar__social--facebook" target="_blank">
+							{% render "icon-facebook" %}
+							<span class="visually-hidden">Facebook</span>
+						</a>
+					</li>
+				{% endif %}
+
+				{% comment %}{# Instagram Link #}{% endcomment %}
+				{% if settings.instagram_link %}
+					<li>
+						<a href="{{ settings.instagram_link }}" class="side-bar__social__link side-bar__social--instagram" target="_blank">
+							{% render "icon-instagram" %}
+							<span class="visually-hidden">Instagram</span>
+						</a>
+					</li>
+				{% endif %}
+
+				{% comment %}{# Twitter Link #}{% endcomment %}
+				{% if settings.twitter_link %}
+					<li>
+						<a href="{{ settings.twitter_link }}" class="side-bar__social__link side-bar__social--twitter" target="_blank">
+							{% render "icon-twitter" %}
+							<span class="visually-hidden">Twitter</span>
+						</a></li>
+				{% endif %}
+
+				{% comment %}{# TikTok Link #}{% endcomment %}
+				{% if settings.tiktok_link %}
+					<li>
+						<a href="{{ settings.tiktok_link }}" class="side-bar__social__link side-bar__social--tiktok" target="_blank">
+							{% render "icon-twitter" %}
+							<span class="visually-hidden">Tik Tok</span>
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</footer>
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" ></script>
 	<script src="{{ 'global.js' | asset_url }}" ></script>
 
@@ -442,6 +454,10 @@
 				loader.style.opacity = "0";
 			}, 1000);
 		} );
+
+		document.addEventListener('touchmove', function (event) {
+			if (event.scale !== 1) { event.preventDefault(); }
+		}, false);
 	</script>
 </body>
 </html>
