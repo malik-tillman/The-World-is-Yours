@@ -2,6 +2,14 @@
   .product-grid__image {
     padding: 0 1em;
   }
+
+  .product-grid__name {
+    font-size: 0.8em;
+  }
+
+  .product-grid__card {
+    padding: 1em 0;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -230,6 +238,7 @@
   .product-grid {
     flex-direction: row;
     margin-top: 1.5em;
+    padding-left: 0;
   }
 
   .product-grid__card {
@@ -451,7 +460,7 @@
   }
 
   .page__container_general {
-    padding: 5em;
+    padding: 3em;
   }
 
   #CustomerLoginForm {
@@ -471,7 +480,7 @@
   }
 
   .empty__bag_collection_video {
-    width: 50vw;
+    width: 100%;
   }
 
   .product-grid__image {
@@ -480,6 +489,10 @@
 
   .indicators {
     display: block;
+  }
+
+  .contact__page__container {
+    padding: 0 1.6em;
   }
 }
 

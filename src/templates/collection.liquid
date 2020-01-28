@@ -1,9 +1,12 @@
+{% assign quality = 'original' %}
+{% assign hiQuality = 'original' %}
+
 <div class="collection_container">
 	<div class="collection">
 		{% if settings.collection_heading_video_fallback %}
 			<div class="collection_video_container">
 				<video class="collection_video" autoplay muted loop playsinline preload disablePictureInPicture
-					   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/csnv_background_video__thumbnail_ad54107d-174e-49c2-8ce6-8c3197ff618c.jpg?v=1575484209">
+					   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster.PNG?v=1580061262">
 					<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
 				</video>
 			</div>
@@ -19,45 +22,17 @@
 	<h1 class="collection_title visually-hidden">{{ collection.title }}</h1>
 
 	<section class="product-grid">
+		<script>
+			function imageLoaded(image, imgSrc) {
+				image.onload = null;
+				image.src = imgSrc;
+			}
+		</script>
 		{% for product in collection.products %}
-
-			{% assign glitched_image = "none" %}
-			{% for tag in product.tags %}
-				{% if tag contains 'glitched_bottom' %}
-					{% assign glitched_image = "glitched_bottom" %}
-					{% elsif tag contains 'glitched_top' %}
-					{% assign glitched_image = "glitched_top" %}
-				{% endif %}
-			{% endfor %}
-
-
 			<div class="product-grid__card">
 				<a href="{{ product.url | within: collection }}">
 					{% assign image = product.featured_image %}
-					{% case glitched_image %}
-						{% when 'glitched_top' %}
-							{% if image.alt contains 'glitched' %}
-								<div class="glitch_container">
-									<img class="product-grid__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
-									<img class="glitch_image_top glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
-								</div>
-							{% else %}
-								<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
-							{% endif %}
-
-						{% when 'glitched_bottom' %}
-							{% if image.alt contains 'glitched' %}
-								<div class="glitch_container">
-									<img class="product-grid__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
-									<img class="glitch_image_bottom glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
-								</div>
-							{% else %}
-								<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
-							{% endif %}
-
-							{% else %}
-							<img class="product-grid__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
-						{% endcase %}
+					<img onload="imageLoaded(this, '{{ image.src | img_url: hiQuality }}')" class="product-grid__image" src="{{ image.src | img_url: '500x500' }}" alt="{{ image.alt | escape }}">
 					<div class="product-grid__details">
 						<h3 class="product-grid__name">{{ product.title }}</h3>
 						<span class="product-grid__price">{{ product.price | money }}</span>
@@ -72,50 +47,6 @@
 </div>
 
 <script>
-	/* Glitch */
-	const stopIt = false;
-	$( function() {
-		$( ".glitch_image" ).mgGlitch({
-			destroy : stopIt, // set 'true' to stop the plugin
-			glitch: true, // set 'false' to stop glitching
-			scale: true, // set 'false' to stop scaling
-			blend : true, // set 'false' to stop glitch blending
-			blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
-			glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
-			glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
-			glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
-			glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
-			zIndexStart : 8, // because of absolute position, set z-index base value
-		});
-	});
-
-	let checkForGlitch = false;
-	setInterval(function () {
-		if(window.innerWidth < 736)
-			checkForGlitch = true;
-
-		if(checkForGlitch){
-			if(window.innerWidth < 736){
-				$( function() {
-					$( ".glitch_image" ).mgGlitch({
-						destroy : true, // set 'true' to stop the plugin
-					});
-				});
-
-				checkForGlitch = true;
-			}
-			else {
-				$( function() {
-					$( ".glitch_image" ).mgGlitch({
-						destroy : false, // set 'true' to stop the plugin
-					});
-				});
-
-				checkForGlitch = false;
-			}
-		}
-	}, 1000);
-
 	/* Resize  */
 	let glitchImages = document.getElementsByClassName("glitch_image");
 	let glitchImageContainers = document.getElementsByClassName("glitch_container");
