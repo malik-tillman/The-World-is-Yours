@@ -1,5 +1,7 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+{% assign hiQuality = 'master' %}
+
 <section class="product">
     <div id="clickRegions">
         <div id="leftRegion"></div>
@@ -9,9 +11,15 @@
 
     <div class="product__images">
         <div id="product__container">
+            <script>
+                function imageLoaded(image, imgSrc) {
+                    image.onload = null;
+                    image.src = imgSrc;
+                }
+            </script>
             {% for image in product.images %}
                 <div class="product__images__container imageTrigger">
-                    <img onmouseenter="toggleGlitch(self)" class="product__image glitch_image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt }}">
+                    <img onload="imageLoaded(this, '{{ image.src | img_url: hiQuality }}')" class="product__image glitch_image product__image-{{ forloop.index }}" src="{{ image.src | img_url: '500x500' }}" alt="{{ image.alt }}">
                 </div>
             {% endfor %}
         </div>
@@ -37,25 +45,25 @@
         {% when 'glitched_top' %}
           {% if image.alt contains 'glitched' %}
             <div class="glitch_container">
-                <img class="product__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
-                <img class="glitch_image_top glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
+                <img class="product__image glitch_image_main" src="{{ image.src | img_url: quality }}" alt="">
+                <img class="glitch_image_top glitch_image" src="{{ image.src | img_url: quality }}" alt="">
             </div>
           {% else %}
-            <img class="product__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+            <img class="product__image" src="{{ image.src | img_url: quality }}" alt="{{ image.alt | escape }}">
           {% endif %}
 
         {% when 'glitched_bottom' %}
           {% if image.alt contains 'glitched' %}
               <div class="glitch_container">
-                  <img class="product__image glitch_image_main" src="{{ image.src | img_url: 'master' }}" alt="">
-                  <img class="glitch_image_bottom glitch_image" src="{{ image.src | img_url: 'master' }}" alt="">
+                  <img class="product__image glitch_image_main" src="{{ image.src | img_url: quality }}" alt="">
+                  <img class="glitch_image_bottom glitch_image" src="{{ image.src | img_url: quality }}" alt="">
               </div>
           {% else %}
-              <img class="product__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+              <img class="product__image" src="{{ image.src | img_url: quality }}" alt="{{ image.alt | escape }}">
           {% endif %}
 
         {% else %}
-          <img class="product__image" src="{{ image.src | img_url: 'master' }}" alt="{{ image.alt | escape }}">
+          <img class="product__image" src="{{ image.src | img_url: quality }}" alt="{{ image.alt | escape }}">
       {% endcase %}
 
     {% endfor %}
@@ -153,7 +161,7 @@
     });
   });
 
-  var imagePath = '{{ image.src | img_url: 'master' }}';
+  var imagePath = '{{ image.src | img_url: quality }}';
 
   let imageContainer = document.getElementById("product__container");
   let outerImageContainers = [...document.querySelectorAll(".product__images__container")];
@@ -177,20 +185,7 @@
   /* Initial Reset */
   focusReset();
 
-  $( function() {
-      $( ".glitch_image" ).mgGlitch({
-          destroy : false, // set 'true' to stop the plugin
-          glitch: true, // set 'false' to stop glitching
-          scale: true, // set 'false' to stop scaling
-          blend : true, // set 'false' to stop glitch blending
-          blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
-          glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
-          glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
-          glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
-          glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
-          zIndexStart : 1, // because of absolute position, set z-index base value
-      });
-  });
+
 
   leftTrigger.addEventListener('click', focusLastImage);
   rightTrigger.addEventListener('click', focusNextImage);
@@ -231,6 +226,23 @@
 
   window.addEventListener('resize', focusReset);
 
+  window.addEventListener('load', function () {
+      $( function() {
+          $( ".glitch_image" ).mgGlitch({
+              destroy : false, // set 'true' to stop the plugin
+              glitch: true, // set 'false' to stop glitching
+              scale: true, // set 'false' to stop scaling
+              blend : true, // set 'false' to stop glitch blending
+              blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
+              glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
+              glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
+              glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
+              glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
+              zIndexStart : 1, // because of absolute position, set z-index base value
+          });
+      });
+  });
+
   mobileSwipeRegion.addEventListener('touchstart', function (event) {
       clientX = event.touches[0].clientX;
       noMouseEvents = true;
@@ -242,7 +254,7 @@
   });
 
   mobileSwipeRegion.addEventListener('touchend', function (event) {
-      if(Math.abs(deltaX) > 75) {
+      if(Math.abs(deltaX) > 50) {
           if(deltaX<0)
               focusNextImage();
           else
@@ -420,6 +432,8 @@
       containerTransform = 0;
       let deltaX = 0;
   }
+
+
 </script>
 
 <style>

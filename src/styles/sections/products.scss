@@ -110,7 +110,7 @@ body.template--product main  {
   @include prefix(user-select, none, webkit moz o spec);
   transform: rotate(90deg);
   font-size: $product-font-size;
-  text-align: center;
+  text-align: left;
 
   white-space: nowrap;
 }
@@ -119,7 +119,7 @@ body.template--product main  {
   position: relative;
   order: 2;
   overflow: visible;
-  right: -13em;
+  right: -5em;
 }
 
 
@@ -191,6 +191,8 @@ body.template--product main  {
 
   margin: 0;
   padding: 0;
+
+  z-index: 5;
 }
 
 .collection_video {
@@ -211,13 +213,14 @@ body.template--product main  {
   @include flexbox();
   @include justify-content(flex-start);
   @include flex-flow(wrap);
-  @include align-items(center);
+  @include align-items(flex-start);
 
   width: 100%;
   height: 100%;
   position: relative;
   left: 0;
   top: 0;
+  padding-left: 3em;
 }
 
 $card-width: 25%;
@@ -257,14 +260,13 @@ $card-width: 25%;
   @include flex-wrap(nowrap);
   @include justify-content(space-between);
   @include align-items(center);
-  width: 100vw;
+  width: 100%;
 }
 
 .product__images {
   @include flexbox();
   @include flex-direction(row);
 
-  overflow: visible;
   width: 50vw;
   height: 100vh;
 
@@ -379,6 +381,7 @@ $card-width: 25%;
   @include prefix(user-select, none, webkit moz o spec);
   position: absolute;
   max-width: 50vw;
+  height: 100%;
   background-color: transparent !important;
   //padding-top: 2em;
 }
@@ -449,7 +452,7 @@ $card-width: 25%;
 
 .campaign_collection_video {
   width: 20vw;
-  height: 15vw;
+  height: 20vw;
 
   transform: scale(1);
 

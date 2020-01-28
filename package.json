@@ -6,7 +6,9 @@
   },
   "scripts": {
     "start-dev": "slate start --env=dev",
-    "watch-dev": "slate watch --env=dev"
+    "watch-dev": "slate watch --env=dev",
+    "start-prod": "slate start --env=prod",
+    "watch-prod": "slate watch --env=prod"
   },
   "dependencies": {
     "@shopify/slate": "^0.14.0"
