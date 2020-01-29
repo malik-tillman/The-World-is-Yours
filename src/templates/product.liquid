@@ -82,6 +82,9 @@
         {% include 'size-chart' %}
 
         <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product__cart-form">
+            {% assign vQuantity = 0 %}
+            {% assign vVariant = 0 %}
+
             {% if product.available %}
             {% if product.has_only_default_variant %}
                 <input name="id" value="{{ product.variants[0].id }}" type="hidden">
@@ -108,7 +111,7 @@
                 <input type="number" id="Quantity" name="quantity" value="1" min="1">
             </div>
 
-            <button type="submit" name="add" id="AddToCart" class="button--colored" data-cart-add="{{ product.variants[0].id }}" >Add to cart</button>
+            <button type="submit" name="add" id="AddToCart" class="button--colored" >Add to cart</button>
 
             {% else %}
             <span class="product__sold-out">Sold Out</span>
@@ -136,26 +139,22 @@
 <script type="text/javascript">
   let add_to_cart = $('#AddToCart');
 
-  console.log(document.getElementById('AddToCart'));
-
   add_to_cart.on('click', e => {
+
+
     e.preventDefault();
 
     let header_cart_text = document.getElementById('header-cart__text');
     let shopping_cart__empty_text = document.getElementById('shopping-cart__empty-text');
     let shopping_cart_text = $('.shopping-cart__content');
 
-    //CartJS.addItem();
-    //Shopify.addItemFromForm('AddToCartForm');
+    let productSelect = document.getElementById('productSelect');
+    let quantity = document.getElementById('Quantity');
 
-    $.ajax({
-      type: 'GET',
-      url: '/cart.js',
-      dataType: 'json',
-      success: function(data){
-          console.log(header_cart_text);
-      },
-      error: function(){}
+    CartJS.addItem(productSelect.value, quantity.value);
+
+    $(document).on('cart.requestComplete', function (data) {
+        header_cart_text.innerHTML = "[" + CartJS.cart.item_count + "]";
     });
   });
 

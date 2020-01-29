@@ -117,6 +117,12 @@
 		<div class="header-cart__count">
 			<span id="header-cart__text" class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
 		</div>
+
+		{% else %}
+			<div class="header-cart__count">
+				<span id="header-cart__text" class="header-cart__count__text" aria-label="Amount of items in cart"></span>
+			</div>
+
 		{% endif %}
 
 		{% comment %}{# Cart Icon #}{% endcomment %}
