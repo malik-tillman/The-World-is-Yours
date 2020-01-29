@@ -82,41 +82,42 @@
         {% include 'size-chart' %}
 
         <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product__cart-form">
+            {% if product.available %}
+            {% if product.has_only_default_variant %}
+                <input name="id" value="{{ product.variants[0].id }}" type="hidden">
+            {% else %}
+                <select name="id" id="productSelect">
+                {% for variant in product.variants %}
+                {% if variant.available %}
+                    <option value="{{ variant.id }}">
+                        {{ variant.title }}
+                    </option>
+                {% else %}
+                    <option disabled="disabled">
+                        {{ variant.title }} - sold out
+                    </option>
+                {% endif %}
+                {% endfor %}
+                </select>
+            {% endif %}
+            {% endif %}
 
             {% if product.available %}
-  {% if product.has_only_default_variant %}
-  <input name="id" value="{{ product.variants[0].id }}" type="hidden">
-  {% else %}
-  <select name="id" id="productSelect">
-    {% for variant in product.variants %}
-      {% if variant.available %}
-        <option value="{{ variant.id }}">
-          {{ variant.title }}
-        </option>
-      {% else %}
-        <option disabled="disabled">
-          {{ variant.title }} - sold out
-        </option>
-      {% endif %}
-    {% endfor %}
-  </select>
-{% endif %}
-  
-{% endif %}
+            <div class="product-info__quantity">
+                <label for="Quantity">Quantity</label>
+                <input type="number" id="Quantity" name="quantity" value="1" min="1">
+            </div>
 
-            {% if product.available %}
-  <div class="visually-hidden">
-    <label for="Quantity">Quantity</label>
-    <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  </div>
-  <button type="submit" name="add" id="AddToCart" class="button--colored" data-product-id="{{ product.variants[0].id }}">Add to cart</button>
-  {% else %}
-  <span class="product__sold-out">Sold Out</span>
-  {% endif %}
+            <button type="submit" name="add" id="AddToCart" class="button--colored" data-cart-add="{{ product.variants[0].id }}" >Add to cart</button>
+
+            {% else %}
+            <span class="product__sold-out">Sold Out</span>
+
+            {% endif %}
         </form>
 
         <div class="product-info__klarna">
-            Pay in installments with
+            Pay in installments at checkout with
             <strong><a href="https://www.klarna.com/" target="_blank">
                 Klarna
             </a></strong>
@@ -144,7 +145,8 @@
     let shopping_cart__empty_text = document.getElementById('shopping-cart__empty-text');
     let shopping_cart_text = $('.shopping-cart__content');
 
-    Shopify.addItemFromForm('AddToCartForm');
+    //CartJS.addItem();
+    //Shopify.addItemFromForm('AddToCartForm');
 
     $.ajax({
       type: 'GET',

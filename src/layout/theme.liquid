@@ -63,16 +63,13 @@
 
 	{% comment %}{# Preloaded Stylesheets and Scripts #}{% endcomment %}
 	{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
-	{% comment %}{# {# {{ 'csnv.css' | asset_url | stylesheet_tag }} #} #}{% endcomment %}
-	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }} {% comment %}{# todo: delete #}{% endcomment %}
-	{{ 'api.jquery.js' | shopify_asset_url | script_tag }} {% comment %}{# todo: delete #}{% endcomment %}
+	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+	{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
 
 	{% comment %}{# Deferred Scripts #}{% endcomment %}
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" defer></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/rivets-cart.min.js" defer></script>
-	<script src="{{ 'global.js' | asset_url }}" defer></script>
-	<script src="{{ 'glitch.js' | asset_url }}"></script>
-
+	<script type="text/javascript" src="{{ 'rivets-cart.min.js' | asset_url }}" defer></script>
+	<script type="text/javascript" src="{{ 'global.js' | asset_url }}" defer></script>
+	<script type="text/javascript" src="{{ 'glitch.js' | asset_url }}" defer></script>
 
 	{% comment %}{# Blahh #}{% endcomment %}
 	{{ content_for_header }}
@@ -117,13 +114,12 @@
 	<div class="header-cart">
 		{% comment %}{# Show Count #}{% endcomment %}
 		{% if cart.item_count > 0 %}
-			<div class="header-cart__count">
-				<span id="header-cart__text" class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
-			</div>
+		<div class="header-cart__count">
+			<span id="header-cart__text" class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
+		</div>
 		{% endif %}
 
 		{% comment %}{# Cart Icon #}{% endcomment %}
-		{% comment %}{# todo: Change button to link #}{% endcomment %}
 		<button class="header-cart__button" type="button">
 			<span class="visually-hidden">Shopping Cart</span>
             {% render 'icon-bag' %}
@@ -143,7 +139,7 @@
 			{% comment %}{# All Rights Reserved #}{% endcomment %}
 			{% comment %}{# todo: Localize #}{% endcomment %}
 			<small class="side-bar__header-logo__reg">All Rights Reserved <br>
-			&copy; 2019 CSNV studio</small>
+			&copy; 2020 CSNV studio</small>
 		</div>
 
 		{% comment %}{# Nav #}{% endcomment %}
@@ -296,9 +292,6 @@
 
 	{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
 	<div class="shopping-cart">
-		{% comment %}{# todo: evaluate | delete #}{% endcomment %}
-		<div class="shopping-cart__mask"></div>
-
 		{% comment %}{# Cart #}{% endcomment %}
 		<div class="shopping-cart__content">
 			{% comment %}{# Close Button #}{% endcomment %}
@@ -418,7 +411,7 @@
 						<!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
 
 						{% comment %}{# todo: Localize #}{% endcomment %}
-						<button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
+						<button class="shopping-cart__checkout button--colored" name="checkout">
 							Checkout
 						</button>
 					</div>
@@ -475,26 +468,25 @@
 		</div>
 	</footer>
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" ></script>
-	<script src="{{ 'global.js' | asset_url }}" ></script>
-
 	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
 		jQuery(function() {
 			CartJS.init({{ cart | json }});
 		});
 
-		window.addEventListener("load", function () {
-			let loader = document.getElementById("loader");
+		console.log("{{ routes.cart_url }}");
 
-			setTimeout(function () {
-				document.body.style.overflowY = "scroll";
-			}, 500);
-
-			setTimeout(function () {
-				loader.style.opacity = "0";
-			}, 1000);
-		} );
+		// window.addEventListener("load", function () {
+		// 	let loader = document.getElementById("loader");
+		//
+		// 	setTimeout(function () {
+		// 		document.body.style.overflowY = "scroll";
+		// 	}, 500);
+		//
+		// 	setTimeout(function () {
+		// 		loader.style.opacity = "0";
+		// 	}, 1000);
+		// } );
 	</script>
 </body>
 </html>
