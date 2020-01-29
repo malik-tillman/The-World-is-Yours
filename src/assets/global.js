@@ -5,11 +5,10 @@ const init = () => {
     let sidebar_mask = select('.side-bar__mask');
 
     let nav_dropdown = select('.side-bar__nav__dropdown-trigger');
-    
+
     let header_cart_button = select('.header-cart__button');
     let close_cart_button = select('.shopping-cart__close');
-    let shopping_mask = select('.shopping-cart__mask');
-    let cart_triggers = [header_cart_button, close_cart_button, shopping_mask];
+    let cart_triggers = [header_cart_button, close_cart_button];
 
     if (mobile_menu_button) mobile_menu_button.addEventListener('click', toggle_menu);
     if (sidebar_mask) sidebar_mask.addEventListener('click', toggle_menu);
@@ -61,7 +60,7 @@ const init = () => {
     		})
     	})
     }
-}
+};
 
 const select = (selector, parent = document) => {
     let found_el = [...parent.querySelectorAll(selector)];
@@ -96,10 +95,7 @@ const toggle_menu = e => {
 }
 
 const toggle_shoppingcart = e => {
-	let content = select('body');
 	let off_screen_cart = select('.shopping-cart');
-
-	content.classList[!content.classList.contains('shopping-cart--is-open') ? 'add' : 'remove']('shopping-cart--is-open');
 
 	off_screen_cart.classList[!off_screen_cart.classList.contains('is-open') ? 'add' : 'remove']('is-open');
 };
@@ -133,6 +129,10 @@ const toggle_dropdown = e => {
 		clicked_element.parentElement.classList.add('is-active');
 	}
 }
+
+const vLog = e => {
+	console.log(e);
+};
 
 document.addEventListener('DOMContentLoaded', init)
 
