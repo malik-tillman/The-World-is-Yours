@@ -273,6 +273,7 @@
   #product__container {
     height: 100%;
     overflow: hidden;
+    margin-right: 0;
   }
 
   .product__images__container {
@@ -311,22 +312,16 @@
   }
 
   .product_title_container {
-    order: 1;
-    width: 100%;
-    right: 0;
+    top: 50vw;
   }
 
   #product_title {
     text-align: center;
 
-    transform: rotate(0deg);
-    position: relative;
-
     font-size: 1.7em;
     white-space: normal;
 
-    padding: 1em;
-    margin: 0;
+    padding-right: 1em;
   }
 
   .product__info {

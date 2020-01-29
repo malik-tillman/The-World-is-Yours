@@ -69,6 +69,7 @@
 
 	{% comment %}{# Deferred Scripts #}{% endcomment %}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/cart.min.js" defer></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.3/rivets-cart.min.js" defer></script>
 	<script src="{{ 'global.js' | asset_url }}" defer></script>
 	<script src="{{ 'glitch.js' | asset_url }}"></script>
 
@@ -117,7 +118,7 @@
 		{% comment %}{# Show Count #}{% endcomment %}
 		{% if cart.item_count > 0 %}
 			<div class="header-cart__count">
-				<span class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
+				<span id="header-cart__text" class="header-cart__count__text" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
 			</div>
 		{% endif %}
 
@@ -310,7 +311,7 @@
 
 			{% comment %}{# No Items in Cart #}{% endcomment %}
 			{% if cart.item_count == 0 %}
-				<div class="shopping-cart__empty-text">The shopping bag is empty, try refreshing the page.</div>
+				<div id="shopping-cart__empty-text" class="shopping-cart__empty-text">The shopping bag is empty, try refreshing the page.</div>
 
 				<div class="empty__bag_video_container">
 					<a href="/cart">
@@ -479,6 +480,10 @@
 
 	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
+		jQuery(function() {
+			CartJS.init({{ cart | json }});
+		});
+
 		window.addEventListener("load", function () {
 			let loader = document.getElementById("loader");
 

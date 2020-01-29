@@ -3,6 +3,12 @@
 {% assign hiQuality = 'master' %}
 
 <section class="product">
+    <div class="product_title_container">
+        <div class="intrinsic__title_container">
+            <h1 id="product_title">{{ product.title }}</h1>
+        </div>
+    </div>
+
     <div id="clickRegions">
         <div id="leftRegion"></div>
 
@@ -120,24 +126,22 @@
             {{ product.description }}
         </div>
     </div>
-
-    <div class="product_title_container">
-        <div class="intrinsic__title_container">
-            <h1 id="product_title">{{ product.title }}</h1>
-        </div>
-    </div>
 </section>
 
-{% section 'product-recommendations' %}
+<div class="visually-hidden">
+    {% section 'product-recommendations' %}
+</div>
 
 <script type="text/javascript">
   let add_to_cart = $('#AddToCart');
 
+  console.log(document.getElementById('AddToCart'));
+
   add_to_cart.on('click', e => {
     e.preventDefault();
 
-    let header_cart_text = $('.header-cart__count__text');
-    let shopping_cart__empty_text = $('.shopping-cart__empty-text');
+    let header_cart_text = document.getElementById('header-cart__text');
+    let shopping_cart__empty_text = document.getElementById('shopping-cart__empty-text');
     let shopping_cart_text = $('.shopping-cart__content');
 
     Shopify.addItemFromForm('AddToCartForm');
@@ -147,15 +151,7 @@
       url: '/cart.js',
       dataType: 'json',
       success: function(data){
-          console.log(data);
-
-          shopping_cart__empty_text.remove();
-
-          header_cart_text.html( `[${data.item_count}]`);
-
-          data.items.forEach( item => {
-            console.log(item)
-          })
+          console.log(header_cart_text);
       },
       error: function(){}
     });
