@@ -1,0 +1,32 @@
+
+{%- for item in cart.items -%}
+<div>{{ item.title }}</div>
+
+{% comment %}
+<div class="shopping-cart__item">
+    <div class="shopping-cart__image_container">
+        <img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
+    </div>
+
+    <div class="shopping-cart__details">
+        <div class="shopping-cart__details_container">
+            <span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
+            <span class="shopping-cart__price">{{ item.product.price | money}}</span>
+            <span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+        </div>
+
+        <div class="shopping-cart__inputs_container">
+                        <span class="shopping-cart__quantity">
+                            <label for="updates_{{ item.key }}">Quantity:</label>
+                            <input id="updates_{{ item.key }}" class="cart__qty-input" name="updates[]" type="text"
+                                   value="{{ item.quantity }}" min="0" pattern="[0-9]*"
+                                   data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
+                        </span>
+            <p class="cart__remove">
+                <a class="text-link text-link--accent" aria-label="Remove">Remove</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endcomment %}
+{%- endfor -%}

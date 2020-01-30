@@ -81,7 +81,7 @@
 
         {% include 'size-chart' %}
 
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product__cart-form">
+        <form id="AddToCartForm" class="product__cart-form">
             {% assign vQuantity = 0 %}
             {% assign vVariant = 0 %}
 
@@ -111,7 +111,7 @@
                 <input type="number" id="Quantity" name="quantity" value="1" min="1">
             </div>
 
-            <button type="submit" name="add" id="AddToCart" class="button--colored" >Add to cart</button>
+            <button id="AddToCart" class="button--colored">Add to cart</button>
 
             {% else %}
             <span class="product__sold-out">Sold Out</span>
@@ -140,21 +140,26 @@
   let add_to_cart = $('#AddToCart');
 
   add_to_cart.on('click', e => {
-
-
     e.preventDefault();
 
     let header_cart_text = document.getElementById('header-cart__text');
+    let cartItemContainer = document.getElementById('cart-item__container');
     let shopping_cart__empty_text = document.getElementById('shopping-cart__empty-text');
     let shopping_cart_text = $('.shopping-cart__content');
 
     let productSelect = document.getElementById('productSelect');
     let quantity = document.getElementById('Quantity');
 
-    CartJS.addItem(productSelect.value, quantity.value);
-
-    $(document).on('cart.requestComplete', function (data) {
-        header_cart_text.innerHTML = "[" + CartJS.cart.item_count + "]";
+    CartJS.addItem(productSelect.value, quantity.value, {}, {
+        "success": function (data, textStatus, jsXHR) {
+            header_cart_text.innerHTML = "[" + CartJS.cart.item_count + "]";
+            let newCart = `{% render 'cart-item' %}`;
+            $('#cart-item__container')[0].innerHTML = newCart;
+            console.log(newCart);
+        },
+        "error": function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
     });
   });
 
@@ -224,6 +229,7 @@
   window.addEventListener('resize', focusReset);
 
   window.addEventListener('load', function () {
+      // CartJS.clear();
       $( function() {
           $( ".glitch_image" ).mgGlitch({
               destroy : false, // set 'true' to stop the plugin
