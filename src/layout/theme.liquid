@@ -323,75 +323,18 @@
 
 			{% comment %}{# Items are in Cart #}{% endcomment %}
 			{% else %}
-				<form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+				<form  action="{{ routes.cart_url }}" method="post" novalidate class="cart">
 
 					{% comment %}{# Items in Cart #}{% endcomment %}
 					<div class="shopping-cart__items">
 
 						{% comment %}{# Cart Title #}{% endcomment %}
 						{% comment %}{# todo: localize #}{% endcomment %}
-						<a href="/cart">
-							<h1 id="cart-title">Your Bag</h1>
-						</a>
+						<h1 id="cart-title">Your Bag</h1>
 
-						{% comment %}{# Loop Through Cart Items #}{% endcomment %}
-						{%- for item in cart.items -%}
-							{% comment %}{# Display Each Item's Information #}{% endcomment %}
-							<div class="shopping-cart__item">
-
-								{% comment %}{# Item Image #}{% endcomment %}
-								<img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
-
-								{% comment %}{# Item Details #}{% endcomment %}
-								<div class="shopping-cart__details">
-
-									<div class="shopping-cart__details_container">
-										<span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
-										<span class="shopping-cart__price">{{ item.product.price | money}}</span>
-										<span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
-									</div>
-
-									<div class="shopping-cart__inputs_container">
-										{% comment %}{# Quantity Selection #}{% endcomment %}
-										<span class="shopping-cart__quantity">
-
-										{% comment %}{# Item Input Label #}{% endcomment %}
-										<label for="updates_{{ item.key }}" class="visually-hidden">
-											Quantity:
-										</label>
-
-										{% comment %}{# Minus Item Input #}{% endcomment %}
-										<button type="button" class="shopping-cart__quantity-button shopping-cart__quantity-button--minus" data-quantity-input="{{ item.key }}">
-											<span>−</span>
-										</button>
-
-										{% comment %}{# Input Number Amount #}{% endcomment %}
-										<input id="updates_{{ item.key }}_cart" class="shopping-cart__quantity-input"
-											   name="updates[]" type="text" value="{{ item.quantity }}"
-											   data-min="0" data-max="{{ item.quantity }}" pattern="[0-9]*"
-											   data-quantity-input="{{ item.key }}"
-											   data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
-
-										{% comment %}{# Add Item Input #}{% endcomment %}
-										<button type="button" class="shopping-cart__quantity-button shopping-cart__quantity-button--plus" data-quantity-input="{{ item.key }}">
-											<span>+</span>
-										</button>
-
-									</span>
-
-										{% comment %}{# Remove Product #}{% endcomment %}
-										<p class="shopping-cart__cart-remove">
-											<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
-											   class="text-link text-link--accent" aria-label="Remove">
-												Remove
-											</a>
-										</p>
-									</div>
-								</div>
-
-							</div>
-
-						{%- endfor -%}
+						<div id="cart-item__container">
+							{% render 'cart-item' %}
+						</div>
 
 					</div>
 
@@ -479,8 +422,6 @@
 		jQuery(function() {
 			CartJS.init({{ cart | json }});
 		});
-
-		console.log("{{ routes.cart_url }}");
 
 		// window.addEventListener("load", function () {
 		// 	let loader = document.getElementById("loader");
