@@ -65,9 +65,9 @@
 	{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
 	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
 	{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+	{{ 'cart.min.js' | asset_url | script_tag }}
 
 	{% comment %}{# Deferred Scripts #}{% endcomment %}
-	<script type="text/javascript" src="{{ 'rivets-cart.min.js' | asset_url }}" defer></script>
 	<script type="text/javascript" src="{{ 'global.js' | asset_url }}" defer></script>
 	<script type="text/javascript" src="{{ 'glitch.js' | asset_url }}" defer></script>
 
@@ -323,7 +323,7 @@
 
 			{% comment %}{# Items are in Cart #}{% endcomment %}
 			{% else %}
-				<form  action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+				<form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
 
 					{% comment %}{# Items in Cart #}{% endcomment %}
 					<div class="shopping-cart__items">
@@ -342,7 +342,7 @@
 					<div class="shopping-cart__subtotal">
 						<span class="shopping-cart__subtotal-text">
 							{% comment %}{# todo: Localize #}{% endcomment %}
-							<span>Subtotal</span>{{ cart.total_price | money }}
+							<span>Subtotal</span><span id="cart__total_price">{{ cart.total_price | money }}</span>
 						</span>
 					</div>
 
@@ -360,7 +360,7 @@
 						<!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
 
 						{% comment %}{# todo: Localize #}{% endcomment %}
-						<button class="shopping-cart__checkout button--colored" name="checkout">
+						<button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
 							Checkout
 						</button>
 					</div>
@@ -419,8 +419,30 @@
 
 	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
-		jQuery(function() {
-			CartJS.init({{ cart | json }});
+		CartJS.init({{ cart | json }});
+
+		let removeTriggers = document.getElementsByClassName('cart__remove_1');
+		let itemContainer = document.getElementsByClassName('shopping-cart__item');
+		let indexCallback = 0;
+
+		Array.from(removeTriggers).forEach(trigger => {
+			let localIndexCallback = indexCallback;
+			trigger.addEventListener("click", function () {
+				let variantID = itemContainer[localIndexCallback].classList[1];
+
+				$.ajax({
+					type: 'POST',
+					url: '/cart/change.js',
+					data: "quantity=0&line=" + (localIndexCallback + 1),
+					success: function () {
+						location.reload();
+					},
+					error: function (e) {
+						location.reload();
+					}
+				});
+			});
+			indexCallback++;
 		});
 
 		// window.addEventListener("load", function () {
