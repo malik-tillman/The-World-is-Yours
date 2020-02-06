@@ -8,7 +8,7 @@
   }
 
   .product-grid__card {
-    padding: 1em 0;
+    padding: 0 0 1em 0;
   }
 }
 
@@ -312,16 +312,22 @@
   }
 
   .product_title_container {
-    top: 50vw;
+    position: absolute;
+    padding-right: 2em;
+    left: 0;
   }
 
   #product_title {
+    @include prefix(writing-mode, vertical-rl, webkit moz ms o spec);
+
+    writing-mode: tb-rl;
+
     text-align: center;
 
     font-size: 1.7em;
     white-space: normal;
 
-    padding-right: 1em;
+    padding-right: 0;
   }
 
   .product__info {
@@ -493,6 +499,12 @@
   .collection_video_container {
     margin: 0 auto;
     height: 50px;
+  }
+}
+
+@media screen and (min-width: 737px) {
+  .product_title_container {
+    right: 0;
   }
 }
 

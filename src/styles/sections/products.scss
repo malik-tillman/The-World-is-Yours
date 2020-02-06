@@ -124,7 +124,6 @@ body.template--product main  {
 
 .product_title_container {
   position: fixed;
-  right: 0;
   top: 25vh;
   z-index: 5;
 }
@@ -191,22 +190,29 @@ body.template--product main  {
 
 
   position: relative;
-  width: 75%;
+  width: 100%;
   height: 150px;
   object-fit: cover;
   overflow: hidden;
 
-  border-radius: 20px;
-
-  margin: 10em auto auto auto;
   padding: 0;
 
   z-index: 5;
 }
 
+.collection_video_overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(255, 255, 255, 0.2);
+
+  z-index: 1;
+}
+
 .collection_video {
   position: absolute;
-  width: 80vw;
+  width: 100%;
 
   margin: 0;
   padding: 0;
@@ -397,7 +403,6 @@ $card-width: 25%;
   @include prefix(user-select, none, webkit moz o spec);
   position: absolute;
   max-width: 50vw;
-  height: 100%;
   background-color: transparent !important;
   //padding-top: 2em;
 }

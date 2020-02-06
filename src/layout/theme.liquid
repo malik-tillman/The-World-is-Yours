@@ -367,6 +367,8 @@
 
 				</form>
 
+				<button id="remove-all__btn">Remove All</button>
+
 			{% endif %}
 		</div>
 	</div>
@@ -423,6 +425,7 @@
 
 		let removeTriggers = document.getElementsByClassName('cart__remove_1');
 		let itemContainer = document.getElementsByClassName('shopping-cart__item');
+		let removeAllTrigger = document.getElementById('remove-all__btn');
 		let indexCallback = 0;
 
 		Array.from(removeTriggers).forEach(trigger => {
@@ -443,6 +446,20 @@
 				});
 			});
 			indexCallback++;
+		});
+
+		if(removeAllTrigger != null)
+			removeAllTrigger.addEventListener('click', function () {
+			$.ajax({
+				type: 'POST',
+				url: '/cart/clear.js',
+				success: function () {
+					location.reload();
+				},
+				error: function () {
+					location.reload();
+				}
+			});
 		});
 
 		// window.addEventListener("load", function () {
