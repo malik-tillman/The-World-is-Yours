@@ -70,12 +70,16 @@
 .shopping-cart {
   position: fixed;
   left: 0;
-  top: -100%;
+  top: 0;
   transition: top 1000ms ease;
-  will-change: right;
+  will-change: top;
   z-index: 200;
   height: 100%;
   width: 100%;
+}
+
+.shopping-cart.is-closed {
+  top: -100%;
 }
 
 .shopping-cart.is-open {

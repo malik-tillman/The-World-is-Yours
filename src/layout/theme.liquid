@@ -297,7 +297,22 @@
 	</div>
 
 	{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
-	<div class="shopping-cart">
+	<div id="shopping-cart" class="shopping-cart">
+		<script>
+			let isLoadWithCart = localStorage.getItem('load_with_cart');
+			let offScreenCart = document.getElementById('shopping-cart');
+
+			if(isLoadWithCart === "true") {
+				//offScreenCart.classList['add']('is-open');
+			}
+			else {
+				offScreenCart.classList['add']('is-closed');
+			}
+
+			offScreenCart.style.transition = "transition: top 1000ms ease";
+			localStorage.setItem('load_with_cart', 'false');
+		</script>
+
 		{% comment %}{# Cart #}{% endcomment %}
 		<div class="shopping-cart__content">
 			{% comment %}{# Close Button #}{% endcomment %}
@@ -373,6 +388,7 @@
 		</div>
 	</div>
 
+
 	{% comment %}{# Footer #}{% endcomment %}
 	<footer class="footer">
 		<div class="social__footer">
@@ -423,7 +439,7 @@
 	<script>
 		CartJS.init({{ cart | json }});
 
-		let removeTriggers = document.getElementsByClassName('cart__remove_1');
+		let removeTriggers = document.getElementsByClassName('cart__remove');
 		let itemContainer = document.getElementsByClassName('shopping-cart__item');
 		let removeAllTrigger = document.getElementById('remove-all__btn');
 		let indexCallback = 0;
@@ -437,12 +453,8 @@
 					type: 'POST',
 					url: '/cart/change.js',
 					data: "quantity=0&line=" + (localIndexCallback + 1),
-					success: function () {
-						location.reload();
-					},
-					error: function (e) {
-						location.reload();
-					}
+					success: processCallback(null, null),
+					error: e => processCallback(e)
 				});
 			});
 			indexCallback++;
@@ -450,17 +462,32 @@
 
 		if(removeAllTrigger != null)
 			removeAllTrigger.addEventListener('click', function () {
-			$.ajax({
-				type: 'POST',
-				url: '/cart/clear.js',
-				success: function () {
-					location.reload();
-				},
-				error: function () {
-					location.reload();
-				}
+				$.ajax({
+					type: 'POST',
+					url: '/cart/clear.js',
+					success: e => processCallback(null, null),
+					error: e => processCallback(e, "error")
+				});
 			});
-		});
+
+		function processCallback(e) {
+			if(e != null) {
+				let response = JSON.parse(e.responseText);
+
+				if(response.status === "bad_status"){
+					console.log("error");
+					console.log(response);
+				}
+				else {
+					console.log("success");
+					location.reload();
+
+					localStorage.setItem('load_with_cart', 'true');
+				}
+			}
+
+			location.reload();
+		}
 
 		// window.addEventListener("load", function () {
 		// 	let loader = document.getElementById("loader");

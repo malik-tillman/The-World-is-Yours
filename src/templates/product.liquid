@@ -2,7 +2,7 @@
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 {% assign hiQuality = 'master' %}
 
-<section class="product">
+<section class="product" style="position: fixed">
     <div class="product_title_container">
         <div class="intrinsic__title_container">
             <h1 id="product_title">{{ product.title }}</h1>
@@ -119,6 +119,12 @@
             {% endif %}
         </form>
 
+        <div id="cart_feedback__container">
+            <div id="cart_feedback__intrinsic">
+                <div id="product-info__cart-feedback">There was an error adding your item!</div>
+            </div>
+        </div>
+
         <div class="product-info__klarna">
             Pay in installments at checkout with
             <strong><a href="https://www.klarna.com/" target="_blank">
@@ -132,7 +138,7 @@
     </div>
 </section>
 
-<div class="visually-hidden">
+<div style="" class="visually-hidden">
     {% section 'product-recommendations' %}
 </div>
 
@@ -153,16 +159,38 @@
               location.reload();
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
-              let errorStatus = JSON.parse(XMLHttpRequest.responseText).status;
-              if(errorStatus) {
-                  console.log(errorStatus);
+              let response = JSON.parse(XMLHttpRequest.responseText);
+              if(response.status) {
+                  console.log(response);
+                  localStorage.setItem('cart_error_message', response.status);
               }
               else {
-                  location.reload();
+
+                  localStorage.setItem('cart_error_message', null);
               }
+
+
+              location.reload();
           }
       });
   });
+
+  function processCartCallback(e) {
+      if(e != null) {
+          let response = JSON.parse(e.responseText);
+
+          if(response.status === "bad_status"){
+              console.log("error");
+              console.log(response);
+          }
+          else {
+              localStorage.setItem('cart_error_message', null);
+          }
+      }
+
+      localStorage.setItem('cart_show_feedback', "true");
+      location.reload();
+  }
 
   var imagePath = '{{ image.src | img_url: quality }}';
 
@@ -187,7 +215,6 @@
 
   /* Initial Reset */
   focusReset();
-
 
 
   leftTrigger.addEventListener('click', focusLastImage);
@@ -436,6 +463,8 @@
       containerTransform = 0;
       let deltaX = 0;
   }
+
+
 
 </script>
 

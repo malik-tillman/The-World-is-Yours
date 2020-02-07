@@ -18,7 +18,7 @@
                                    value="{{ item.quantity }}" min="0" pattern="[0-9]*" oninput="updateTotalPrice()"
                                    data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
                         </span>
-            <button class="cart__remove_1">Remove</button>
+            <button type="button" onclick="return false;" class="cart__remove">Remove</button>
             <div>[{{ item.quantity }}]</div>
         </div>
     </div>

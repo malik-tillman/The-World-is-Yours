@@ -71,7 +71,7 @@ body.template--product main  {
   padding: 0;
 }
 
-#size-chart-container {
+#size-chart-container, #cart_feedback__container {
   width: auto;
   height: 0;
 
@@ -79,7 +79,7 @@ body.template--product main  {
   transition: height 1s ease;
 }
 
-#size-chart-intrinsic {
+#size-chart-intrinsic, #cart_feedback__intrinsic {
   @include flexbox();
   @include flex-direction(coulmn);
   @include justify-content(center);
@@ -89,6 +89,18 @@ body.template--product main  {
 
 #size-chart {
   width: 35vh;
+}
+
+#product-info__cart-feedback {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+
+  padding: 1em 0;
+}
+
+#product-info__cart-feedback {
+  background-color: red;
 }
 
 .product__info {
@@ -451,6 +463,7 @@ $card-width: 25%;
   width: 100%;
   max-width: unset;
 }
+
 
 .product__sold-out {
   margin: 1rem 0;
