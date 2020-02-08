@@ -1,68 +1,61 @@
-<div class="cart__page__container">
-    {% if settings.collection_heading_video_fallback %}
-        <div class="collection_video_container">
-            <video class="collection_video" autoplay muted loop playsinline preload disablePictureInPicture
-                   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster-2.PNG?v=1580146792">
-                <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/6494e618-2175-47d1-a407-84e2c5d85bc6.MP4?940" type="video/mp4">
-            </video>
-        </div>
-    {% endif %}
+{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
+<div id="cart" class="cart">
+    {% comment %}{# Cart #}{% endcomment %}
+    <div class="shopping-cart__content">
+        {% comment %}{# No Items in Cart #}{% endcomment %}
+        {% if cart.item_count == 0 %}
 
-    {% if cart.item_count > 0 %}
-    <h1 class="cart_page__title">Checkout Bag</h1>
-    <form class="cart__item_container" action="/cart" method="post" novalidate>
-        {% for item in cart.items %}
-        <div class="shopping-cart__divider"></div>
+            <div id="shopping-cart__empty-text" class="shopping-cart__empty-text">The shopping bag is empty.</div>
 
-        <div class="shopping-cart__item">
-                <div class="shopping-cart__image_container">
-                    <img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
+            <div class="empty__bag_video_container">
+                <a href="/cart">
+                    <video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture
+                           poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster-3.PNG?v=1580146792">
+                        <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/6494e618-2175-47d1-a407-84e2c5d85bc6.MP4?940" type="video/mp4">
+                    </video>
+                </a>
+            </div>
+
+            {% comment %}{# Items are in Cart #}{% endcomment %}
+        {% else %}
+            <form class="shopping-cart__content-container" action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+
+                <div class="cart__title">Checkout Bag</div>
+
+                <div class="clickBag">
+                    Click Bag Icon
                 </div>
 
-                <div class="shopping-cart__details">
-                    <div class="shopping-cart__details_container">
-                        <span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
-                        <span class="shopping-cart__price">{{ item.product.price | money}}</span>
-                        <span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+                <div class="shopping-cart__footer-container">
+                    {% comment %}{# Cart Subtotal #}{% endcomment %}
+                    <div class="shopping-cart__subtotal">
+						<span class="shopping-cart__subtotal-text">
+							{% comment %}{# todo: Localize #}{% endcomment %}
+							<span>Subtotal</span><span id="cart__total_price">{{ cart.total_price | money }}</span>
+						</span>
                     </div>
 
-                    <div class="shopping-cart__inputs_container">
-                        <span class="shopping-cart__quantity">
-                            <label for="updates_{{ item.key }}">Quantity:</label>
-                            <input id="updates_{{ item.key }}" class="cart__qty-input" name="updates[]" type="text"
-                                   value="{{ item.quantity }}" min="0" pattern="[0-9]*"
-                                   data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
-                        </span>
-                        <p class="cart__remove">
-                            <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-link text-link--accent" aria-label="Remove">Remove</a>
-                        </p>
+                    {% comment %}{# Cart Footer #}{% endcomment %}
+                    <div class="shopping-cart__footer">
+                        {% comment %}{# todo: Localize #}{% endcomment %}
+                        <p>Shipping & taxes calculated at checkout</p>
+
+                        {% comment %}{# todo: Localize #}{% endcomment %}
+                        <p><strong>INTERNATIONAL ORDERS MAY BE SUBJECT TO CUSTOMS DUTIES OR IMPORT TAXES</strong></p>
+                    </div>
+
+                    {% comment %}{# Submit Button #}{% endcomment %}
+                    <div class="shopping-cart__button-containers">
+                        <!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
+
+                        {% comment %}{# todo: Localize #}{% endcomment %}
+                        <button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
+                            Checkout
+                        </button>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            </form>
 
-        <div class="shopping-cart__checkout_container">
-            <div class="shopping-cart__subtotal">
-                <span class="shopping-cart__subtotal-text"><strong>Subtotal:</strong> {{ cart.total_price | money }}</span>
-            </div>
-            <div class="shopping-cart__button-containers">
-                <button type="submit" name="update">Update</button>
-                <button class="button--colored" type="submit" name="checkout">Checkout</button>
-            </div>
-        </div>
-    </form>
-
-    {% else %}
-    <h2 class="cart_page__title">Bag is empty, try refreshing to update it.</h2>
-
-    {% comment %}
-    <div class="empty__bag_video_container">
-        <video class="empty__bag_collection_video" autoplay muted loop playsinline preload disablePictureInPicture
-               poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster-2.PNG?v=1580146792">
-            <source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/6494e618-2175-47d1-a407-84e2c5d85bc6.MP4?940" type="video/mp4">
-        </video>
+        {% endif %}
     </div>
-    {% endcomment %}
-    {% endif %}
 </div>
-

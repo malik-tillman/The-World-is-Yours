@@ -15,8 +15,7 @@ body.template--product main  {
   width: 100%;
   max-width: unset;
   padding-top: 0;
-
-  overflow: hidden;
+  min-height: 100%;
 }
 
 .product-info__description {
@@ -140,7 +139,13 @@ body.template--product main  {
   z-index: 5;
 }
 
+.product_title_container-mobile {
+  display: none;
+}
 
+#product_title-mobile {
+  font-size: 1.2em;
+}
 
 
 #shopify-section-product-recommendations,
@@ -503,4 +508,47 @@ $card-width: 25%;
 
   -webkit-box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.2),
   -15px -15px 52px -6px rgba(255,255,255,.7);
+}
+
+#size-chart__lookbook-container {
+  @include flexbox();
+  @include justify-content(center);
+
+  position: absolute;
+  top: 0;
+  display: none;
+
+  width: 100vw;
+  height: 100%;
+
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(5px);
+
+  opacity: 0;
+  transition: opacity 1000ms ease;
+
+  z-index: 1000;
+}
+
+.size-chart__image-container {
+  position: sticky;
+  top: 25vh;
+  padding: 2em;
+}
+
+#size-chart__image {
+  max-height: 90vh;
+  max-width: 90vw;
+
+  box-shadow: 0 0 15px 0 rgba(0,0,0,.4);
+}
+
+.product__info__badge-container {
+  text-align: justify;
+  letter-spacing: 0.2em;
+  background-color: rgba(30, 30, 30, 0.89);
+  color: #f1f1f1;
+  padding: 1em;
+  font-size: 0.7em;
+  margin-bottom: 2em;
 }

@@ -8,6 +8,7 @@ const init = () => {
 
     let header_cart_button = select('.header-cart__button');
     let close_cart_button = select('.shopping-cart__close');
+
     let cart_triggers = [header_cart_button, close_cart_button];
 
     if (mobile_menu_button) mobile_menu_button.addEventListener('click', toggle_menu);
@@ -96,8 +97,11 @@ const toggle_menu = e => {
 
 const toggle_shoppingcart = e => {
 	let off_screen_cart = select('.shopping-cart');
+	let mainContainer = select('.container');
 
 	off_screen_cart.classList[!off_screen_cart.classList.contains('is-open') ? 'add' : 'remove']('is-open');
+
+	mainContainer.style.overflow = off_screen_cart.classList.contains('is-open') ? 'hidden' : 'initial';
 };
 
 const toggle_dropdown = e => {

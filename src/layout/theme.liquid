@@ -303,7 +303,7 @@
 			let offScreenCart = document.getElementById('shopping-cart');
 
 			if(isLoadWithCart === "true") {
-				//offScreenCart.classList['add']('is-open');
+				offScreenCart.classList['add']('is-open');
 			}
 			else {
 				offScreenCart.classList['add']('is-closed');
@@ -315,16 +315,20 @@
 
 		{% comment %}{# Cart #}{% endcomment %}
 		<div class="shopping-cart__content">
-			{% comment %}{# Close Button #}{% endcomment %}
-			<button class="shopping-cart__close" aria-labeled="Close shopping cart">
-				{% render "icon-close" %}
-
-				{% comment %}{# todo: localize #}{% endcomment %}
-				<span class="visually-hidden">Close</span>
-			</button>
-
 			{% comment %}{# No Items in Cart #}{% endcomment %}
 			{% if cart.item_count == 0 %}
+				{% comment %}{# Close Button #}{% endcomment %}
+				<div class="shopping-cart__header-container">
+					<div class="shopping-cart__title">Checkout Bag</div>
+					<div></div>
+					<button class="shopping-cart__close" aria-labeled="Close shopping cart">
+						{% render "icon-close" %}
+
+						{% comment %}{# todo: localize #}{% endcomment %}
+						<span class="visually-hidden">Close</span>
+					</button>
+				</div>
+
 				<div id="shopping-cart__empty-text" class="shopping-cart__empty-text">The shopping bag is empty, try refreshing the page.</div>
 
 				<div class="empty__bag_video_container">
@@ -338,51 +342,58 @@
 
 			{% comment %}{# Items are in Cart #}{% endcomment %}
 			{% else %}
-				<form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+				{% comment %}{# Close Button #}{% endcomment %}
+				<div class="shopping-cart__header-container">
+					<div class="shopping-cart__title">Checkout Bag</div>
+					<div></div>
+					<button class="shopping-cart__close" aria-labeled="Close shopping cart">
+						{% render "icon-close" %}
+
+						{% comment %}{# todo: localize #}{% endcomment %}
+						<span class="visually-hidden">Close</span>
+					</button>
+				</div>
+
+				<form class="shopping-cart__content-container" action="{{ routes.cart_url }}" method="post" novalidate class="cart">
 
 					{% comment %}{# Items in Cart #}{% endcomment %}
 					<div class="shopping-cart__items">
-
-						{% comment %}{# Cart Title #}{% endcomment %}
-						{% comment %}{# todo: localize #}{% endcomment %}
-						<h1 id="cart-title">Your Bag</h1>
-
 						<div id="cart-item__container">
 							{% render 'cart-item' %}
 						</div>
-
 					</div>
 
-					{% comment %}{# Cart Subtotal #}{% endcomment %}
-					<div class="shopping-cart__subtotal">
+					<div class="shopping-cart__footer-container">
+						{% comment %}{# Cart Subtotal #}{% endcomment %}
+						<div class="shopping-cart__subtotal">
 						<span class="shopping-cart__subtotal-text">
 							{% comment %}{# todo: Localize #}{% endcomment %}
 							<span>Subtotal</span><span id="cart__total_price">{{ cart.total_price | money }}</span>
 						</span>
+						</div>
+
+						{% comment %}{# Cart Footer #}{% endcomment %}
+						<div class="shopping-cart__footer">
+							{% comment %}{# todo: Localize #}{% endcomment %}
+							<p>Shipping & taxes calculated at checkout</p>
+
+							{% comment %}{# todo: Localize #}{% endcomment %}
+							<p><strong>INTERNATIONAL ORDERS MAY BE SUBJECT TO CUSTOMS DUTIES OR IMPORT TAXES</strong></p>
+						</div>
+
+						{% comment %}{# Submit Button #}{% endcomment %}
+						<div class="shopping-cart__button-containers">
+							<!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
+
+							{% comment %}{# todo: Localize #}{% endcomment %}
+							<button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
+								Checkout
+							</button>
+						</div>
+
+						<div id="remove-all__btn">Remove All</div>
 					</div>
-
-					{% comment %}{# Cart Footer #}{% endcomment %}
-					<div class="shopping-cart__footer">
-						{% comment %}{# todo: Localize #}{% endcomment %}
-						<p>Shipping & taxes calculated at checkout</p>
-
-						{% comment %}{# todo: Localize #}{% endcomment %}
-						<p><strong>INTERNATIONAL ORDERS MAY BE SUBJECT TO CUSTOMS DUTIES OR IMPORT TAXES</strong></p>
-					</div>
-
-					{% comment %}{# Submit Button #}{% endcomment %}
-					<div class="shopping-cart__button-containers">
-						<!-- <a class="shopping-cart__empty-cart" href="/cart/clear">Empty Cart</a> -->
-
-						{% comment %}{# todo: Localize #}{% endcomment %}
-						<button class="shopping-cart__checkout button--colored" name="checkout" action="/checkout/">
-							Checkout
-						</button>
-					</div>
-
 				</form>
-
-				<button id="remove-all__btn">Remove All</button>
 
 			{% endif %}
 		</div>
@@ -437,9 +448,12 @@
 
 	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
-		CartJS.init({{ cart | json }});
+		CartJS.init({{ cart | json }}, {
+			"moneyFormat": "{{ shop.money_format }}",
+			"moneyWithCurrencyFormat": "{{ shop.money_with_currency_format }}"
+		});
 
-		let removeTriggers = document.getElementsByClassName('cart__remove');
+		let removeTriggers = document.getElementsByClassName('shopping-cart__cart-remove');
 		let itemContainer = document.getElementsByClassName('shopping-cart__item');
 		let removeAllTrigger = document.getElementById('remove-all__btn');
 		let indexCallback = 0;

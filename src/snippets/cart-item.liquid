@@ -1,26 +1,109 @@
-{%- for item in cart.items -%}
-<div class="shopping-cart__item {{ item.id }}">
-    <div class="shopping-cart__image_container">
-        <img class="shopping-cart__image" src="{{ item.image | img_url: 'master' }}" alt="{{ item.product.title }}">
-    </div>
 
-    <div class="shopping-cart__details">
-        <div class="shopping-cart__details_container">
-            <span class="shopping-cart__title"><a href="{{ item.url }}" title="{{ item.product.title }}">{{ item.product.title }}</a></span>
-            <span class="shopping-cart__price">{{ item.product.price | money}}</span>
-            <span class="shopping-cart__size">{{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+{%- for item in cart.items -%}
+{% assign itemID = item.id %}
+<div class="shopping-cart__item-container">
+    <div class="shopping-cart__item {{ itemID }}">
+        <div class="shopping-cart__image_container">
+            <img class="shopping-cart__image" src="{{ item.image | img_url: 'original' }}" alt="{{ item.product.title }}">
         </div>
 
-        <div class="shopping-cart__inputs_container">
-            <span class="shopping-cart__quantity visually-hidden">
-                            <label for="updates_{{ item.key }}">Quantity:</label>
-                            <input id="updates_{{ item.key }}" class="cart__qty-input" name="updates[]" type="text"
-                                   value="{{ item.quantity }}" min="0" pattern="[0-9]*" oninput="updateTotalPrice()"
-                                   data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-mobile>
-                        </span>
-            <button type="button" onclick="return false;" class="cart__remove">Remove</button>
-            <div>[{{ item.quantity }}]</div>
+        <div class="shopping-cart__details_container">
+            <span class="shopping-cart__title">{{ item.product.title }}</span>
+            <div>
+                <span class="shopping-cart__size">Size: {{ item.title | remove : item.product.title | remove: ' / ' | remove: '- '}}</span>
+                <span class="shopping-cart__price">{{ item.product.price | money}} x {{ item.quantity }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="shopping-cart__input-container {{ itemID }}">
+        <div class="shopping-cart__input {{ itemID }}">
+            <div class="cart__add visually-hidden">
+                {% render 'icon-plus' %}
+            </div>
+
+            <div class="cart__minus visually-hidden">
+                {% render 'icon-minus' %}
+            </div>
+
+            <span class="cart__remove">
+                REMOVE
+            </span>
+
+            <div class="cart__item-view" onclick="location.href='{{ item.url }}'">
+                View Item
+            </div>
         </div>
     </div>
 </div>
+
 {%- endfor -%}
+
+
+<script>
+    let cartItemContainer = document.getElementsByClassName('shopping-cart__item-container');
+    let inputContainer = document.getElementsByClassName('shopping-cart__input-container');
+    let removeButtons = document.getElementsByClassName("cart__remove");
+    let input = document.getElementsByClassName('shopping-cart__input');
+    let inputToggle = false;
+
+    for(let i=0; i<cartItemContainer.length; i++) {
+        cartItemContainer[i].addEventListener('click', function () {
+            inputToggle = !inputToggle;
+
+            console.log(inputToggle);
+
+            if(inputToggle)
+                showInput(i);
+            else
+                hideInput(i);
+        });
+        cartItemContainer[i].addEventListener('mouseenter', function () {
+            if(window.innerWidth > 736)
+                showInput(i);
+        });
+        cartItemContainer[i].addEventListener('mouseleave', function () {
+            if(window.innerWidth > 736)
+                hideInput(i);
+        });
+        removeButtons[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/cart/change.js',
+                data: "quantity=0&line=" + (i+1),
+                success: processRemoveCallback(null, null),
+                error: e => processRemoveCallback(e)
+            });
+        });
+    }
+
+    function processRemoveCallback(e) {
+        if(e != null) {
+            let response = JSON.parse(e.responseText);
+
+            if(response.status === "bad_status"){
+                console.log("error");
+                console.log(response);
+            }
+            else {
+                localStorage.setItem('cart_error_message', null);
+            }
+        }
+
+        localStorage.setItem('load_with_cart', "true");
+        setTimeout(function () {
+            location.reload();
+        }, 500);
+    }
+
+    function showInput(index) {
+        inputContainer[index].style.height = input[index].offsetHeight + "px";
+    }
+
+    function hideInput(index) {
+        setTimeout(function () {
+            inputContainer[index].style.height = "0";
+        }, 200);
+    }
+</script>

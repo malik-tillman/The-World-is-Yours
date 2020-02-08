@@ -2,10 +2,16 @@
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 {% assign hiQuality = 'master' %}
 
-<section class="product" style="position: fixed">
-    <div class="product_title_container">
-        <div class="intrinsic__title_container">
-            <h1 id="product_title">{{ product.title }}</h1>
+<div class="product_title_container">
+    <div class="intrinsic__title_container">
+        <h1 id="product_title">{{ product.title }}</h1>
+    </div>
+</div>
+
+<section class="product">
+    <div id="size-chart__lookbook-container">
+        <div class="size-chart__image-container">
+            <img src="" alt="" id="size-chart__image">
         </div>
     </div>
 
@@ -77,6 +83,12 @@
     </div>
 
     <div id="product__info" class="product__info">
+        <div class="product_title_container-mobile">
+            <div class="intrinsic__title_container-mobile">
+                <h1 id="product_title-mobile">{{ product.title }}</h1>
+            </div>
+        </div>
+
         <span class="product__info__price">{{ current_variant.price | money }}</span>
 
         {% include 'size-chart' %}
@@ -135,6 +147,10 @@
             <h3 class="product-info__description__title">Description and Details</h3>
             {{ product.description }}
         </div>
+
+        <div class="product__info__badge-container">
+            * Each piece from our capsule collection is unique - containing visual cues that have been purposefully made incorrectly rendering it 1:1
+        </div>
     </div>
 </section>
 
@@ -175,24 +191,11 @@
       });
   });
 
-  function processCartCallback(e) {
-      if(e != null) {
-          let response = JSON.parse(e.responseText);
+  let imagePath = '{{ image.src | img_url: quality }}';
 
-          if(response.status === "bad_status"){
-              console.log("error");
-              console.log(response);
-          }
-          else {
-              localStorage.setItem('cart_error_message', null);
-          }
-      }
+  let sizeChartContainer = document.getElementById("size-chart__lookbook-container");
+  let sizeChartImage = document.getElementById("size-chart__image");
 
-      localStorage.setItem('cart_show_feedback', "true");
-      location.reload();
-  }
-
-  var imagePath = '{{ image.src | img_url: quality }}';
 
   let imageContainer = document.getElementById("product__container");
   let outerImageContainers = [...document.querySelectorAll(".product__images__container")];
@@ -216,12 +219,57 @@
   /* Initial Reset */
   focusReset();
 
+  window.addEventListener('resize', focusReset);
 
-  leftTrigger.addEventListener('click', focusLastImage);
-  rightTrigger.addEventListener('click', focusNextImage);
+  window.addEventListener('load', function () {
+      // CartJS.clear();
+      $( function() {
+          $( ".glitch_image" ).mgGlitch({
+              destroy : false, // set 'true' to stop the plugin
+              glitch: true, // set 'false' to stop glitching
+              scale: true, // set 'false' to stop scaling
+              blend : true, // set 'false' to stop glitch blending
+              blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
+              glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
+              glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
+              glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
+              glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
+              zIndexStart : 1, // because of absolute position, set z-index base value
+          });
+      });
+  });
 
   document.addEventListener('mousemove', function (event) {
       glitchToggle = event.clientX <= (document.documentElement.clientWidth / 2);
+  });
+
+  leftTrigger.addEventListener('click', focusLastImage);
+
+  rightTrigger.addEventListener('click', focusNextImage);
+
+  mobileSwipeRegion.addEventListener('touchstart', function (event) {
+      clientX = event.touches[0].clientX;
+      noMouseEvents = true;
+      glitchToggle = true;
+  }, false);
+
+  mobileSwipeRegion.addEventListener('touchmove', function (event) {
+      deltaX = event.changedTouches[0].clientX - clientX;
+  });
+
+  mobileSwipeRegion.addEventListener('touchend', function (event) {
+      if(Math.abs(deltaX) > 50) {
+          if(deltaX<0)
+              focusNextImage();
+          else
+              focusLastImage();
+      }
+
+      glitchToggle = false;
+  });
+
+  sizeChartContainer.addEventListener('click', function () {
+      hideSizeChart();
   });
 
   setInterval(function () {
@@ -253,47 +301,22 @@
       }
   }, 1000);
 
+  function processCartCallback(e) {
+      if(e != null) {
+          let response = JSON.parse(e.responseText);
 
-  window.addEventListener('resize', focusReset);
-
-  window.addEventListener('load', function () {
-      // CartJS.clear();
-      $( function() {
-          $( ".glitch_image" ).mgGlitch({
-              destroy : false, // set 'true' to stop the plugin
-              glitch: true, // set 'false' to stop glitching
-              scale: true, // set 'false' to stop scaling
-              blend : true, // set 'false' to stop glitch blending
-              blendModeType : '{{ settings.products_glitch_blend }}', // select blend mode type
-              glitch1TimeMin : {{ settings.products_glitch_alpha_min }}, // set min time for glitch 1 elem
-              glitch1TimeMax : {{ settings.products_glitch_alpha_max }}, // set max time for glitch 1 elem
-              glitch2TimeMin : {{ settings.products_glitch_omega_min }}, // set min time for glitch 2 elem
-              glitch2TimeMax : {{ settings.products_glitch_omega_max }}, // set max time for glitch 2 elem
-              zIndexStart : 1, // because of absolute position, set z-index base value
-          });
-      });
-  });
-
-  mobileSwipeRegion.addEventListener('touchstart', function (event) {
-      clientX = event.touches[0].clientX;
-      noMouseEvents = true;
-      glitchToggle = true;
-  }, false);
-
-  mobileSwipeRegion.addEventListener('touchmove', function (event) {
-      deltaX = event.changedTouches[0].clientX - clientX;
-  });
-
-  mobileSwipeRegion.addEventListener('touchend', function (event) {
-      if(Math.abs(deltaX) > 50) {
-          if(deltaX<0)
-              focusNextImage();
-          else
-              focusLastImage();
+          if(response.status === "bad_status"){
+              console.log("error");
+              console.log(response);
+          }
+          else {
+              localStorage.setItem('cart_error_message', null);
+          }
       }
 
-      glitchToggle = false;
-  });
+      localStorage.setItem('cart_show_feedback', "true");
+      location.reload();
+  }
 
   function focusNextImage() {
       if(window.innerWidth < 736) {
@@ -464,8 +487,22 @@
       let deltaX = 0;
   }
 
+  function showSizeChart(image_url) {
+      sizeChartContainer.style.display = "flex";
+      sizeChartImage.src = image_url;
+      
+      setTimeout(function () {
+          sizeChartContainer.style.opacity = "1";
+      }, 300);
+  }
+  
+  function hideSizeChart() {
+      sizeChartContainer.style.opacity = "0";
 
-
+      setTimeout(function () {
+          sizeChartContainer.style.display = "none";
+      }, 1100);
+  }
 </script>
 
 <style>
