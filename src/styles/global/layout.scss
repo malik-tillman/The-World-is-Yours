@@ -55,12 +55,12 @@ tr:nth-child(even) {
 }
 
 .container {
-  @include flexbox();
+  @include flexbox(); 
 
   margin: 0 auto;
   position: absolute;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
   max-width: 100vw;
 }
 
