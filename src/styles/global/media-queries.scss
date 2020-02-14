@@ -1,3 +1,19 @@
+@media screen and (max-width: 1400px) {
+  .product-grid__image {
+    padding: 0 1em;
+  }
+
+  .product-grid__name {
+    font-size: 0.8em;
+  }
+
+  .product-grid__card {
+    padding: 0 0 1em 0;
+  }
+
+  $card-width: 33%;
+}
+
 @media screen and (max-width: 1200px) {
   .product-grid__image {
     padding: 0 1em;
@@ -224,6 +240,10 @@
 
   .lookbook-grid__image {
     width: 50%;
+  }
+
+  .product {
+    overflow: initial;
   }
 
   .product-grid {

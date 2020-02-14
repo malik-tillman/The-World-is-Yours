@@ -2,6 +2,9 @@
   display: block;
 }
 
+.product {
+  overflow: hidden;
+}
 
 body:not(.template--product, .template--collection) main  {
   max-width: unset;
@@ -199,6 +202,13 @@ body.template--product main  {
   @include flex-direction(column);
 }
 
+.collection {
+  position: sticky;
+  top: 0;
+
+  z-index: 2;
+}
+
 .collection_video_container {
   display: block;
 
@@ -259,7 +269,7 @@ body.template--product main  {
 $card-width: 25%;
 .product-grid__card {
   display: inline-block;
-  padding: 2em;
+  padding: 0 2em 4em 2em;
   flex: 1 $card-width;
   width: $card-width;
   max-width: $card-width;
@@ -276,6 +286,13 @@ $card-width: 25%;
   width: 100%;
 
   background-color: $color-product-background;
+
+  cursor: pointer;
+}
+
+.product-grid__image-intrinsic {
+  @include flexbox();
+  height: 50vh;
 }
 
 .product-grid__details {

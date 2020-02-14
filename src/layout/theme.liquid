@@ -82,8 +82,8 @@
 
 	{% comment %}{# ------ Page Loader ------ #}{% endcomment %}
 	<div id="loader">
-	<img id="loader-image" src="{{ 'loading-logo.gif' | asset_url }}" alt="Loading..."/>
-</div>
+		<img id="loader-image" src="{{ 'loading-logo.gif' | asset_url }}" alt="Loading..."/>
+	</div>
 
 	{% comment %}{# ------ Background Video on Index ------ #}{% endcomment %}
 	{% if template == 'index' %}
@@ -503,17 +503,17 @@
 			location.reload();
 		}
 
-		// window.addEventListener("load", function () {
-		// 	let loader = document.getElementById("loader");
-		//
-		// 	setTimeout(function () {
-		// 		document.body.style.overflowY = "scroll";
-		// 	}, 500);
-		//
-		// 	setTimeout(function () {
-		// 		loader.style.opacity = "0";
-		// 	}, 1000);
-		// } );
+		window.addEventListener("DOMContentLoaded", function () {
+			let loader = document.getElementById("loader");
+
+			setTimeout(function () {
+				document.body.style.overflowY = "scroll";
+			}, 500);
+
+			setTimeout(function () {
+				loader.style.opacity = "0";
+			}, 1000);
+		} );
 	</script>
 </body>
 </html>
