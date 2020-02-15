@@ -1,5 +1,6 @@
-{% assign quality = 'original' %}
-{% assign hiQuality = 'original' %}
+{% assign lowQuality = '350x350' %}
+{% assign midQuality = '700x700' %}
+{% assign hiQuality = 'master' %}
 
 <div class="collection_container">
 	<div class="collection">
@@ -30,16 +31,16 @@
 			}
 		</script>
 		{% for product in collection.products %}
-			<div class="product-grid__card">
-				<a href="{{ product.url | within: collection }}">
-					{% assign image = product.featured_image %}
-					<img onload="imageLoaded(this, '{{ image.src | img_url: hiQuality }}')" class="product-grid__image" src="{{ image.src | img_url: '500x500' }}" alt="{{ image.alt | escape }}">
-					<div class="product-grid__details">
-						<h3 class="product-grid__name">{{ product.title }}</h3>
-						<span class="product-grid__price">{{ product.price | money }}</span>
-						{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
-					</div>
-				</a>
+			<div class="product-grid__card" onclick="location.href = '{{ product.url | within: collection }}'">
+				{% assign image = product.featured_image %}
+				<div class="product-grid__image-container">
+					<img class="product-grid__image" src="{{ image.src | img_url: lowQuality }}" onload="imageLoaded(this, '{{ image.src | img_url: hiQuality }}')"  alt="{{ image.alt | escape }}">
+				</div>
+				<div class="product-grid__details">
+					<h3 class="product-grid__name">{{ product.title }}</h3>
+					<span class="product-grid__price">{{ product.price | money }}</span>
+					{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
+				</div>
 			</div>
 		{% else %}
 			<p>no matches</p>

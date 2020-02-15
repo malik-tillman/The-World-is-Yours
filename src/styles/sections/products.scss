@@ -212,10 +212,6 @@ body.template--product main  {
 .collection_video_container {
   display: block;
 
-  box-shadow: 0px 5px 25px 9px rgba(0,0,0,0.2),
-  0px -5px 25px 9px rgba(255,255,255,0.2);
-
-
   position: relative;
   width: 100vw;
   height: 150px;
@@ -254,7 +250,7 @@ body.template--product main  {
 /* ---------- Products Grid ---------- */
 .product-grid {
   @include flexbox();
-  @include justify-content(flex-start);
+  @include justify-content(space-around);
   @include flex-flow(wrap);
   @include align-items(flex-start);
 
@@ -263,27 +259,31 @@ body.template--product main  {
   position: relative;
   left: 0;
   top: 0;
-  padding-left: 3em;
+  padding: 0 3em;
+  margin-bottom: 3em;
 }
 
-$card-width: 25%;
+//$card-width: 28vmax;
+
 .product-grid__card {
-  display: inline-block;
-  padding: 0 2em 4em 2em;
-  flex: 1 $card-width;
-  width: $card-width;
-  max-width: $card-width;
+  margin-bottom: 2em;
+  //margin: 0 2em 4em 2em;
+  // flex: 1 $card-height;
+  //width: $card-width;
+
+  //max-width: $card-width;
 
 }
 
-.product-grid__card a {
-  text-decoration: none;
+$card-height: 35vmax;
+.product-grid__image-container {
+  height: $card-height;
 }
 
 .product-grid__image {
   padding: 0 1.5em;
 
-  width: 100%;
+  height: 100%;
 
   background-color: $color-product-background;
 
@@ -519,17 +519,10 @@ $card-width: 25%;
   transform: scale(0.9);
 }
 
-.lookbook__image, .campaign_collection_video  {
-  box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.2),
-  -15px -15px 52px -6px rgba(255,255,255,.7);
-
-  -webkit-box-shadow: 15px 15px 52px -6px rgba(0,0,0,0.2),
-  -15px -15px 52px -6px rgba(255,255,255,.7);
-}
-
 #size-chart__lookbook-container {
   @include flexbox();
-  @include justify-content(center);
+  @include align-items(center);
+  @include flex-direction(column);
 
   position: absolute;
   top: 0;
@@ -538,7 +531,7 @@ $card-width: 25%;
   width: 100vw;
   height: 100%;
 
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(5px);
 
   opacity: 0;
@@ -547,17 +540,14 @@ $card-width: 25%;
   z-index: 1000;
 }
 
-.size-chart__image-container {
+.size-chart__lookbook-content {
   position: sticky;
-  top: 25vh;
-  padding: 2em;
+  top: 2em;
 }
 
 #size-chart__image {
   max-height: 90vh;
   max-width: 90vw;
-
-  box-shadow: 0 0 15px 0 rgba(0,0,0,.4);
 }
 
 .product__info__badge-container {
@@ -568,4 +558,11 @@ $card-width: 25%;
   padding: 1em;
   font-size: 0.7em;
   margin-bottom: 2em;
+}
+
+#size-chart__close-text {
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  font-weight: bolder;
 }

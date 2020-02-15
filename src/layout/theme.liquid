@@ -75,6 +75,8 @@
 	{{ content_for_header }}
 </head>
 
+
+{% assign marquee_text = "WORLD IS YOURS SS20" %}
 {% comment %}{#  todo: Change body page class selector  #}{% endcomment %}
 {% comment %}{# todo: optimize classes #}{% endcomment %}
 {% comment %}{# class="template-{{ request.page_type | handle }}" #}{% endcomment %}
@@ -101,11 +103,28 @@
     {% comment %}{# ------ Marquee Text ------ #}{% endcomment %}
     {% comment %}{# todo: Change classes to `marquee-[level-name]` #}{% endcomment %}
 	{%- if settings.marquee_text -%}
+		{% case template%}
+			{% when 'index' %}
+				{% assign marquee_text = "THE WORLD IS YOURS" %}
+			{% when 'collection' %}
+				{% assign marquee_text = "SHOP NOW  SHOP NOW" %}
+			{% when 'product' %}
+				{% assign marquee_text = product.title %}
+			{% when 'customers/login' %}
+				{% assign marquee_text = "LOGIN  LOGIN  LOGIN" %}
+			{% when 'customers/register' %}
+				{% assign marquee_text = "REGISTER  REGISTER  REGISTER" %}
+			{% when 'page.contact' %}
+				{% assign marquee_text = "CONTACT US  CONTACT US" %}
+		{% endcase %}
+
+		<script>console.log("{{ template }}")</script>
+
 		<div class="alert-banner">
 			<div class="alert-banner__marquee">
-				<span>{{ settings.marquee_text }}</span>
-				<span>{{ settings.marquee_text }}</span>
-				<span>{{ settings.marquee_text }}</span>
+				<span>{{ marquee_text }}</span>
+				<span>{{ marquee_text }}</span>
+				<span>{{ marquee_text }}</span>
 			</div>
 		</div>
 	{%- endif -%}
@@ -257,8 +276,6 @@
 					margin-left: 0;
 					padding: 2em;
 					background-color: rgba(255, 255, 255, 0.4);
-					-webkit-box-shadow: 0 0 34px 0 rgba(255,255,255,.5);
-					box-shadow: 0 0 34px 0 rgba(255,255,255,.5);
 
 					animation-name: dropHeight;
 					animation-timing-function: ease;

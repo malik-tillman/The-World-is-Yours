@@ -147,7 +147,7 @@
   height: 100%;
   position: relative;
   z-index: 1;
-  max-height: 75%;
+  max-height: 70%;
 
   overflow-y: scroll;
 }
@@ -455,11 +455,11 @@
 }
 
 #remove-all__btn {
-  margin: 1em 0;
+  margin: 0.5em 0;
   background-color: rgba(109, 8, 8, 0.79);
   color: #f8f8f8;
   font-size: 0.8em;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 3px;
   cursor: pointer;
 
@@ -484,7 +484,7 @@
   @include align-items(center);
 
   width: 100%;
-  height: 25%;
+  height: 30%;
   bottom: 0;
 
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.10);
