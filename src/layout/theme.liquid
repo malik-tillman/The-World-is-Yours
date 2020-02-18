@@ -81,6 +81,20 @@
 {% comment %}{# todo: optimize classes #}{% endcomment %}
 {% comment %}{# class="template-{{ request.page_type | handle }}" #}{% endcomment %}
 <body class="template--{{ template | split: '/' | join : '-' | split: '.' | join: '-'}} loading">
+{% case template%}
+{% when 'index' %}
+{% assign marquee_text = "THE WORLD IS YOURS" %}
+{% when 'collection' %}
+{% assign marquee_text = "SHOP NOW  SHOP NOW" %}
+{% when 'product' %}
+{% assign marquee_text = product.title %}
+{% when 'customers/login' %}
+{% assign marquee_text = "LOGIN  LOGIN  LOGIN" %}
+{% when 'customers/register' %}
+{% assign marquee_text = "REGISTER  REGISTER  REGISTER" %}
+{% when 'page.contact' %}
+{% assign marquee_text = "CONTACT US  CONTACT US" %}
+{% endcase %}
 
 	{% comment %}{# ------ Page Loader ------ #}{% endcomment %}
 	<div id="loader">
@@ -91,7 +105,7 @@
 	{% if template == 'index' %}
 		{% comment %}{# todo: #}{% endcomment %}
 		{%- if settings.home_video_url_webm and settings.home_video_url_mp4 -%}
-			<div class="video-container">
+			<div class="video-container visually-hidden">
 				<video autoplay muted loop playsinline preload disablePictureInPicture
 					   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster-5.PNG?v=1580149853">
 					<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/WhatsApp_Video_2020-01-27_at_1.13.33_PM.mp4?958" type="video/mp4">
@@ -100,27 +114,132 @@
 		{%- endif -%}
 	{% endif %}
 
+	<div class="">
+		<div class="m-header_container">
+			<div class="m-header_marquee-container">
+				<div class="m-header_marquee">
+					<span>{{ marquee_text }}</span>
+					<span>{{ marquee_text }}</span>
+					<span>{{ marquee_text }}</span>
+				</div>
+			</div>
+			<div class="m-header_section">
+				<div class="m-header__logo-container">
+					<a href="/" title="CSNV Home">
+						<img src="{{ 'logo.gif' | asset_url }}" alt="CSNV Logo"/>
+					</a>
+
+					<small class="side-bar__header-logo__reg">All Rights Reserved <br>
+						&copy; 2020 CSNV studio</small>
+				</div>
+
+				<div class="m-header__cart-trigger-container">
+					{% if cart.item_count > 0 %}
+						<div class="m-header__cart-count-container">
+							<span id="m-header__cart-count" class="m-header__cart-count" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
+						</div>
+
+					{% else %}
+						<div class="m-header__cart-count-container">
+							<span id="m-header__cart-count" class="m-header__cart-count" aria-label="Amount of items in cart">empty</span>
+						</div>
+
+					{% endif %}
+
+					{% comment %}{# Cart Icon #}{% endcomment %}
+					<button class="m-header__cart-icon-container" type="button">
+						<span class="visually-hidden">Shopping Cart</span>
+						{% render 'icon-bag' %}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="m-nav_container">
+			<button class="side-bar__menu-button"><span>Menu</span></button>
+
+			<ul>
+				{% for link in linklists.main-menu.links %}
+				{% assign child_list_handle = link.title | handleize %}
+
+				{% if linklists[child_list_handle].links != blank %}
+				<li class="m-nav__dropdown-container">
+					<button class="m-nav__dropdown-trigger" type="button">{{ link.title }}</button>
+
+					<ul class="m-nav__dropdown" aria-expanded="false">
+						{% for childLink in linklists[child_list_handle].links %}
+						<li class="m-nav__link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="{{ childLink.url }}" title="{{ childLink.title | escape }}">{{ childLink.title | escape}}</a>
+						</li>
+
+						{% endfor %}
+					</ul>
+				</li>
+
+				{% else %}
+				<li class="m-nav__nav-item" onclick="window.location.href = '{{ link.url }}'">
+					<a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a>
+				</li>
+
+				{% endif %}
+				{% endfor %}
+
+				{% if shop.customer_accounts_enabled %}
+				{% if customer %}
+					<li class="m-nav__nav-item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account" title="Go to your account">
+							Account <br/><span class="m-nav__account-name">({{ customer.email }})</span>
+						</a>
+					</li>
+					<li class="m-nav__nav-item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/logout" title="Log out">Log out</a>
+					</li>
+
+				{% else %}
+					<li class="m-nav__nav-item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/login" title="Log in to your account">Log in</a>
+					</li>
+					<li class="m-nav__nav-item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/register" title="Register for an account">Register</a>
+					</li>
+
+				{% endif %}
+				{% endif %}
+			</ul>
+
+			<div class="m-nav__search-container" tabindex="0">
+				<form class="m-nav__search-form" action="{{ routes.search_url }}">
+					<label for="q" class="visually-hidden">Search</label>
+
+					<div class="side-bar__search-mask">
+						<input type="text" placeholder="Search..." id="q" name="q">
+					</div>
+
+					<button class="m-nav__search-button">
+						{% render "icon-search" %}
+
+						<span class="visually-hidden">Search</span>
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="m-main_container">
+			<main>
+				{% if template != 'index' %}
+				{{ content_for_layout }}
+
+				{% endif %}
+			</main>
+		</div>
+	</div>
+
     {% comment %}{# ------ Marquee Text ------ #}{% endcomment %}
     {% comment %}{# todo: Change classes to `marquee-[level-name]` #}{% endcomment %}
 	{%- if settings.marquee_text -%}
-		{% case template%}
-			{% when 'index' %}
-				{% assign marquee_text = "THE WORLD IS YOURS" %}
-			{% when 'collection' %}
-				{% assign marquee_text = "SHOP NOW  SHOP NOW" %}
-			{% when 'product' %}
-				{% assign marquee_text = product.title %}
-			{% when 'customers/login' %}
-				{% assign marquee_text = "LOGIN  LOGIN  LOGIN" %}
-			{% when 'customers/register' %}
-				{% assign marquee_text = "REGISTER  REGISTER  REGISTER" %}
-			{% when 'page.contact' %}
-				{% assign marquee_text = "CONTACT US  CONTACT US" %}
-		{% endcase %}
-
 		<script>console.log("{{ template }}")</script>
 
-		<div class="alert-banner">
+		<div class="alert-banner visually-hidden">
 			<div class="alert-banner__marquee">
 				<span>{{ marquee_text }}</span>
 				<span>{{ marquee_text }}</span>
@@ -129,8 +248,8 @@
 		</div>
 	{%- endif -%}
 
-	{% comment %}{# ------ Cart ------ #}{% endcomment %}
-	<div class="header-cart">
+	<!-- Hidden -->
+	<div class="header-cart visually-hidden">
 		{% comment %}{# Show Count #}{% endcomment %}
 		{% if cart.item_count > 0 %}
 		<div class="header-cart__count">
@@ -151,8 +270,8 @@
 		</button>
 	</div>
 
-	{% comment %}{# ------ Side Nav ------ #}{% endcomment %}
-	<aside class="side-bar">
+	<!-- Hidden -->
+	<aside class="side-bar visually-hidden">
 		{% comment %}{# Logo and Rights #}{% endcomment %}
 		<div class="side-bar__header-logo">
 			{% comment %}{# Logo Link #}{% endcomment %}
@@ -302,8 +421,8 @@
 		</style>
 	{% endif %}
 
-	{% comment %}{# ------ Main Content Container ------ #}{% endcomment %}
-	<div class="container">
+	<!-- Hidden -->
+	<div class="container visually-hidden">
 		<main>
 			{% comment %}{# Ignores Content for Index #}{% endcomment %}
 			{% comment %}{# todo: evaluate #}{% endcomment %}
@@ -313,7 +432,6 @@
 		</main>
 	</div>
 
-	{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
 	<div id="shopping-cart" class="shopping-cart">
 		<script>
 			let isLoadWithCart = localStorage.getItem('load_with_cart');
@@ -416,8 +534,6 @@
 		</div>
 	</div>
 
-
-	{% comment %}{# Footer #}{% endcomment %}
 	<footer class="footer">
 		<div class="social__footer">
 			<ul> {% comment %}{# todo: Localize #}{% endcomment %}
@@ -463,7 +579,6 @@
 		</div>
 	</footer>
 
-	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
 		CartJS.init({{ cart | json }}, {
 			"moneyFormat": "{{ shop.money_format }}",
