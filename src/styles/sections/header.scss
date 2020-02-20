@@ -220,3 +220,20 @@
 .side-bar__link-item {
   cursor: pointer;
 }
+
+// -------------------------------------------------------------------------------------
+
+.m-header__logo-container {
+  @include flexbox();
+  @include flex-direction(column);
+  @include align-items(center);
+
+  position: relative;
+  top: -50%;
+  width: 25vmax;
+}
+
+.m-header__logo-container a {
+  width: 75%;
+  display: block;
+}

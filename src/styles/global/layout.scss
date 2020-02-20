@@ -146,4 +146,15 @@ tr:nth-child(even) {
   margin: 10em 20em;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 
+.m-header_container {
+  background-color: red;
+}
+
+.m-header_section {
+  @include flexbox();
+  @include flex-direction(row);
+  @include justify-content(space-between);
+  @include align-items(center);
+}
