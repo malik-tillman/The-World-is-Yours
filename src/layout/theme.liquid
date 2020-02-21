@@ -115,39 +115,38 @@
 	{% endif %}
 
 	<div class="">
-		<div class="m-header_container">
-			<div class="m-header_marquee-container">
-				<div class="m-header_marquee">
-					<span>{{ marquee_text }}</span>
-					<span>{{ marquee_text }}</span>
-					<span>{{ marquee_text }}</span>
+		<div class="header__container">
+			<div class="marquee__section">
+				<div class="marquee">
+					<span class="marquee__item">{{ marquee_text }}</span>
+					<span class="marquee__item">{{ marquee_text }}</span>
+					<span class="marquee__item">{{ marquee_text }}</span>
 				</div>
 			</div>
-			<div class="m-header_section">
-				<div class="m-header__logo-container">
-					<a href="/" title="CSNV Home">
-						<img src="{{ 'logo.gif' | asset_url }}" alt="CSNV Logo"/>
+			<div class="header__section">
+				<div class="logo__container">
+					<a class="logo__link" href="/" title="CSNV Home">
+						<img class="logo__image" src="{{ 'logo.gif' | asset_url }}" alt="CSNV Logo"/>
 					</a>
 
-					<small class="side-bar__header-logo__reg">All Rights Reserved <br>
-						&copy; 2020 CSNV studio</small>
+					<small class="logo__rights--text">
+						All Rights Reserved <br>&copy; 2020 CSNV studio
+					</small>
 				</div>
 
-				<div class="m-header__cart-trigger-container">
+				<div class="cart--trigger__container">
 					{% if cart.item_count > 0 %}
-						<div class="m-header__cart-count-container">
-							<span id="m-header__cart-count" class="m-header__cart-count" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
-						</div>
+					<div class="cart--count__container">
+						<span id="cart--count" class="cart--count" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
+					</div>
 
 					{% else %}
-						<div class="m-header__cart-count-container">
-							<span id="m-header__cart-count" class="m-header__cart-count" aria-label="Amount of items in cart">empty</span>
-						</div>
-
+					<div class="cart--count__container">
+						<span id="cart--count" class="cart--count" aria-label="Amount of items in cart"></span>
+					</div>
 					{% endif %}
 
-					{% comment %}{# Cart Icon #}{% endcomment %}
-					<button class="m-header__cart-icon-container" type="button">
+					<button class="cart--icon__container" type="button">
 						<span class="visually-hidden">Shopping Cart</span>
 						{% render 'icon-bag' %}
 					</button>
@@ -155,7 +154,7 @@
 			</div>
 		</div>
 
-		<div class="m-nav_container">
+		<div class="nav__container">
 			<button class="side-bar__menu-button"><span>Menu</span></button>
 
 			<ul>
@@ -224,7 +223,7 @@
 			</div>
 		</div>
 
-		<div class="m-main_container">
+		<div class="main__container">
 			<main>
 				{% if template != 'index' %}
 				{{ content_for_layout }}
@@ -590,6 +589,15 @@
 		let removeAllTrigger = document.getElementById('remove-all__btn');
 		let indexCallback = 0;
 
+		let headerSection = document.getElementsByClassName('header__section')[0].style;
+		let marqueeSection = document.getElementsByClassName('marquee__section')[0].style;
+		let logoContainer = document.getElementsByClassName('logo__container')[0].style;
+		let rightsTextHTMLElement = document.getElementsByClassName('logo__rights--text')[0];
+		let rightsText = rightsTextHTMLElement.style;
+		let rightsHeight = rightsTextHTMLElement.offsetHeight + "px";
+
+		let lastScrollPos = 0;
+
 		Array.from(removeTriggers).forEach(trigger => {
 			let localIndexCallback = indexCallback;
 			trigger.addEventListener("click", function () {
@@ -635,6 +643,12 @@
 			location.reload();
 		}
 
+		function animateHeader(color, height, margin) {
+			headerSection.backgroundColor = color;
+			rightsText.height = height;
+			logoContainer.margin = margin;
+		}
+
 		window.addEventListener("DOMContentLoaded", function () {
 			let loader = document.getElementById("loader");
 
@@ -646,6 +660,25 @@
 				loader.style.opacity = "0";
 			}, 1000);
 		} );
+
+		window.addEventListener("scroll", function() {
+			let thisScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+			if (thisScrollPos === 0) {
+				animateHeader("transparent", rightsHeight, "3em 0 2em 5em");
+			}
+
+			else if (thisScrollPos > lastScrollPos) {
+				animateHeader("white", "0", "1em");
+			}
+
+			else {
+				animateHeader("white", rightsHeight, "3em 0 2em 5em");
+			}
+
+			/* Mobile/Negative Scroll Fix */
+			lastScrollPos = thisScrollPos <= 0 ? 0 : thisScrollPos;
+		}, false);
 	</script>
 </body>
 </html>

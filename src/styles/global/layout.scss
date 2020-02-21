@@ -148,13 +148,28 @@ tr:nth-child(even) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-.m-header_container {
-  background-color: red;
+.header__container {
+  @include flexbox();
+  @include flex-direction(column);
+
+  background-color: transparent;
+
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
-.m-header_section {
+.marquee__section {
+
+}
+
+.header__section {
   @include flexbox();
   @include flex-direction(row);
   @include justify-content(space-between);
   @include align-items(center);
+  @include order(0);
+
+  background-color: transparent;
+  transition: background-color 1s ease;
 }

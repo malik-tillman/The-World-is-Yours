@@ -223,17 +223,36 @@
 
 // -------------------------------------------------------------------------------------
 
-.m-header__logo-container {
+.logo__container {
   @include flexbox();
   @include flex-direction(column);
   @include align-items(center);
 
   position: relative;
   top: -50%;
-  width: 25vmax;
+  width: 150px;
+
+  margin: 3em 0 2em 5em;
+  transition: margin 1s ease;
 }
 
-.m-header__logo-container a {
-  width: 75%;
-  display: block;
+.logo__container, .logo__rights--text {
+  font-size: 0.5rem;
+  line-height: 1.4;
+  text-align: center;
+
+  overflow: hidden;
+}
+
+.logo__rights--text {
+  height: auto;
+
+  transition: height 1s ease;
+  overflow: hidden;
+}
+
+.logo__image {
+  width: 100%;
+  height: auto;
+  margin: 0;
 }
