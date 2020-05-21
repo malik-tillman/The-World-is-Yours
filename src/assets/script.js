@@ -6,8 +6,9 @@ const initialize = () => {
         nav_dropdown_trigger.forEach(element => element.addEventListener('click', toggleDropdownMenu));
 
     /* Initialize Menu Trigger Event Listener */
-    let menu_trigger = document.querySelector(".menu__button");
-    if (menu_trigger) menu_trigger.addEventListener('click', toggleMenu);
+    let menu_triggers = [document.querySelector(".menu__button"), document.querySelector(".nav__mask")];
+    if (menu_triggers && Array.isArray(menu_triggers))
+        menu_triggers.forEach(element => element.addEventListener('click', toggleMenu));
 
     /* Initialize Cart Trigger */
     let header_cart_button = document.querySelector(".cart--icon__container");
@@ -16,6 +17,14 @@ const initialize = () => {
 
     if (cart_triggers && Array.isArray(cart_triggers))
         cart_triggers.forEach(element => element.addEventListener('click', toggleCart));
+
+    let bounceContainer = document.querySelector(".bounce--container")
+
+    let logoContainer = document.querySelector(".logo__container").style;
+    setTimeout(() => {
+        //logoContainer.position = "fixed";
+        //logoContainer.top = "0";
+    }, 5000)
 };
 
 const toggleDropdownMenu = ev => {

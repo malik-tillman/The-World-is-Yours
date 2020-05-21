@@ -56,7 +56,6 @@ const toggle_menu = e => {
 	} else {
 		content.classList[!content.classList.contains('side-bar--is-open') ? 'add' : 'remove']('side-bar--is-open');
 	}
-	
 }
 
 const toggle_shoppingcart = e => {

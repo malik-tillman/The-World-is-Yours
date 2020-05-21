@@ -7,15 +7,16 @@
 
     {% if search.performed %}
       {% for item in search.results %}
-        {% if item.featured_image %}
-          <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
-            {{ item.featured_image.src | img_url: 'original' | img_tag: item.featured_image.alt }}
-          </a>
-        {% endif %}
-        <h5>{{ item.title | link_to: item.url }}</h5>
-        <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
-      {% else %}
-        no results
+      <div class="search--result__container">
+          {% if item.featured_image %}
+              <a class="search--result__image--container" href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+                  <img class="search--result__image" src="{{ item.featured_image.src | img_url: 'master' }}" alt="{{ item.featured_image.alt }}">
+              </a>
+          {% endif %}
+          <h5 class="search--result__title">{{ item.title | link_to: item.url }}</h5>
+      </div>
+            {% else %}
+          no results
       {% endfor %}
     {% endif %}
 
