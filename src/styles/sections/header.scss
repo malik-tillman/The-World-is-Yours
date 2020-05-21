@@ -273,6 +273,8 @@
   @include inline-flex();
   @include flex-direction(column);
   @include align-items(flex-start);
+
+  margin-top: 20vh;
 }
 
 .nav__container ul li {
@@ -342,7 +344,7 @@
   overflow: hidden;
   max-height: 0;
   will-change: max-height;
-  transition: max-height 0.6s ease-in-out;
+  transition: max-height 400ms ease-in-out;
 }
 
 .is-active .dropdown{
@@ -389,9 +391,10 @@
   width: 1rem;
 }
 
-.scrolled__down {
+//body:not(.template--index)
+.Vscrolled_down {
   .header__container {
-    background-color: white;
+    background-color: transparent;
   }
 
   .logo__rights--text {
@@ -408,5 +411,48 @@
 
   .marquee__section {
     height: 0;
+  }
+}
+
+.nav__mask {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+
+  left: -100vw;
+
+  transition: left 100ms ease-out;
+}
+
+$width: 115px;
+
+.logo__container {
+  width: $width;
+
+  z-index: 1;
+  overflow: visible;
+
+  top:0;
+  transition: top 2s ease;
+}
+
+.logo__container {
+  //animation: x 6s linear 5s infinite alternate;
+}
+
+.logo__intrinsic {
+  //animation: y 4s linear 5s infinite alternate;
+}
+
+
+@keyframes x {
+  100% {
+    transform: translateX( calc(100vw - #{$width}) );
+  }
+}
+
+@keyframes y {
+  100% {
+    transform: translateY( calc(100vh - #{$width}) );
   }
 }

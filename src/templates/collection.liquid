@@ -1,67 +1,25 @@
-{% assign lowQuality = '350x350' %}
-{% assign midQuality = '700x700' %}
-{% assign hiQuality = 'master' %}
-
 <div class="collection_container">
-	<div class="collection__header">
-	{% if settings.collection_heading_video_fallback %}
-		<div class="collection--video__container">
-			<div class="collection--video__overlay">Shop</div>
-			<video class="collection--video" autoplay muted loop playsinline preload disablePictureInPicture
-				   poster="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/wiy-poster.PNG?v=1580061262">
-				<source src="https://cdn.shopify.com/s/files/1/0188/6325/9699/files/80202500_137666454321675_4020897754693855417_n.mp4?824" type="video/mp4">
-			</video>
-		</div>
-	{% endif %}
-
-	{% if collection.description %}
-		<div class="collection__description visually-hidden">{% comment %}{% raw %} {{ collection.description }} {% endraw %}{% endcomment %}</div>
-	{% endif %}
-	</div>
-
-	<h1 class="collection_title visually-hidden">{{ collection.title }}</h1>
-
 	<section class="product-grid">
-		<script>
-			function imageLoaded(image, imgSrc) {
-				image.onload = null;
-				image.src = imgSrc;
-			}
-		</script>
 		{% for product in collection.products %}
+			{% assign image = product.featured_image %}
 			<div class="product-grid__card">
-				{% assign image = product.featured_image %}
 				<a class="product-grid__image-container" href="{{ product.url | within: collection }}">
-					<img class="product-grid__image" src="{{ image.src | img_url: lowQuality }}" onload="imageLoaded(this, '{{ image.src | img_url: hiQuality }}')"  alt="{{ image.alt | escape }}">
+					<img class="product-grid__image lazyload" data-src="{{ image.src | img_url: 'master' }}" src="" alt="{{ image.alt | escape }}">
 				</a>
+
 				<div class="product-grid__details">
 					<h3 class="product-grid__name">{{ product.title }}</h3>
 					<span class="product-grid__price">{{ product.price | money }}</span>
-					{% unless product.available %}<span class="product-price__sold-out"><strong>Sold Out</strong></span>{% endunless %}
+
+					{% unless product.available %}
+						<span class="product-price__sold-out"><strong>Sold Out</strong></span>
+					{% endunless %}
 				</div>
 			</div>
+
 		{% else %}
 			<p>no matches</p>
+
 		{% endfor %}
 	</section>
 </div>
-
-<script>
-	let arrOfImages = document.querySelectorAll(".product-grid__image");
-
-	//normalizeContainerHeight(arrOfImages);
-
-	function normalizeContainerHeight(arrContainers) {
-		let minSize = arrContainers[0].clientHeight;
-
-		arrContainers.forEach(container =>
-				minSize = minSize < container.clientHeight ? minSize : container.clientHeight);
-
-		arrContainers.forEach(container => {
-			if(container.clientHeight > minSize)
-				container.style.maxHeight = minSize + "px";
-		});
-	}
-</script>
-
-

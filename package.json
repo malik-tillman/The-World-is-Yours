@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@shopify/slate": "^0.14.0",
-    "bootstrap": "^4.4.1"
+    "bootstrap": "^4.4.1",
+    "lazysizes": "^5.2.0"
   }
 }

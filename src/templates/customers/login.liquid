@@ -11,7 +11,7 @@
 
           <!-- <h1 id="LoginHeading" class="text-center">Log in</h1> -->
           <div class="register-header">
-            <h1 class="register-header__header">CSNV</h1>
+            <h1 class="register-header__header">Welcome back</h1>
             <span class="register-header__sub-head">TYPE OR PRINT ALL INFORMATION IN BLACK</span>
           </div>
 
@@ -54,6 +54,7 @@
                 <input
                         type="password"
                         value=""
+                        placeholder=""
                         name="customer[password]"
                         id="CustomerPassword"
                         {%- if form.errors contains 'form' -%}
@@ -66,7 +67,7 @@
 
             <div class="register-form__section">
               <button type="submit" class="register-form__submit">
-                <span>Log in</span>
+                <span class="login__button--text">Log in</span>
                 {% render 'icon-submit' %}
               </button>
             </div>
