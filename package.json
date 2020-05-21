@@ -11,6 +11,7 @@
     "watch-prod": "slate watch --env=prod"
   },
   "dependencies": {
-    "@shopify/slate": "^0.14.0"
+    "@shopify/slate": "^0.14.0",
+    "bootstrap": "^4.4.1"
   }
 }

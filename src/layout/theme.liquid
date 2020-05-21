@@ -68,19 +68,52 @@
 	{{ 'cart.min.js' | asset_url | script_tag }}
 
 	{% comment %}{# Deferred Scripts #}{% endcomment %}
-	<script type="text/javascript" src="{{ 'global.js' | asset_url }}" defer></script>
+	<!-- <script type="text/javascript" src="{{ 'global.js' | asset_url }}" defer></script> -->
+	<script type="text/javascript" src="{{ 'script.js' | asset_url }}" defer></script>
 	<script type="text/javascript" src="{{ 'glitch.js' | asset_url }}" defer></script>
 
 	{% comment %}{# Blahh #}{% endcomment %}
 	{{ content_for_header }}
 </head>
 
-
-{% assign marquee_text = "WORLD IS YOURS SS20" %}
-{% comment %}{#  todo: Change body page class selector  #}{% endcomment %}
-{% comment %}{# todo: optimize classes #}{% endcomment %}
-{% comment %}{# class="template-{{ request.page_type | handle }}" #}{% endcomment %}
 <body class="template--{{ template | split: '/' | join : '-' | split: '.' | join: '-'}} loading">
+	<script>
+		let asciiTitle = `
+			  /$$$$$$        /$$      /$$$$$$$$/$$$$$$$$/$$   /$$
+			 /$$__  $$      | $$     | $$_____| $$_____| $$  /$$/
+			| $$  \\ $$      | $$     | $$     | $$     | $$ /$$/
+			| $$$$$$$$      | $$     | $$$$$  | $$$$$  | $$$$$/
+			| $$__  $$      | $$     | $$__/  | $$__/  | $$  $$
+			| $$  | $$      | $$     | $$     | $$     | $$\\  $$
+			| $$  | $$      | $$$$$$$| $$$$$$$| $$$$$$$| $$ \\  $$
+			|__/  |__/      |________|________|________|__/  \\__/
+		`;
+		let asciiTagline = `
+			  ___ ___  ___  ___  _   _  ___ _____ ___ ___  _  _
+			 | _ | _ \\/ _ \\|   \\| | | |/ __|_   _|_ _/ _ \\| \\| |
+			 |  _|   | (_) | |) | |_| | (__  | |  | | (_) | .\` |
+			 |_| |_|_\\\\___/|___/ \\___/ \\___| |_| |___\\___/|_|\\_|
+		`;
+		let asciiTag = asciiTitle  + asciiTagline;
+
+		console.log(asciiTag);
+	</script>
+
+	{% assign marquee_text = "WORLD IS YOURS SS20" %}
+	{% case template%}
+	{% when 'index' %}
+	{% assign marquee_text = "THE WORLD IS YOURS" %}
+	{% when 'collection' %}
+	{% assign marquee_text = "SHOP NOW  SHOP NOW" %}
+	{% when 'product' %}
+	{% assign marquee_text = product.title %}
+	{% when 'customers/login' %}
+	{% assign marquee_text = "LOGIN  LOGIN  LOGIN" %}
+	{% when 'customers/register' %}
+	{% assign marquee_text = "REGISTER  REGISTER  REGISTER" %}
+	{% when 'page.contact' %}
+	{% assign marquee_text = "CONTACT US  CONTACT US" %}
+	{% endcase %}
 
 	{% comment %}{# ------ Page Loader ------ #}{% endcomment %}
 	<div id="loader">
@@ -100,27 +133,140 @@
 		{%- endif -%}
 	{% endif %}
 
+	<div class="">
+		{% if template != 'collection' %}
+		{% if template != 'collection.campaign' %}
+		{% if template != 'product' %}
+		<div class="side__background"></div>
+		{% endif %}
+		{% endif %}
+		{% endif %}
+
+		<div class="header__container">
+			<div class="marquee__section">
+				<div class="marquee">
+					<span class="marquee__item">{{ marquee_text }}</span>
+					<span class="marquee__item">{{ marquee_text }}</span>
+					<span class="marquee__item">{{ marquee_text }}</span>
+				</div>
+			</div>
+
+			<div class="header__section">
+				<button class="menu__button"><span>Menu</span></button>
+
+				<div class="logo__container">
+					<a class="logo__link" href="/" title="CSNV Home">
+						<img class="logo__image" src="{{ 'logo.gif' | asset_url }}" alt="CSNV Logo"/>
+					</a>
+
+					<small class="logo__rights--text">
+						All Rights Reserved <br>&copy; 2020 CSNV studio
+					</small>
+				</div>
+
+				<div class="cart--trigger__container">
+					{% if cart.item_count > 0 %}
+					<div class="cart--count__container">
+						<span id="cart--count" class="cart--count" aria-label="Amount of items in cart">[{{ cart.item_count }}]</span>
+					</div>
+
+					{% else %}
+					<div class="cart--count__container">
+						<span id="cart--count" class="cart--count" aria-label="Amount of items in cart"></span>
+					</div>
+					{% endif %}
+
+					<button class="cart--icon__container" type="button">
+						<span class="visually-hidden">Shopping Cart</span>
+						{% render 'icon-bag' %}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="nav__container">
+			<ul class="nav--item__container">
+				{% for link in linklists.main-menu.links %}
+				{% assign child_list_handle = link.title | handleize %}
+
+				{% if linklists[child_list_handle].links != blank %}
+				<li class="dropdown__container">
+					<button class="nav--dropdown__trigger" type="button">{{ link.title }}</button>
+
+					<ul class="dropdown" aria-expanded="false">
+						{% for childLink in linklists[child_list_handle].links %}
+						<li class="link-item" onclick="window.location.href = '{{ childLink.url }}'">
+							<a href="{{ childLink.url }}" title="{{ childLink.title | escape }}">{{ childLink.title | escape}}</a>
+						</li>
+
+						{% endfor %}
+					</ul>
+				</li>
+
+				{% else %}
+				<li class="nav-item" onclick="window.location.href = '{{ link.url }}'">
+					<a href="{{ link.url }}" title="{{ link.title | escape }}">{{ link.title | escape}}</a>
+				</li>
+
+				{% endif %}
+				{% endfor %}
+
+				{% if shop.customer_accounts_enabled %}
+				{% if customer %}
+					<li class="nav--item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account" title="Go to your account">
+							Account <br/><span class="m-nav__account-name">({{ customer.email }})</span>
+						</a>
+					</li>
+					<li class="nav--item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/logout" title="Log out">Log out</a>
+					</li>
+
+				{% else %}
+					<li class="nav--item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/login" title="Log in to your account">Log in</a>
+					</li>
+					<li class="nav--item" onclick="window.location.href = '{{ childLink.url }}'">
+						<a href="/account/register" title="Register for an account">Register</a>
+					</li>
+
+				{% endif %}
+				{% endif %}
+			</ul>
+
+			<div class="search__container" tabindex="0">
+				<form class="search__form" action="{{ routes.search_url }}">
+					<label for="q" class="visually-hidden">Search</label>
+
+					<div class="search--mask">
+						<input type="text" placeholder="Search..." id="q" name="q">
+					</div>
+
+					<button class="search--button">
+						{% render "icon-search" %}
+
+						<span class="visually-hidden">Search</span>
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="main__container">
+			<main>
+				{% if template != 'index' %}
+				{{ content_for_layout }}
+
+				{% endif %}
+			</main>
+		</div>
+	</div>
+
+
+	{% comment %}{% raw %}
     {% comment %}{# ------ Marquee Text ------ #}{% endcomment %}
     {% comment %}{# todo: Change classes to `marquee-[level-name]` #}{% endcomment %}
 	{%- if settings.marquee_text -%}
-		{% case template%}
-			{% when 'index' %}
-				{% assign marquee_text = "THE WORLD IS YOURS" %}
-			{% when 'collection' %}
-				{% assign marquee_text = "SHOP NOW  SHOP NOW" %}
-			{% when 'product' %}
-				{% assign marquee_text = product.title %}
-			{% when 'customers/login' %}
-				{% assign marquee_text = "LOGIN  LOGIN  LOGIN" %}
-			{% when 'customers/register' %}
-				{% assign marquee_text = "REGISTER  REGISTER  REGISTER" %}
-			{% when 'page.contact' %}
-				{% assign marquee_text = "CONTACT US  CONTACT US" %}
-		{% endcase %}
-
-		<script>console.log("{{ template }}")</script>
-
-		<div class="alert-banner">
+		<div class="alert-banner visually-hidden">
 			<div class="alert-banner__marquee">
 				<span>{{ marquee_text }}</span>
 				<span>{{ marquee_text }}</span>
@@ -129,8 +275,8 @@
 		</div>
 	{%- endif -%}
 
-	{% comment %}{# ------ Cart ------ #}{% endcomment %}
-	<div class="header-cart">
+	<!-- Hidden -->
+	<div class="header-cart visually-hidden">
 		{% comment %}{# Show Count #}{% endcomment %}
 		{% if cart.item_count > 0 %}
 		<div class="header-cart__count">
@@ -151,8 +297,8 @@
 		</button>
 	</div>
 
-	{% comment %}{# ------ Side Nav ------ #}{% endcomment %}
-	<aside class="side-bar">
+	<!-- Hidden -->
+	<aside class="side-bar visually-hidden">
 		{% comment %}{# Logo and Rights #}{% endcomment %}
 		<div class="side-bar__header-logo">
 			{% comment %}{# Logo Link #}{% endcomment %}
@@ -302,8 +448,8 @@
 		</style>
 	{% endif %}
 
-	{% comment %}{# ------ Main Content Container ------ #}{% endcomment %}
-	<div class="container">
+	<!-- Hidden -->
+	<div class="container visually-hidden">
 		<main>
 			{% comment %}{# Ignores Content for Index #}{% endcomment %}
 			{% comment %}{# todo: evaluate #}{% endcomment %}
@@ -312,8 +458,8 @@
 			{% endif %}
 		</main>
 	</div>
+	{% endraw %}{% endcomment %}
 
-	{% comment %}{# ------ Shopping Cart Menu ------ #}{% endcomment %}
 	<div id="shopping-cart" class="shopping-cart">
 		<script>
 			let isLoadWithCart = localStorage.getItem('load_with_cart');
@@ -416,8 +562,6 @@
 		</div>
 	</div>
 
-
-	{% comment %}{# Footer #}{% endcomment %}
 	<footer class="footer">
 		<div class="social__footer">
 			<ul> {% comment %}{# todo: Localize #}{% endcomment %}
@@ -463,17 +607,30 @@
 		</div>
 	</footer>
 
-	{% comment %}{# ------ Loading Script ------ #}{% endcomment %}
 	<script>
+		let page = '{{ template }}';
+		let vContent = document.body;
 		CartJS.init({{ cart | json }}, {
 			"moneyFormat": "{{ shop.money_format }}",
 			"moneyWithCurrencyFormat": "{{ shop.money_with_currency_format }}"
 		});
 
-		let removeTriggers = document.getElementsByClassName('shopping-cart__cart-remove');
+		let removeTriggers = document.getElementsByClassName('.shopping-cart__cart-remove');
 		let itemContainer = document.getElementsByClassName('shopping-cart__item');
 		let removeAllTrigger = document.getElementById('remove-all__btn');
 		let indexCallback = 0;
+
+		let headerSection = document.querySelector('.header__container').style;
+		let marqueeSection = document.getElementsByClassName('marquee__section')[0].style;
+		let logoContainer = document.getElementsByClassName('logo__container')[0].style;
+		let navContainer = document.querySelector('.nav__container').style;
+		let rightsTextHTMLElement = document.getElementsByClassName('logo__rights--text')[0];
+		let rightsText = rightsTextHTMLElement.style;
+		let rightsHeight = rightsTextHTMLElement.offsetHeight + "px";
+
+		let lastScrollPos = 0;
+		let lastScrollDownPos = 0;
+		let lastScrollUpPos = 0;
 
 		Array.from(removeTriggers).forEach(trigger => {
 			let localIndexCallback = indexCallback;
@@ -520,17 +677,58 @@
 			location.reload();
 		}
 
+		function animateHeader(color, height, margin, padding) {
+			headerSection.backgroundColor = color;
+			rightsText.height = height;
+			logoContainer.margin = margin;
+			navContainer.paddingLeft = padding
+		}
+
 		window.addEventListener("DOMContentLoaded", function () {
 			let loader = document.getElementById("loader");
 
 			setTimeout(function () {
-				document.body.style.overflowY = "scroll";
+				if(page !== "index")
+					document.body.style.overflowY = "scroll";
 			}, 500);
 
 			setTimeout(function () {
 				loader.style.opacity = "0";
 			}, 1000);
 		} );
+
+		window.addEventListener("scroll", function() {
+			// Record Scroll Pos
+			let thisScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+			if(thisScrollPos <= lastScrollPos)
+				lastScrollUpPos = thisScrollPos;
+			else
+				lastScrollDownPos = thisScrollPos;
+
+			// Initial and Up
+			if (thisScrollPos === 0 || thisScrollPos <= lastScrollPos) {
+				if(vContent.classList.contains('scrolled__down')
+						&& Math.abs(lastScrollUpPos-lastScrollDownPos) > 250
+						|| thisScrollPos === 0)
+					vContent.classList['remove']('scrolled__down');
+			}
+
+
+			// Down if (thisScrollPos > lastScrollPos)
+			else {
+				if(!vContent.classList.contains('scrolled__down')
+						&& Math.abs(lastScrollUpPos-lastScrollDownPos) > 50) {
+					vContent.classList['add']('scrolled__down');
+				}
+			}
+
+
+
+			/* Mobile/Negative Scroll Fix */
+			lastScrollPos = thisScrollPos <= 0 ? 0 : thisScrollPos;
+		}, false);
+
 	</script>
 </body>
 </html>

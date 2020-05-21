@@ -501,3 +501,54 @@
   font-weight: bold;
   text-align: center;
 }
+
+
+// ----------------------------------------------------------------------------------------------------------------
+
+.cart--trigger__container {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+
+  z-index: 100;
+}
+
+.cart--count__container {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.8rem;
+  font-weight: 700;
+  /*background-color: white;
+  text-align: center;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 0.1em solid #111;*/
+}
+
+.cart--count {
+  color: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+}
+
+.header-cart__button {
+  width: 100%;
+  padding: 0.8em;
+}
+
+.header-cart__button {
+  transform: scale(1);
+  transition: transform 1s ease;
+}
+
+.header-cart__button:focus {
+  @include prefix(user-select, none, webkit moz ms o spec);
+  cursor: pointer;
+
+  transform: scale(2);
+}

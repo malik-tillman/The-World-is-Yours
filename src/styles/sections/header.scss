@@ -23,6 +23,7 @@
   margin-left: 1.15em;
 }
 
+
 /*@supports (position: sticky) {
 	.side-bar {
 		position: -webkit-sticky;
@@ -219,4 +220,193 @@
 
 .side-bar__link-item {
   cursor: pointer;
+}
+
+// -------------------------------------------------------------------------------------
+
+.logo__container {
+  @include flexbox();
+  @include flex-direction(column);
+  @include align-items(center);
+
+  position: relative;
+  top: -50%;
+  width: 150px;
+
+  margin: 3em 0 2em 5em;
+  transition: margin 1s ease;
+}
+
+.logo__container, .logo__rights--text {
+  font-size: 0.5rem;
+  line-height: 1.4;
+  text-align: center;
+
+  overflow: hidden;
+}
+
+.logo__rights--text {
+  height: 22px;
+
+  transition: height 1s ease;
+  overflow: hidden;
+}
+
+.logo__image {
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.nav__container {
+  position: fixed;
+  display: inline-block;
+  top: 25vh;
+  padding-left: 40px;
+
+  transition: padding-left 1s ease;
+
+  z-index: 6;
+}
+
+.nav--item__container {
+  @include inline-flex();
+  @include flex-direction(column);
+  @include align-items(flex-start);
+}
+
+.nav__container ul li {
+  margin: .25em 0;
+  display: inline;
+  white-space: nowrap;
+}
+
+.menu__button {
+  display: none;
+  padding: .5em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.menu__button span {
+  display: block;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.nav__container {
+  a, button {
+    color: inherit;
+    text-decoration: none;
+
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 0.075em;
+  }
+}
+
+.nav__container .account-name {
+  font-size: .6rem;
+  text-transform: initial;
+  margin-top: 0;
+  display: block;
+  white-space: nowrap;
+}
+
+.nav__container li {
+  list-style: none;
+}
+
+.nav--dropdown__trigger {
+  padding-left: 0;
+  white-space: nowrap;
+}
+
+.dropdown__container button:after {
+  content: '\25BC';
+  font-size: 0.5rem;
+  display: inline-block;
+  margin-top: -20px;
+}
+
+.dropdown__container.is-active button:after {
+  content: '\25B2';
+}
+
+.dropdown {
+  @include flexbox();
+  @include flex-direction(column);
+
+  padding-left: 0.8em;
+  overflow: hidden;
+  max-height: 0;
+  will-change: max-height;
+  transition: max-height 0.6s ease-in-out;
+}
+
+.is-active .dropdown{
+  max-height: unset;
+}
+
+
+.search__container {
+  margin-left: 0;
+}
+
+.search--mask {
+  width: 0;
+  transition: all .45s ease-in-out;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.search__form {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.search__container input{
+  display: inline-block;
+  margin-right: .5rem;
+  max-width: 120px;
+}
+
+.search__container:hover .search--mask,
+.search__container:focus .search--mask,
+.search__container:focus-within .search--mask,
+.search__container:active .search--mask,
+.search__container input:focus{
+  width: 100%;
+  margin-right: .5rem;
+}
+
+.search--button {
+  margin-left: 0;
+}
+
+.search--button img {
+  width: 1rem;
+}
+
+.scrolled__down {
+  .header__container {
+    background-color: white;
+  }
+
+  .logo__rights--text {
+    height: 0;
+  }
+
+  .logo__container {
+    margin: 1em;
+  }
+
+  .nav__container {
+    padding-left: 14px;
+  }
+
+  .marquee__section {
+    height: 0;
+  }
 }

@@ -26,6 +26,12 @@ body {
   height: 100%;
 }
 
+@media (min-width: 737px) {
+  body.template--product {
+    overflow: hidden !important;
+  }
+}
+
 /*
 * Table Styles
 */
@@ -146,4 +152,62 @@ tr:nth-child(even) {
   margin: 10em 20em;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 
+.header__container {
+  @include flexbox();
+  @include flex-direction(column);
+
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+
+  background-color: transparent;
+  transition: background-color 1s ease;
+}
+
+.marquee__section {
+
+}
+
+.header__section {
+  @include flexbox();
+  @include flex-direction(row);
+  @include justify-content(space-between);
+  @include align-items(center);
+  @include order(0);
+
+  background-color: transparent;
+
+  padding: 0 1em;
+}
+
+@media screen and (min-width: 736px) {
+  .side__background {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: hsla(180, 100%, 100%, .75);
+
+    animation-name: dropHeight2;
+    animation-timing-function: ease;
+    animation-duration: 2000ms;
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .side__background {
+      backdrop-filter: blur(10px);
+      background-color: hsla(0, 100%, 100%, .25);
+    }
+  }
+
+  @keyframes dropHeight2 {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: 100%;
+    }
+  }
+}
