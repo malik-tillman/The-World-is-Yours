@@ -12,6 +12,7 @@ dist
 upload
 deploy.log
 config.yml
+npm-shrinkwrap.json
 
 # Compiled source #
 ###################
